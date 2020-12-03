@@ -24,7 +24,7 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "yiisoft/yii2-bootstrap4": "^2.0",
         "2amigos/yii2-tinymce-widget": "~1.1",
-        "2amigos/qrcode-library": "~1.1",
+        "2amigos/qrcode-library": "^2.0",
         "skeeks/yii2-assets-auto-compress": "*",
         "kartik-v/yii2-export": "@dev",
         "kartik-v/yii2-widget-select2": "@dev"
