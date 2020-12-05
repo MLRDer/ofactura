@@ -12,6 +12,7 @@ $in_error = \common\models\DocInData::find()->where("date(created_date)='{$date}
 
 $aktiv_company = \common\models\Company::find()->where("invoices_sum>0")->count();
 
+//$total_docs_success_send = \common\models\Facturas::find()->where("(created_date BETWEEN '{$start_date}' and '{$end_date}') and type_invoices=0")->count();
 
 ?>
 <div class="site-index">
@@ -55,6 +56,9 @@ $aktiv_company = \common\models\Company::find()->where("invoices_sum>0")->count(
                     </div>
 
                     <div class="clearfix"></div>
+
+
+
                </div>
            </div>
        </div>
