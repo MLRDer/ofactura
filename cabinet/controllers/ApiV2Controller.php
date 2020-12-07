@@ -73,14 +73,14 @@ class ApiV2Controller extends Controller
         }
     }
 
-    public function getClassifications(){
+    public function actionGetClassifications(){
 
         try {
             $tin = Components::CompanyData('tin');
             $opts = array(
                 'http' => array(
                     'method' => "GET",
-                    'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                    'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
                 )
             );
             $context = stream_context_create($opts);
@@ -89,7 +89,7 @@ class ApiV2Controller extends Controller
             return $data;
         }
         catch (\Exception $exception){
-            return json_encode(['message'=>$exception]);
+            return $exception->getMessage();
         }
     }
 
