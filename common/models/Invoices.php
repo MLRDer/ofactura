@@ -112,4 +112,11 @@ class Invoices extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+//    public function getTotalDocsStat($data){
+//        $total_doc_count = Invoices::find()->where("(created_date BETWEEN '{$data->start_date}' and '{$data->end_date}') and type_invoices=0")->count();
+//        $total_doc_davernost = Invoices::find()->where("(created_date BETWEEN '{$data->start_date}' and '{$data->end_date}') and type_invoices=0 and ")->count();
+//
+//    }
+
 }
