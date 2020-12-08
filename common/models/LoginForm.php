@@ -64,6 +64,8 @@ class LoginForm extends Model
      */
     public function login()
     {
+//        var_dump($this);die;
+//        $this->role_id = 2;
         if ($this->validate()) {
 
             $users = $this->getUser();

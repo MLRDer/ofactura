@@ -30,21 +30,21 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['role_id', 'required'],
+//            ['role_id', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
-            ['fio', 'required'],
-            ['fio', 'string', 'min' => 2, 'max' => 255],
-
-            ['company_name', 'required'],
-            ['company_name', 'string', 'min' => 2, 'max' => 255],
-
-            ['tin', 'required'],
-            ['tin', 'string', 'min' => 9, 'max' => 9],
-
-            ['address', 'required'],
-            ['address', 'string', 'min' => 2, 'max' => 255],
+//            ['fio', 'required'],
+//            ['fio', 'string', 'min' => 2, 'max' => 255],
+//
+//            ['company_name', 'required'],
+//            ['company_name', 'string', 'min' => 2, 'max' => 255],
+//
+//            ['tin', 'required'],
+//            ['tin', 'string', 'min' => 9, 'max' => 9],
+//
+//            ['address', 'required'],
+//            ['address', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -72,15 +72,15 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
-        $user->fio = $this->fio;
-        $user->role_id=$this->role_id;
+//        $user->fio = $this->fio;
+        $user->role_id=2;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         if(!$user->save()){
             $reason = Json::encode($user->getErrors());
         }
-        return $user->save() && $this->sendEmail($user);
+        return $user->save();
     }
 
     /**

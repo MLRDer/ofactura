@@ -86,7 +86,7 @@ class ClassificationsController extends Controller
     {
         $searchModel = new ClassificationsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->query->andWhere(['tin'=>Components::CompanyData('tin')]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

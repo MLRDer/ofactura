@@ -118,7 +118,7 @@ padding: 3px 10px;">
         <!--begin: Quick actions -->
         <div class="kt-header__topbar-item dropdown">
             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-                <span class="kt-header__topbar-icon kt-header__topbar-icon--warning"><i class="fa fa-cart-arrow-down"></i></span>
+                <span class="kt-header__topbar-icon kt-header__topbar-icon--warning"><i class="flaticon2-gear"></i></span>
             </div>
             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                 <form>
@@ -147,7 +147,7 @@ padding: 3px 10px;">
                                 <span class="kt-grid-nav__title"><?= Yii::t('main','To`lov tarixi')?></span>
                                 <span class="kt-grid-nav__desc"><?= Yii::t('main','to`lovlar va xarajatlar')?></span>
                             </a>
-                            <a href="/doc/tarif" class="kt-grid-nav__item">
+                            <a href="/classifications/index" class="kt-grid-nav__item">
 													<span class="kt-grid-nav__icon">
 														<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success kt-svg-icon--lg">
 															<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -156,9 +156,11 @@ padding: 3px 10px;">
 																<path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" id="Path" fill="#000000" opacity="0.3" />
 															</g>
 														</svg> </span>
-                                <span class="kt-grid-nav__title"><?= Yii::t('main','Tariflar')?></span>
-                                <span class="kt-grid-nav__desc"><?= Yii::t('main','Tariflarni o`zgartirish va tanlash')?></span>
+                                <span class="kt-grid-nav__title"><?= Yii::t('main','Маҳсулотларим (хизматларим)')?></span>
+                                <span class="kt-grid-nav__desc"><?= Yii::t('main','Товар (хизмат)лар Ягона электрон миллий каталог
+                                ')?></span>
                             </a>
+
                         </div>
 
                     </div>
