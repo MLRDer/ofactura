@@ -15,6 +15,8 @@ use Yii;
  * @property string|null $CommittentVatRegCode Регистрационный код плательщика НДС комитента
  * @property string $Name Наименование товара (продукта, услуги)
  * @property string|null $Serial Серия товара
+ * @property string|null $CatalogCode Серия товара
+ * @property string|null $CatalogName Серия товара
  * @property int $MeasureId ID единицы измерения
  * @property float|null $BaseSumma Базовая цена
  * @property float|null $ProfitRate % добавочной стоимости
@@ -50,9 +52,10 @@ class FacturaProducts extends \yii\db\ActiveRecord
             [['FacturaId'], 'string', 'max' => 24],
             [['OrdNo'], 'string', 'max' => 5],
             [['CommittentName', 'Serial'], 'string', 'max' => 500],
+            [['CatalogCode'], 'string', 'max' => 32],
             [['CommittentTin'], 'string', 'max' => 9],
             [['CommittentVatRegCode'], 'string', 'max' => 12],
-            [['Name'], 'string', 'max' => 1000],
+            [['Name','CatalogName'], 'string', 'max' => 1000],
         ];
     }
 

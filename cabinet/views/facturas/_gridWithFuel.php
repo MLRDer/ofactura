@@ -17,6 +17,8 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
         <th width="40px" rowspan="2"></th>
 
         <th rowspan="2"><?= Yii::t('main','Наименование товара, выполненных работ и оказанных услуг')?></th>
+        <th rowspan="2"><?= Yii::t('main','Товар (хизмат)лар Ягона электрон миллий каталоги бўйича идентификация коди ва номи')?></th>
+        <th width="130px"  rowspan="2"><?= Yii::t('main','Товар штрих коди (мажбурий эмас)')?></th>
         <th width="130px" rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
         <th width="90px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
         <th width="130px" rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
@@ -56,6 +58,12 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
                 <div class="editable" name="ProductName" rowid="1"></div>
             </td>
             <td>
+                <div class="editable" name="ProductCatalogName" rowid="1"></div>
+            </td>
+            <td>
+                <div class="editable" name="ProductCatalogCode" rowid="1"></div>
+            </td>
+            <td>
                 <div class="editable" name="ProductMeasureId" rowid="1"></div>
             </td>
             <td>
@@ -92,7 +100,7 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
 
         </tr>
         <tr>
-            <td align="center" colspan="3">
+            <td align="center" colspan="5">
 
 0
 
@@ -148,6 +156,12 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
 
                 <td>
                     <div class="editable" name="ProductName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductName ?></div>
+                </td>
+                <td>
+                    <div class="editable" name="ProductCatalogName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogName ?></div>
+                </td>
+                <td>
+                    <div class="editable" name="ProductCatalogCode" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogCode ?></div>
                 </td>
                 <td>
                     <div class="editable" name="ProductMeasureId" rowid="<?= $items->SortOreder ?>">

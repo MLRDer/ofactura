@@ -12,6 +12,8 @@
 <tr>
     <th width="30px" rowspan="2">№</th>
     <th rowspan="2"><?= Yii::t('main','Name')?></th>
+    <th rowspan="2"><?= Yii::t('main','ProductCatalogName')?></th>
+    <th rowspan="2"><?= Yii::t('main','ProductCatalogCode')?></th>
     <th width="40px" rowspan="2"><?= Yii::t('main','ProductMeasureId')?></th>
     <th width="40px" rowspan="2"><?= Yii::t('main','ProductCount')?></th>
     <th width="60px" rowspan="2"><?= Yii::t('main','ProductSumma')?></th>
@@ -35,6 +37,8 @@
     <tr>
         <td><?= $items->OrdNo ?> </td>
         <td><?= $items->Name ?></td>
+        <td><?= $items->CatalogName ?></td>
+        <td><?= $items->CatalogCode ?></td>
         <td><?= $measure[$items->MeasureId] ?></td>
         <td><?= $items->Count ?></td>
         <td><?= number_format($items->Summa,2) ?></td>
@@ -45,7 +49,7 @@
     </tr>
 <?php }?>
 <tr>
-    <td colspan="3" align="left"><b><?= Yii::t('main','Jami summa')?></b></td>
+    <td colspan="5" align="left"><b><?= Yii::t('main','Jami summa')?></b></td>
     <td> <b><?= $count?></b></td>
     <td> </td>
     <td><b><?= number_format($DeliverySum,2) ?></b></td>

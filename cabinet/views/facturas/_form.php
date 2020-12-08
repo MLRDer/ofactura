@@ -266,7 +266,7 @@ use yii\widgets\ActiveForm;
 
     <?php if($model->isNewRecord || $model->json_items==""){ ?>
 
-         <?= $form->field($model, 'json_items')->hiddenInput(['id' => "items_json",'value'=>"{}"])->label(false) ?>
+         <?= $form->field($model, 'json_items')->textInput(['id' => "items_json",'value'=>"{}"])->label(false) ?>
 
     <?php } else {?>
 
@@ -326,6 +326,8 @@ use yii\widgets\ActiveForm;
             var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
             var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
             var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
+            var ProductCatalogName =  '<div class="editable" name="ProductCatalogName" id="ProductCatalogName_'+k+'" rowid="'+k+'"></div>';
+            var ProductCatalogCode =  '<div class="editable" name="ProductCatalogCode" id="ProductCatalogCode_'+k+'" rowid="'+k+'"></div>';
             var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'">0</div>';
             var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'">0</div>';
             var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'">0</div>';
@@ -339,7 +341,7 @@ use yii\widgets\ActiveForm;
             k++;
 
 
-            var markup = "<tr><td align='center'><label class='kt-checkbox kt-checkbox--brand'><input type='checkbox' name='record'><span style='top: 4px;left: 5px;'></span></label></td><td>" + ProductName + "</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td><td>"+ProductSumma+"</td><td>"+ ProductFuelRate +"</td><td>"+ProductFuelSum+"</td><td>"+ProductDeliverySum+"</td><td>"+ProductVatRate+"</td><td>"+ProductVatSum+"</td><td>"+ProductDeliverySumWithVat+"</td> </tr>";
+            var markup = "<tr><td align='center'><label class='kt-checkbox kt-checkbox--brand'><input type='checkbox' name='record'><span style='top: 4px;left: 5px;'></span></label></td><td>" + ProductName + "</td><td>"+ProductCatalogName+"</td><td>"+ProductCatalogCode+"</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td><td>"+ProductSumma+"</td><td>"+ ProductFuelRate +"</td><td>"+ProductFuelSum+"</td><td>"+ProductDeliverySum+"</td><td>"+ProductVatRate+"</td><td>"+ProductVatSum+"</td><td>"+ProductDeliverySumWithVat+"</td> </tr>";
 
 
 
@@ -375,58 +377,55 @@ use yii\widgets\ActiveForm;
             console.log("sdfgsdfg");
             row_id = $(this).attr('rowid');
             var name = $(this).attr('name');
-            // var is_alcohol = document.getElementById("ExtraValue").value;
-            // if (is_alcohol==1){
-            //     if(name=="ProductName"){
-            //         var langs = document.getElementById('langs').value;
-            //         document.getElementById("val_id").value = row_id;
-            //         $.ajax({
-            //             url: "/" + langs + "/extra/alco-extra",  //Server script to process data
-            //             type: 'POST',
-            //             data: {'row_id':row_id},
-            //             datatype:'json',
-            //             success: function(data) {
-            //                 if(data.success==true){
-            //                     $("#kt_modal_4").modal("show");
-            //                     document.getElementById('ExtraAlcoModalArea').innerHTML = data.html;
-            //                     var ids = document.getElementById("type_product").value;
-            //                     AlcoGeneratForm(ids);
-            //                 }
-            //             },
-            //             error: function(data){
-            //                 swal("Xatolik", data.message, "error");
-            //             },
-            //         });
-            //     }
-            // }
-            if(name=="ProductMeasureId"){
-
-                if(!$(this).is("select")) {
-                    $.ajax({
-                        url: '/api/get-measure',
-                        async: false,
-                        success: function (data) {
-                            new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
-                        },
-                        error: function (data) {
-                            ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
-                        }
-                    });
+            switch (name) {
+                case "ProductName":
+                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
                     $(this).replaceWith(new_item);
                     new_item.trigger('focus');
-                }
-            } else {
-
-                if(name!="ProductName") {
-                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" onkeyup="CalcStandart(this,' + row_id + ')"  rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
-                } else {
+                    break;
+                case "ProductMeasureId":
+                    if(!$(this).is("select")) {
+                        $.ajax({
+                            url: '/api/get-measure',
+                            async: false,
+                            success: function (data) {
+                                new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
+                            },
+                            error: function (data) {
+                                ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
+                            }
+                        });
+                        $(this).replaceWith(new_item);
+                        new_item.trigger('focus');
+                    }
+                    break;
+                case "ProductCatalogCode":
                     new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
-                }
-                $(this).replaceWith(new_item);
-
-                new_item.trigger('focus');
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                    break;
+                case "ProductCatalogName":
+                    if(!$(this).is("select")) {
+                        $.ajax({
+                            url: '/api/get-catalog',
+                            async: false,
+                            success: function (data) {
+                                new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
+                            },
+                            error: function (data) {
+                                ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
+                            }
+                        });
+                        $(this).replaceWith(new_item);
+                        new_item.trigger('focus');
+                    }
+                    break;
+                default:
+                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" onkeyup="CalcStandart(this,' + row_id + ')"  rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                    break;
             }
-
         });
 
         $(document).on('focusout',".editable",function (e) {
@@ -434,9 +433,6 @@ use yii\widgets\ActiveForm;
             // console.log(e.target.name);
             var data = $("#items_json").val();
             data = JSON.parse(data);
-
-
-
              var countAll = 0;
              // var sumProduct = 0;
              var ProductVatSum = 0;
@@ -558,7 +554,7 @@ use yii\widgets\ActiveForm;
         height: 35px;
         text-align: right;
     }
-    div[name="ProductName"] {
+    div[name="ProductName"],div[name="ProductCatalogName"],div[name="ProductCatalogCode"] {
         text-align: left;
         white-space: nowrap;
         text-overflow: ellipsis;

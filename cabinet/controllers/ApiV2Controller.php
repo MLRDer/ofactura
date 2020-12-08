@@ -86,7 +86,11 @@ class ApiV2Controller extends Controller
             $context = stream_context_create($opts);
             $url = 'http://my.soliq.uz/services/cl-api/class/get-list/by-company?tin='.$tin;
             $data = file_get_contents( $url, false, $context);
-            return $data;
+            echo "<pre>";
+            var_dump(
+                Json::decode($data)
+            );
+            die;
         }
         catch (\Exception $exception){
             return $exception->getMessage();

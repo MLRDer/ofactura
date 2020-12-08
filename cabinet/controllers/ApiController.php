@@ -3,6 +3,7 @@
 namespace cabinet\controllers;
 
 use cabinet\models\Components;
+use common\models\Classifications;
 use common\models\Company;
 use common\models\CompanyUsers;
 use common\models\DocInData;
@@ -16,6 +17,7 @@ use common\models\EmpowermentProduct;
 use common\models\FacturaPks7;
 use common\models\Facturas;
 use function GuzzleHttp\Psr7\str;
+use Matrix\Functions;
 use Yii;
 use common\models\Docs;
 use common\models\DocsSearch;
@@ -1002,6 +1004,14 @@ class ApiController extends Controller
         $html = "";
         foreach ($model as $items){
             $html.="<option value='".$items->id."'>".$items->name." </option>";
+        }
+        return $html;
+    }
+    public function actionGetCatalog(){
+        $model = Classifications::findAll(['tin'=>Components::CompanyData('tin')]);
+        $html = "";
+        foreach ($model as $items){
+            $html.="<option value='".$items->classCode." - ".$items->className."'>".$items->classCode." - ".$items->className." </option>";
         }
         return $html;
     }

@@ -311,6 +311,8 @@ class Facturas extends \yii\db\ActiveRecord
                 "CommittentVatRegCode"=>$items->CommittentVatRegCode,
                 "Name"=>$items->Name,
                 "Serial"=>$items->Serial,
+                "CatalogCode"=>$items->CatalogCode,
+                "CatalogName"=>$items->CatalogName,
                 "MeasureId"=>$items->MeasureId,
                 "BaseSumma"=>$items->BaseSumma,
                 "ProfitRate"=>$items->ProfitRate,
@@ -506,6 +508,8 @@ class Facturas extends \yii\db\ActiveRecord
                 $dataProducts->CommittentVatRegCode = $itemsProducts['committentVatRegCode'];
                 $dataProducts->Name = $itemsProducts['name'];
                 $dataProducts->Serial= $itemsProducts['serial'];
+                $dataProducts->CatalogCode= $itemsProducts['catalogCode'];
+                $dataProducts->CatalogName= $itemsProducts['catalogName'];
                 $dataProducts->MeasureId = $itemsProducts['measureId'];
                 $dataProducts->BaseSumma = $itemsProducts['baseSumma'];
                 $dataProducts->ProfitRate = $itemsProducts['profitRate'];
@@ -565,6 +569,10 @@ class Facturas extends \yii\db\ActiveRecord
                 $data->Count = isset($items['COUNT'])?$items['COUNT']:0;
                 $data->Summa = $items['SUMMA'];
                 $data->DeliverySum = $items['DELIVERYSUM'];
+                if (isset($items['CATALOGCODE'])) {
+                    $data->CatalogCode = $items['CATALOGCODE'];
+                    $data->CatalogName = $items['CATALOGNAME'];
+                }
                 if (isset($items['EXCISERATE'])) {
                     $data->ExciseRate = $items['EXCISERATE'];
                     $data->ExciseSum = isset($items['EXCISESUM'])?$items['EXCISESUM']:0;
@@ -637,6 +645,10 @@ class Facturas extends \yii\db\ActiveRecord
                     $all_sum +=$data->DeliverySum;
                     $data->VatRate = isset($items['ProductVatRate'])?$items['ProductVatRate']:0;
                     $data->VatSum = isset($items['ProductVatSum'])?$items['ProductVatSum']:0;
+//                    var_dump($items);die;
+                    $data->CatalogCode = $items['ProductCatalogCode'];
+                    $data->CatalogName= $items['ProductCatalogName'];
+
                     if($data->VatSum>0){
                         $this->HasVat = 1;
 
