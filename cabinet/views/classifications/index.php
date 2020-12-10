@@ -36,11 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <i class="la la-refresh"></i> 
                             <?= Yii::t('main','Update')?>
                         </a>
-                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            <i class="la la-filter"></i>
-                            <?= Yii::t('main','Filter search')?>
-                        </button>
-                        <?= \cabinet\widgets\LimiterPage::widget() ?>
+
                     </div>
                 </div>
             </div>
@@ -57,11 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'groupCode',
             'classCode',
             'className',
-            'productCode',
-            'productName',
+//            'productCode',
+//            'productName',
             //'enabled',
 
-            ['class' => 'yii\grid\ActionColumn'],
+//            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

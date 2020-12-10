@@ -451,7 +451,7 @@ class FacturasController extends \cabinet\components\Controller
         $model->SetFacturasParams(Facturas::TYPE_DEFAULT,$companyData->tin);
         $model->SetSellerData($companyData);
 
-        Yii::$app->session->setFlash('danger', 'Rouming talabiga asosan olib borilgan o`zgarishlar natijasida sizda oldingi hujjatlar ko`rinmasligi mumkin. Barcha hujjatlaringgiz 1-3 kun oralig`ida qayta yuklanish jarayonida. Noqulaylikar uchun uzur so`raymiz');
+        Yii::$app->session->setFlash('danger', 'Керакли МХИК топилмаган тақдирда ушбу ҳавола орқали янги товар ёки хизмат қўшиш имкони мавжуд: <a href="https://tasnif.soliq.uz/classifier/" target="_blank">https://tasnif.soliq.uz/classifier/</a> <br> Товар (хизмат)лар Ягона электрон миллий каталоги бўйича мурожаат учун: +998 (71) 202-32-82, +998 (71) 202-32-32 (567), +998 (71) 202-32-32 (572), +998 (71) 202-32-32 (573), +998 (71) 202-32-32 (540)');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->Id]);
         }

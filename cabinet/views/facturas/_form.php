@@ -266,7 +266,7 @@ use yii\widgets\ActiveForm;
 
     <?php if($model->isNewRecord || $model->json_items==""){ ?>
 
-         <?= $form->field($model, 'json_items')->textInput(['id' => "items_json",'value'=>"{}"])->label(false) ?>
+         <?= $form->field($model, 'json_items')->hiddenInput(['id' => "items_json",'value'=>"{}"])->label(false) ?>
 
     <?php } else {?>
 

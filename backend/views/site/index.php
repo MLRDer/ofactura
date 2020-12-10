@@ -13,9 +13,9 @@ $in_error = \common\models\DocInData::find()->where("date(created_date)='{$date}
 $start_date = date("Y-m-t 00:00:00", strtotime("-1 month") );
 $end_date = date("Y-m-1 23:59:00", strtotime("-1 month") );
 
-$total_docs_success_send = \common\models\Facturas::find()->where("(created_date BETWEEN '{$start_date}' and '{$end_date}') and type_invoices=0")->count();
-$total_davernost_success_send = \common\models\Facturas::find()->where("(created_date BETWEEN '{$start_date}' and '{$end_date}') and type_invoices=0 and tarrif_id>0")->count();
-$total_factura_send = $total_docs_success_send - $total_davernost_success_send;
+//$total_docs_success_send = \common\models\Facturas::find()->where("(created_date BETWEEN '{$start_date}' and '{$end_date}') and type=0")->count();
+//$total_davernost_success_send = \common\models\Facturas::find()->where("(created_date BETWEEN '{$start_date}' and '{$end_date}') and type=0 and tarrif_id>0")->count();
+//$total_factura_send = $total_docs_success_send - $total_davernost_success_send;
 
 
 ?>
@@ -48,7 +48,7 @@ $total_factura_send = $total_docs_success_send - $total_davernost_success_send;
                             <hr>
                         <div class="col-md-3">
                             <div class="btn btn-default btn-lg btn-block">
-                                Faol korxonalar <span class="badge"><?= $aktiv_company ?></span>
+<!--                                Faol korxonalar <span class="badge">--><?//= $aktiv_company ?><!--</span>-->
                             </div>
                         </div>
                         </div>
@@ -60,23 +60,20 @@ $total_factura_send = $total_docs_success_send - $total_davernost_success_send;
                     </div>
 
                     <div class="clearfix"></div>
-
-
-
                </div>
            </div>
            <div class="panel panel-default">
                <div class="panel-body">
                    <div class="col-md-3">
-                       <span class="btn btn-default"><i class="glyphicon glyphicon-upload"></i> </span>  O'tgan oy jonatilgan hujjatlar <span class="badge"><?= $total_docs_success_send ?></span>
+<!--                       <span class="btn btn-default"><i class="glyphicon glyphicon-upload"></i> </span>  O'tgan oy jonatilgan hujjatlar <span class="badge">--><?//= $total_docs_success_send ?><!--</span>-->
                    </div>
                    <div class="col-md-3">
                         <span class="btn btn-default">
                         <i class="glyphicon glyphicon-usd"></i> </span>  Davernost hujjatlar
-                       <span class="badge"><?= $total_davernost_success_send  ?></span>
+<!--                       <span class="badge">--><?//= $total_davernost_success_send  ?><!--</span>-->
                    </div>
                    <div class="col-md-3">
-                       <span class="btn btn-default"><i class="glyphicon glyphicon-download"></i> </span>  Jonatilgan facturalar <span class="badge"><?= $total_factura_send  ?></span>
+<!--                       <span class="btn btn-default"><i class="glyphicon glyphicon-download"></i> </span>  Jonatilgan facturalar <span class="badge">--><?//= $total_factura_send  ?><!--</span>-->
                    </div>
 
                    <hr>

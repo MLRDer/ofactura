@@ -209,7 +209,7 @@ padding-bottom: 10px;">
     var sendAuth =function(keyId,pkcs7,data){
         var login ='<div class="kt-spinner kt-spinner--v2 kt-spinner--sm kt-spinner--brand"></div>';
         document.getElementById('authForm').innerHTML = login;
-        // SetLoader('authForm');
+        SetLoader('authForm');
         $.ajax({
             url: '/site/auth',
             method: 'POST',

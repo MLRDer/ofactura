@@ -247,7 +247,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
                         </div>
                     </div>
                 </div>
-                 <?= Alert::widget()?>
+
                 <?= $content ?>
                 </div>
                 <!-- end:: Content -->
