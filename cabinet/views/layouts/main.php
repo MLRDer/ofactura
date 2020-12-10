@@ -15,7 +15,7 @@ AppAsset::register($this);
 $this->title = $this->title." | ".Components::CompanyData('tin');
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
+
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
@@ -247,6 +247,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
                         </div>
                     </div>
                 </div>
+                 <?= Alert::widget()?>
                 <?= $content ?>
                 </div>
                 <!-- end:: Content -->

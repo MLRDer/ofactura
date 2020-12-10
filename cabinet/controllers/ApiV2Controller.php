@@ -73,6 +73,30 @@ class ApiV2Controller extends Controller
         }
     }
 
+    public function actionGetClassifications(){
+
+        try {
+            $tin = Components::CompanyData('tin');
+            $opts = array(
+                'http' => array(
+                    'method' => "GET",
+                    'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
+                )
+            );
+            $context = stream_context_create($opts);
+            $url = 'http://my.soliq.uz/services/cl-api/class/get-list/by-company?tin='.$tin;
+            $data = file_get_contents( $url, false, $context);
+            echo "<pre>";
+            var_dump(
+                Json::decode($data)
+            );
+            die;
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
+
     public function actionGetFactura(){
 
         $id = Yii::$app->request->post('id');
