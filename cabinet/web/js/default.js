@@ -333,15 +333,15 @@ function GetDataByTin(tin){
     if(tin.length==9){
         if (tin=="201122919") {
             if(lang=="ru") {
-                ShowMessage("danger", "РЈРєР°Р·Р°РЅРЅС‹Р№ Р’Р°РјРё РРќРќ (201122919) СЏРІР»СЏРµС‚СЃСЏ РРќРќ РњРёРЅРёСЃС‚РµСЂСЃС‚РІРѕ С„РёРЅР°РЅСЃРѕРІ Р РµСЃРїСѓР±Р»РёРєРё РЈР·Р±РµРєРёСЃС‚Р°РЅ.\n" +
-                    "Р•СЃР»Рё РІС‹ РЅРµ РѕС‚РїСЂР°РІР»СЏРµС‚Рµ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ РІ РњРёРЅРёСЃС‚РµСЂСЃС‚РІРѕ С„РёРЅР°РЅСЃРѕРІ Р РµСЃРїСѓР±Р»РёРєРё РЈР·Р±РµРєРёСЃС‚Р°РЅ, СѓРєР°Р¶РёС‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РРќРќ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµР№ Р±СЋРґР¶РµС‚РЅРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.")
+                ShowMessage("danger", "Указанный Вами ИНН (201122919) является ИНН Министерство финансов Республики Узбекистан.\n" +
+                    "Если вы не отправляете счёт-фактуру в Министерство финансов Республики Узбекистан, укажите, пожалуйста, ИНН соответствующей бюджетной организации.")
             } else {
 
-                ShowMessage("danger", "РЈС€Р±Сѓ\n" +
-                    "201122919 РЎРўРР Рё РЋР·Р±РµРєРёСЃС‚РѕРЅ Р РµСЃРїСѓР±Р»РёРєР°СЃРё РњРѕР»РёСЏ РІР°Р·РёСЂР»РёРіРёРіР° Р±РµСЂРёР»РіР°РЅ.\n" +
-                    "РЎРёР· ТіРёСЃРѕР±РІР°СЂР°Т›-С„Р°РєС‚СѓСЂР°РЅРё РЋР·Р±РµРєРёСЃС‚РѕРЅ Р РµСЃРїСѓР±Р»РёРєР°СЃРё РњРѕР»РёСЏ РІР°Р·РёСЂР»РёРіРёРіР°\n" +
-                    "СЋР±РѕСЂРјР°С‘С‚РіР°РЅ Р±СћР»СЃР°РЅРіРёР·, С‚РµРіРёС€Р»Рё Р±СЋРґР¶РµС‚ С‚Р°С€РєРёР»РѕС‚РёРЅРёРЅРі РЎРўРР \n" +
-                    "СЂР°Т›Р°РјРёРЅРё С‚Р°РЅР»Р°С€РёРЅРіРёР· СЃСћСЂР°Р»Р°РґРё.")
+                ShowMessage("danger", "Ушбу\n" +
+                    "201122919 СТИРи Ўзбекистон Республикаси Молия вазирлигига берилган.\n" +
+                    "Сиз ҳисобварақ-фактурани Ўзбекистон Республикаси Молия вазирлигига\n" +
+                    "юбормаётган бўлсангиз, тегишли бюджет ташкилотининг СТИР\n" +
+                    "рақамини танлашингиз сўралади.")
             }
         }
         GetBuyer()
@@ -662,14 +662,14 @@ function SaveFactura(){
 
 function alertConfirm(_text, success) {
     swal({
-        title: 'РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ',
+        title: 'Предупреждение',
         text: _text,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Р”Р°',
-        cancelButtonText: 'РќРµС‚',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет',
     }).then((result) => {
         if (result.value) {
             success();
@@ -679,14 +679,14 @@ function alertConfirm(_text, success) {
 
 function RejectConfirm(_text, success) {
     swal({
-        title: 'РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ',
-        text: "РЎР°Р±Р°Р±РЅРё РєСѓСЂСЃР°С‚РёРЅРі",
+        title: 'Предупреждение',
+        text: "Сабабни курсатинг",
         type: 'input',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Р”Р°',
-        cancelButtonText: 'РќРµС‚',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет',
     }).then((result) => {
         if (result.value) {
             success();
@@ -698,7 +698,7 @@ function  alertSuccess( _text ) {
     swal({
         position: 'center',
         type: 'success',
-        title: 'РЈСЃРїРµС€РЅРѕ',
+        title: 'Успешно',
         text: _text,
         timer: 5000
     });
@@ -708,7 +708,7 @@ function alertError( _text ) {
     swal({
         position: 'center',
         type: 'error',
-        title: 'РћС€РёР±РєР°',
+        title: 'Ошибка',
         showCloseButton: true,
         text: _text
     });
@@ -754,7 +754,7 @@ function SendData(id){
         },
         success: function (json) {
             var facturaJson = JSON.stringify(json);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ Рё РѕС‚РїСЂР°РІРёС‚СЊ СЌС‚Сѓ СЃС‡РµС‚ С„Р°РєС‚СѓСЂСѓ?", function () {
+            alertConfirm("Вы действительно хотите подписать и отправить эту счет фактуру?", function () {
                 EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
                     $.ajax({
                         type: "POST",
@@ -798,7 +798,7 @@ function SendFactura(factura_id){
         success: function (json) {
             var facturaJson = JSON.stringify(json);
             // console.log(facturaJson);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ Рё РѕС‚РїСЂР°РІРёС‚СЊ СЌС‚Сѓ СЃС‡РµС‚ С„Р°РєС‚СѓСЂСѓ?", function () {
+            alertConfirm("Вы действительно хотите подписать и отправить эту счет фактуру?", function () {
                 EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
                     $.ajax({
                         type: "POST",
@@ -842,7 +842,7 @@ function SendEmpowerment(id){
         },
         success: function (json) {
             var facturaJson = JSON.stringify(json);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ Рё РѕС‚РїСЂР°РІРёС‚СЊ ?", function () {
+            alertConfirm("Вы действительно хотите подписать и отправить ?", function () {
                 EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
                     $.ajax({
                         type: "POST",
@@ -873,27 +873,27 @@ function SendEmpowerment(id){
 };
 
 function DelteFac(id) {
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ?", function () {
+    alertConfirm("Вы действительно хотите удалить?", function () {
         location.href="/doc/delete?id="+id;
     });
 }
 
 
 function DelteFactura(id) {
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ?", function () {
+    alertConfirm("Вы действительно хотите удалить?", function () {
         location.href="/facturas/delete?id="+id;
     });
 }
 
 function DelteEmp(id) {
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ?", function () {
+    alertConfirm("Вы действительно хотите удалить?", function () {
         location.href="/empowerment/delete?id="+id;
     });
 }
 
 
 function DelteEmpowerment(id) {
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ?", function () {
+    alertConfirm("Вы действительно хотите удалить?", function () {
         location.href="/empowerment/delete?id="+id;
     });
 }
@@ -904,7 +904,7 @@ function AcceptData(id){
     console.log(keyId);
     var SellerSign = $("#doc_sign").val();
     // console.log(facturaJson);
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїСЂРёРЅСЏС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+    alertConfirm("Вы действительно хотите принять этот счёт-фактуру?", function () {
         EIMZOClient.appendPkcs7Attached(keyId, SellerSign, timestamper, function (pkcs7) {
             $.ajax({
                 type: "POST",
@@ -944,7 +944,7 @@ function AcceptFactura(id){
         },
         success: function (SellerSign) {
             // console.log(SellerSign);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїСЂРёРЅСЏС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+            alertConfirm("Вы действительно хотите принять этот счёт-фактуру?", function () {
                 EIMZOClient.appendPkcs7Attached(keyId, SellerSign, timestamper, function (pkcs7) {
                     $.ajax({
                         type: "POST",
@@ -983,7 +983,7 @@ function AcceptEmpowerment(id){
         success: function (json) {
             console.log(json);
             if (json.success) {
-                alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїСЂРёРЅСЏС‚СЊ СЌС‚РѕС‚ РґРѕРІРµСЂРµРЅРЅРѕСЃС‚СЊ?", function () {
+                alertConfirm("Вы действительно хотите принять этот доверенность?", function () {
                     EIMZOClient.appendPkcs7Attached(keyId, json.data, timestamper, function (pkcs7) {
                         $.ajax({
                             type: "POST",
@@ -1029,7 +1029,7 @@ function RejectedEmpowerment(id){
             // json['Notes'] = notes;
             var signData = JSON.stringify({ Empowerment: json, Notes: notes });
             console.log(signData);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РєР»РѕРЅРёС‚СЊ СЌС‚РѕС‚ РґРѕРІРµСЂРµРЅРЅРѕСЃС‚СЊ?", function () {
+            alertConfirm("Вы действительно хотите отклонить этот доверенность?", function () {
 
                 EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
                     $.ajax({
@@ -1074,7 +1074,7 @@ function RejectedData(id){
             // json['Notes'] = notes;
             var signData = JSON.stringify({ Factura: json, Notes: notes });
             console.log(signData);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РєР»РѕРЅРёС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+            alertConfirm("Вы действительно хотите отклонить этот счёт-фактуру?", function () {
 
                 EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
                     $.ajax({
@@ -1118,7 +1118,7 @@ function RejectedFactura(id){
             // json['Notes'] = notes;
             var signData = JSON.stringify({ Factura: json, Notes: notes });
             console.log(signData);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РєР»РѕРЅРёС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+            alertConfirm("Вы действительно хотите отклонить этот счёт-фактуру?", function () {
 
                 EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
                     $.ajax({
@@ -1156,7 +1156,7 @@ function CancelEmpData(id){
     var signData = document.getElementById("CaneledValue").value;
 
     console.log(signData);
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РјРµРЅРёС‚СЊ СЌС‚РѕС‚ РґРѕРІРµСЂРµРЅРЅРѕСЃС‚СЊ?", function () {
+    alertConfirm("Вы действительно хотите отменить этот доверенность?", function () {
 
         EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
             $.ajax({
@@ -1188,8 +1188,8 @@ function CancelFacturaData(id){
     // {"FacturaId":"5d24457313181100016b3286","SellerTin":"200523221"}
     var signData = document.getElementById("CaneledValue").value;
 
-    console.log(signData);
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РјРµРЅРёС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+            console.log(signData);
+            alertConfirm("Вы действительно хотите отменить этот счёт-фактуру?", function () {
 
         EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
             $.ajax({
@@ -1223,7 +1223,7 @@ function CancelFactura(id){
     var signData = document.getElementById("CaneledValue").value;
 
     console.log(signData);
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РѕС‚РјРµРЅРёС‚СЊ СЌС‚РѕС‚ СЃС‡С‘С‚-С„Р°РєС‚СѓСЂСѓ?", function () {
+    alertConfirm("Вы действительно хотите отменить этот счёт-фактуру?", function () {
 
         EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
             $.ajax({
@@ -1385,7 +1385,7 @@ function SearchPhysic() {
 function AcceptRole(id){
     var facturaJson = document.getElementById("ID"+id).value;
     var keyId = window.localStorage.getItem("auth_key");
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ Рё СЂР°Р·СЂРµС€РёС‚ ?", function () {
+    alertConfirm("Вы действительно хотите подписать и разрешит ?", function () {
         EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
             $.ajax({
                 type: "POST",
@@ -1413,7 +1413,7 @@ function AcceptRole(id){
 function CancelRole(id){
     var facturaJson = document.getElementById("ID"+id).value;
     var keyId = window.localStorage.getItem("auth_key");
-    alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ Рё РѕС‚РјРµРЅРёС‚СЊ СЂР°Р·СЂРµС€РµРЅРёСЏ?", function () {
+    alertConfirm("Вы действительно хотите подписать и отменить разрешения?", function () {
         EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
             $.ajax({
                 type: "POST",
@@ -1446,7 +1446,7 @@ function BindProvider(){
         success: function (json) {
             var signData = JSON.stringify(json);
             console.log(signData);
-            alertConfirm("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ ?", function () {
+            alertConfirm("Вы действительно хотите ?", function () {
                 EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
                     $.ajax({
                         type: "POST",
