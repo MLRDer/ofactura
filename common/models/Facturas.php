@@ -508,6 +508,9 @@ class Facturas extends \yii\db\ActiveRecord
                 $dataProducts->CommittentVatRegCode = $itemsProducts['committentVatRegCode'];
                 $dataProducts->Name = $itemsProducts['name'];
                 $dataProducts->Serial= $itemsProducts['serial'];
+                 
+
+                //var_dump($catalogCode);die;
                 $dataProducts->CatalogCode= $itemsProducts['catalogCode'];
                 $dataProducts->CatalogName= $itemsProducts['catalogName'];
                 $dataProducts->MeasureId = $itemsProducts['measureId'];
@@ -646,7 +649,8 @@ class Facturas extends \yii\db\ActiveRecord
                     $data->VatRate = isset($items['ProductVatRate'])?$items['ProductVatRate']:0;
                     $data->VatSum = isset($items['ProductVatSum'])?$items['ProductVatSum']:0;
 //                    var_dump($items);die;
-                    $data->CatalogCode = $items['ProductCatalogCode'];
+                    $catalogCode = explode("-",$items['ProductCatalogName']);
+                    $data->CatalogCode = trim($catalogCode[0]);
                     $data->CatalogName= $items['ProductCatalogName'];
 
                     if($data->VatSum>0){
