@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ClassificationsSearch */
@@ -10,6 +11,53 @@ use yii\grid\GridView;
 $this->title = Yii::t('main', 'Classifications');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+<?php
+$formatJs = <<< 'JS'
+var formatRepo = function (repo) {
+    
+    if (repo.loading) {
+        return repo.text;
+    }
+    var markup =
+'<div class="row">' + 
+    '<div class="col-sm-2">' +
+        '<b style="margin-left:5px">' + repo.groupCode + '</b>' + 
+    '</div>' +
+    '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.classCode + '</div>' +
+    '<div class="col-sm-6">' + repo.className + '</div>' +
+'</div>';
+    
+    return '<div style="overflow:hidden;">' + markup + '</div>';
+};
+
+
+var formatRepoSelection = function (repo) {
+    //concole.log(repo);
+    return repo.classCode || repo.text;
+}
+JS;
+
+// Register the formatting script
+$this->registerJs($formatJs, \yii\web\View::POS_HEAD);
+
+// script to parse the results into the format expected by Select2
+$resultsJs = <<< JS
+function (data, params) {
+    params.page = params.page || 1;
+    return {
+        results: data.items,
+        pagination: {
+            more: (params.page * 30) < data.total_count
+        }
+    };
+}
+JS;
+
+?>
+
+
 
 
 <div class="kt-portlet kt-portlet--mobile">
@@ -43,8 +91,37 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="kt-portlet__body">
+        <div class="row mb-5 mt-3">
+        <div class="col-md-8 ">
 
+            <?php
 
+            echo \kartik\select2\Select2::widget([
+                'name' => 'kv-repo-template',
+                'value' => '14719648',
+                'options' => ['placeholder' => 'Search for a product ...', 'multiple'=>true],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'minimumInputLength' => 1,
+                    'ajax' => [
+                        'url' => \yii\helpers\Url::to('ajax-search'),
+                        'dataType' => 'json',
+                        'delay' => 250,
+                        'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                        'cache' => true
+                    ],
+                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                    'templateResult' => new JsExpression('function(city) { return city.text; }'),
+                    'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+                ],
+
+            ]);
+            ?>
+        </div>
+            <div class="col-md-4">
+                <button id="products-add-btn" class="btn btn-brand btn-elevate btn-sm">Qo'shish</button>
+            </div>
+        </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -69,3 +146,26 @@ $this->params['breadcrumbs'][] = $this->title;
         vertical-align: unset !important;
     }
 </style>
+
+<script>
+
+    $('#products-add-btn').on('click', ()=>{
+        let productCodes = $('#w0').val();
+
+        $.ajax({
+            'url':'http://cabinet.ahadjon.onlinefactura.uz/ru/classifications/add-class-codes',
+            'method': 'POST',
+            'data':{
+                classCodes: productCodes
+            },
+            success: data=>{
+                console.log(data);
+            },
+            error: error=>{
+                console.log(error);
+            }
+        })
+        console.log(productCodes);
+    })
+
+</script>

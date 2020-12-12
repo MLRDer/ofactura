@@ -3,10 +3,12 @@
 namespace cabinet\controllers;
 
 use cabinet\models\Components;
+use phpDocumentor\Reflection\Types\Object_;
 use Yii;
 use common\models\Classifications;
 use common\models\ClassificationsSearch;
 use yii\helpers\Json;
+use yii\httpclient\Response;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -76,6 +78,43 @@ class ClassificationsController extends Controller
         }
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAddClassCodes(){
+        try {
+            $classCodes = Yii::$app->request->post('classCodes');
+
+            return json_encode(["message"=>ApiV2Controller::actionPostClassCodes($classCodes)]);
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
+
+    public function actionAjaxSearch(){
+
+    if (isset($_GET['q'])){
+       $result = ApiV2Controller::actionSearchProduct($_GET['q']);
+       //$result = json_decode($result);
+       //return Json::encode(['incomplete_results'=>false, 'total_count'=>count($result->data), 'items'=>$result->data]);
+//
+        $ResData = [];
+        foreach ($result->data as  $items){
+            $ResData[] = [
+                'id'=>$items->classCode,
+                'text'=>$items->classCode." - ".$items->className,
+            ];
+        }
+        $respose = Yii::$app->response;
+        $respose->format=\yii\web\Response::FORMAT_JSON;
+//        $respose->headers->set('Content-Type', 'application/json');
+//        $respose->data=['incomlete_results'=>false, 'total_count'=>count($result->data), 'items'=>$result->data];
+
+       return  ['results'=>$ResData];
+    }
+
+    return null;
+
     }
 
     /**

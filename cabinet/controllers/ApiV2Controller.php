@@ -15,6 +15,7 @@ use common\models\EmpowermentInData;
 use common\models\EmpowermentProduct;
 use common\models\FacturaPks7;
 use common\models\Facturas;
+use yii\httpclient\Client;
 use function GuzzleHttp\Psr7\str;
 use Yii;
 use common\models\Docs;
@@ -50,6 +51,33 @@ class ApiV2Controller extends Controller
         return parent::beforeAction($action);
     }
 
+    public  function  actionSearchProduct($search_text="hi"){
+        try {
+
+            $tin = Components::CompanyData('tin');
+            $opts = array(
+                'http' => array(
+                    'method' => "GET",
+                    'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
+                )
+            );
+
+            $context = stream_context_create($opts);
+            $url = 'https://my.soliq.uz/services/cl-api/class/search?search_text='.$search_text;
+            $data = file_get_contents( $url, false, $context);
+            //echo "<pre>";
+            return json_decode($data);
+
+
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+            //die();
+        }
+    }
+
+
+
     public function actionGetSigned(){
 
         $id = Yii::$app->request->post('factura_id');
@@ -70,6 +98,80 @@ class ApiV2Controller extends Controller
             return $data;
         } else {
             return $modelPks->seller_pks7;
+        }
+    }
+
+    public function actionPostClassCodes($classCodes){
+
+        try {
+            $tin = Components::CompanyData('tin');
+
+            $data = [
+                'tin'=>$tin,
+                'classCodes'=>$classCodes
+            ];
+
+            $headers = [
+                'Content-type: application/json',
+                'Authorization: Basic ' . base64_encode("onlinefactura:9826315157e93a13e05$"),
+            ];
+
+//            var_dump($data);
+//            die();
+
+            $ch=curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://my.soliq.uz/services/cl-api/company/basket/product-add');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+
+//            $client = new Client([
+//                'transport' => 'yii\httpclient\CurlTransport',
+//            ]);
+//
+//            $response = $client->createRequest()
+//                ->setMethod('POST')
+//                ->setUrl('https://my.soliq.uz/services/cl-api/company/basket/product-add')
+//                ->setHeaders([
+//                    'Authorization'=> 'Basic '.base64_encode("onlinefactura:9826315157e93a13e05$"),
+//                    'Content-type'=>"application/json",
+//                    ])
+//                ->setData(['tin' => $tin, 'classCodes' => $classCodes])
+//                ->send();
+//            var_dump($tin);
+//            die();
+//            $post_data = http_build_query(
+//                [
+//                    "tin"=>$tin,
+//                    "classCodes"=>$classCodes
+//                ]
+//            );
+//
+//            $opts = array(
+//                'http' => array(
+//                    'method' => "POST",
+//                    'header' => 'content-type: application/json\r\n'."Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$"),
+//                    'content'=>$post_data
+//                )
+//            );
+//
+//            $context = stream_context_create($opts);
+//
+//            $url = "https://my.soliq.uz/services/cl-api/company/basket/product-add";
+//
+//            header('content-type: application/json');
+//            $response = file_get_contents($url, false, $context, -1, 40000);
+
+            return $response;
+
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
         }
     }
 

@@ -153,6 +153,9 @@ $k=0;
                 $sumAll +=$items->DeliverySum;
                 $vatAll +=$items->VatSum;
                 $sumvatAll +=$items->DeliverySumWithVat;
+
+                var_dump($items);
+                die();
                 ?>
                 <tr rowid="<?= $items->OrdNo ?>">
                     <td align="center">
@@ -167,6 +170,7 @@ $k=0;
                     <td>
                         <div class="editable" name="ProductName" rowid="<?= $items->OrdNo ?>"><?= $items->Name ?></div>
                     </td>
+
                     <td>
                         <div class="editable" name="ProductCatalogName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogName ?></div>
                     </td>
