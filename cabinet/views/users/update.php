@@ -10,6 +10,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
+<?= \common\widgets\Alert::widget()?>
+
 <div class="kt-portlet kt-portlet--responsive-mobile UpdateDat">
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
@@ -46,6 +48,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <!--        </div>-->
     </div>
     <div class="kt-portlet__body">
+
         <ul class="nav nav-tabs  nav-tabs-line nav-tabs-line-success" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#kt_tabs_2_1" role="tab">

@@ -2,9 +2,11 @@
 
 namespace cabinet\controllers;
 
+use cabinet\models\Components;
 use Yii;
 use common\models\Company;
 use common\models\CompanySearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -42,6 +44,48 @@ class CompanyController extends \cabinet\components\Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+
+    public function actionUpdateData(){
+        $model = Company::findOne(['id'=>Components::GetId()]);
+        $reason="";
+        if(empty($model))
+            $reason = "Korxona topilmadi";
+        if($reason==""){
+            $tin = Components::CompanyData('tin');
+            $number  = substr($tin,0,1);
+            if($number==2 || $number==3) {
+                $data = Components::getNp1($tin);
+                $data = Json::decode($data);
+                $nds = Components::getNdsCode($tin,'regCode');
+                echo "<pre>";
+//                var_dump($data);die;
+                $model->name = $data['name'];
+                $model->address = $data['address'];
+                $model->ns10_code = $data['ns10Code'];
+                $model->ns11_code = $data['ns11Code'];
+                $model->mfo = $data['mfo'];
+                $model->oked = $data['oked'];
+                $model->director_tin = $data['directorTin'];
+                $model->director = $data['director'];
+                $model->accountant = $data['accountant'];
+                if(!$model->save()){
+                    $reason = Json::encode($model->getErrors());
+                }
+
+            } else {
+                $data = Components::getFizNp1($tin);
+                $data = Json::decode($data);
+            }
+        }
+
+        if($reason ==""){
+            Yii::$app->session->setFlash('success', "Янгланиш муафияыатли амалга оширилди.");
+        } else {
+            Yii::$app->session->setFlash('error', $reason);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
