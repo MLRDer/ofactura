@@ -574,6 +574,8 @@ class Facturas extends \yii\db\ActiveRecord
                 $data->DeliverySum = $items['DELIVERYSUM'];
                 if (isset($items['CATALOGCODE'])) {
                     $data->CatalogCode = $items['CATALOGCODE'];
+                }
+                if (isset($items['CATALOGNAME'])) {
                     $data->CatalogName = $items['CATALOGNAME'];
                 }
                 if (isset($items['EXCISERATE'])) {
