@@ -39,7 +39,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
 
 
     <link rel="shortcut icon" href="/img/favicon.png" />
-    <script src="//code.jivosite.com/widget/oBa5kDykrG" async></script>
+<!--    <script src="//code.jivosite.com/widget/oBa5kDykrG" async></script>-->
     <?php $this->head() ?>
 </head>
 <body class="kt-header--fixed   kt-header-mobile--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-aside--minimize kt-page--loading ">

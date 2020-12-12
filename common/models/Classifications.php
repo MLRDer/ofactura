@@ -48,11 +48,11 @@ class Classifications extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'tin' => 'Tin',
-            'groupCode' => 'Group Code',
-            'classCode' => 'Class Code',
-            'className' => 'Class Name',
-            'productCode' => 'Product Code',
-            'productName' => 'Product Name',
+            'groupCode' => Yii::t('main', 'Group Code'),
+            'classCode' => Yii::t('main', 'Class Code'),
+            'className' => Yii::t('main', 'Class Name'),
+            'productCode' => Yii::t('main', 'Product Code'),
+            'productName' => Yii::t('main', 'Product Name'),
             'enabled' => 'Enabled',
         ];
     }
