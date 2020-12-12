@@ -115,9 +115,7 @@ class ApiV2Controller extends Controller
                 'Content-type: application/json',
                 'Authorization: Basic ' . base64_encode("onlinefactura:9826315157e93a13e05$"),
             ];
-
-//            var_dump($data);
-//            die();
+            
 
             $ch=curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://my.soliq.uz/services/cl-api/company/basket/product-add');
