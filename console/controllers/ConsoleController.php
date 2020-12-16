@@ -61,6 +61,7 @@ class ConsoleController extends \yii\console\Controller
         }
     }
 
+
     public function actionPay(){
         $token = Yii::$app->params['bank_api']['token'];
         header('Content-Type: application/json'); // Specify the type of data
@@ -261,6 +262,84 @@ class ConsoleController extends \yii\console\Controller
         echo "\n";
         echo "Tugadi. \n";
     }
+
+    public function actionCreateFacturaPksSingleTxt(){
+        $factura_id = $_POST['factura_id'];
+        $seller_pks7 = $_POST['seller_pks7'];
+        try {
+            if (!file_exists("./assets/factura_pks7")){
+                mkdir("./assets/factura_pks7", 0777, true);
+            }
+            if (isset($factura_id) && isset($seller_pks7)){
+                $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "w");
+                fwrite($file, $seller_pks7);
+                fclose($file);
+
+                return json_encode(["message"=>"saved!"]);
+            }
+            return json_encode(["message"=>"factura_id or seller_pks7 fild is missing"]);
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
+
+    public function actionCreateFacturaPksTxt(){
+        $factura_pks = FacturaPks7::find()->all();
+//        var_dump($factura_pks);
+//        die();
+
+        try {
+            if (!file_exists("./assets/factura_pks7")){
+                mkdir("./assets/factura_pks7", 0777, true);
+            }
+
+            foreach ($factura_pks as $factura_pk){
+                $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_pk->factura_id.".txt", "w");
+                fwrite($file, $factura_pk->seller_pks7);
+                fclose($file);
+//                var_dump($factura_pk->seller_pks7);
+//                die();
+            }
+            echo "Success!";
+            return json_encode(['success'=>true, 'facturas'=>$factura_pks]);
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+
+    }
+
+
+    public function actionGetFacturaPksTxt(){
+        try {
+            if (isset($_GET['factura_id'])){
+                $factura_id = $_GET['factura_id'];
+                if (file_exists(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt")){
+
+                    $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "r");
+//                    var_dump(filesize(__DIR__.'/../web/assets/factura_pks7/'.$factura_id.".txt"));
+//                    die();
+                    clearstatcache(true, __DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt");
+                    $content = fread($file, filesize(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt"));
+
+                    fclose($file);
+
+                    //$data = file_get_contents(__DIR__.'/../web/assets/factura_pks7/'.$factura_id.".txt");
+                    //$size = strlen($data);
+
+                    return json_encode(['content'=>$content]);
+                }
+                else{
+                    return json_encode(["content"=>"No file found!"]);
+                }
+            }
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
+
 
     public function actionGetDistrict(){
 
