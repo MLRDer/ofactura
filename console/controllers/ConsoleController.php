@@ -257,7 +257,6 @@ class ConsoleController extends \yii\console\Controller
                 echo ".";
             }
 
-
         }
         echo "\n";
         echo "Tugadi. \n";
@@ -286,8 +285,6 @@ class ConsoleController extends \yii\console\Controller
 
     public function actionCreateFacturaPksTxt(){
         $factura_pks = FacturaPks7::find()->all();
-//        var_dump($factura_pks);
-//        die();
 
         try {
             if (!file_exists("./assets/factura_pks7")){
@@ -298,8 +295,6 @@ class ConsoleController extends \yii\console\Controller
                 $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_pk->factura_id.".txt", "w");
                 fwrite($file, $factura_pk->seller_pks7);
                 fclose($file);
-//                var_dump($factura_pk->seller_pks7);
-//                die();
             }
             echo "Success!";
             return json_encode(['success'=>true, 'facturas'=>$factura_pks]);
@@ -318,15 +313,10 @@ class ConsoleController extends \yii\console\Controller
                 if (file_exists(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt")){
 
                     $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "r");
-//                    var_dump(filesize(__DIR__.'/../web/assets/factura_pks7/'.$factura_id.".txt"));
-//                    die();
                     clearstatcache(true, __DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt");
                     $content = fread($file, filesize(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt"));
 
                     fclose($file);
-
-                    //$data = file_get_contents(__DIR__.'/../web/assets/factura_pks7/'.$factura_id.".txt");
-                    //$size = strlen($data);
 
                     return json_encode(['content'=>$content]);
                 }
@@ -339,7 +329,6 @@ class ConsoleController extends \yii\console\Controller
             return $exception->getMessage();
         }
     }
-
 
     public function actionGetDistrict(){
 
@@ -410,8 +399,6 @@ class ConsoleController extends \yii\console\Controller
         if(isset($data['rows'])){
             echo "Boshlandi\n";
             foreach ($data['rows'] as $items){
-//                echo "<pre>";
-//                var_dump($items);die;
 
                 $items = $this->ValidateFacturaData($items);
                 $check = Facturas::findOne(['Id'=>$items['FACTURAID']]);
@@ -500,7 +487,6 @@ class ConsoleController extends \yii\console\Controller
         $model = FacturaPks7::findOne(['factura_id'=>$facturaId]);
         if(empty($model))
             $model = new FacturaPks7();
-//        echo $facturaId;die;
         $model->factura_id = $facturaId;
         $model->seller_pks7 = $data;
         if(!$model->save()){
@@ -510,7 +496,6 @@ class ConsoleController extends \yii\console\Controller
 
     protected function InsertInFactura($factura){
         $model = Facturas::findOne(['Id'=>$factura['FACTURAID']]);
-//        echo Json::encode($factura);
         if(empty($model)){
             $model = new Facturas();
             $model->InsertByArray($factura);

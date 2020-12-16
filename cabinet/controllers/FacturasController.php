@@ -180,7 +180,6 @@ class FacturasController extends \cabinet\components\Controller
 
         if($reason=="") {
             $result = $this->CanceledFacturaWithCurl($data, $model->Id, 'reject');
-//            var_dump($result);die;
             $result = Json::decode($result);
             $reason = (isset($result['errorMessage'])) ? $result['errorMessage'] : '';
         }
