@@ -34,7 +34,7 @@ class FacturaPks7 extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
+    /**0
      * {@inheritdoc}
      */
     public function attributeLabels()
