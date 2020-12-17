@@ -91,37 +91,37 @@ JS;
         </div>
     </div>
     <div class="kt-portlet__body">
-        <div class="row mb-5 mt-3">
-        <div class="col-md-8 ">
+<!--        <div class="row mb-5 mt-3">-->
+<!--        <div class="col-md-8 ">-->
 
             <?php
 
-            echo \kartik\select2\Select2::widget([
-                'name' => 'kv-repo-template',
-                'value' => '14719648',
-                'options' => ['placeholder' => 'Search for a product ...', 'multiple'=>true],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'minimumInputLength' => 1,
-                    'ajax' => [
-                        'url' => \yii\helpers\Url::to('ajax-search'),
-                        'dataType' => 'json',
-                        'delay' => 250,
-                        'data' => new JsExpression('function(params) { return {q:params.term}; }'),
-                        'cache' => true
-                    ],
-                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                    'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                    'templateSelection' => new JsExpression('function (city) { return city.text; }'),
-                ],
-
-            ]);
+//            echo \kartik\select2\Select2::widget([
+//                'name' => 'kv-repo-template',
+//                'value' => '14719648',
+//                'options' => ['placeholder' => 'Search for a product ...', 'multiple'=>true],
+//                'pluginOptions' => [
+//                    'allowClear' => true,
+//                    'minimumInputLength' => 1,
+//                    'ajax' => [
+//                        'url' => \yii\helpers\Url::to('ajax-search'),
+//                        'dataType' => 'json',
+//                        'delay' => 250,
+//                        'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+//                        'cache' => true
+//                    ],
+//                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+//                    'templateResult' => new JsExpression('function(city) { return city.text; }'),
+//                    'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+//                ],
+//
+//            ]);
             ?>
-        </div>
-            <div class="col-md-4">
-                <button id="products-add-btn" class="btn btn-brand btn-elevate btn-sm">Qo'shish</button>
-            </div>
-        </div>
+<!--        </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <button id="products-add-btn" class="btn btn-brand btn-elevate btn-sm">Qo'shish</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

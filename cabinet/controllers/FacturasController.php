@@ -9,6 +9,7 @@ use common\models\Company;
 use common\models\CompanyInvoicesHelpers;
 use common\models\CompanyTarif;
 use common\models\CompanyUsers;
+use common\models\FacturaPks7;
 use common\models\FacturaProducts;
 use common\models\Invoices;
 use kartik\mpdf\Pdf;
@@ -163,6 +164,9 @@ class FacturasController extends \cabinet\components\Controller
         return $res;
     }
 
+
+
+
     public function actionCanceledData()
     {
         $reason="";
@@ -176,7 +180,6 @@ class FacturasController extends \cabinet\components\Controller
 
         if($reason=="") {
             $result = $this->CanceledFacturaWithCurl($data, $model->Id, 'reject');
-//            var_dump($result);die;
             $result = Json::decode($result);
             $reason = (isset($result['errorMessage'])) ? $result['errorMessage'] : '';
         }
@@ -262,6 +265,7 @@ class FacturasController extends \cabinet\components\Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     public function actionSend()
     {
         $Sign = Yii::$app->request->post('sign');

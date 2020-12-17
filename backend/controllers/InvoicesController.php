@@ -7,7 +7,9 @@ use common\models\BankInvoicesLog;
 use Yii;
 use common\models\Invoices;
 use common\models\InvoicesItemsSearch;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
+use yii\rest\ActiveController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,6 +31,51 @@ class InvoicesController extends \common\components\Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function behaviors(){
+        return [
+            [
+                'class' => AccessControl::class,
+                'only' => ['get-all-invoicess'],
+                'rules'=>[
+                    [
+                        'actions' => ['get-all-invoicess'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ]
+                ]
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    public function actionGetAllInvoicess(){
+
+        header("Access-Control-Allow-Origin: *");
+        Yii::$app->controller->enableCsrfValidation = false;
+
+        if($_GET['auth_token']=="A314xWlsp92819kldK"){
+            if (isset($_GET['start_date']) && isset($_GET['end_date'])){
+
+                $start_date = $_GET['start_date'];
+                $end_date = $_GET['end_date'];
+
+                $invoices = Invoices::find()->where(' created_date between '.$start_date.' and ' . $end_date.' ')->all();
+
+
+
+                return json_encode(['success'=>true, 'data'=>$invoices]);
+            }
+            return json_encode(['success'=>false, 'data'=>"filter dates are not set"]);
+        }
+
+        return json_encode(['success'=>false, 'data'=>"status: 401"]);
     }
 
 
