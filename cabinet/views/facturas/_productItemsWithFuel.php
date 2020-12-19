@@ -23,6 +23,7 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
         <th width="40px" rowspan="2"></th>
 
         <th rowspan="2"><?= Yii::t('main','Наименование товара, выполненных работ и оказанных услуг')?></th>
+        <th width="130px" rowspan="2"><?= Yii::t('main','Product Code')?></th>
         <th width="130px" rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
         <th width="90px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
         <th width="130px" rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
@@ -78,6 +79,9 @@ foreach ($data as $items){
 
     <td>
         <div class="editable" name="ProductName" rowid="<?= $ord ?>"><?= $items[ExcelConst::KEY_NAME]?></div>
+    </td>
+    <td>
+        <div class="editable" name="CatalogCode" rowid="<?= $ord ?>"><?= $items[ExcelConst::CATALOG_CODE]?></div>
     </td>
     <td>
         <div class="editable" name="ProductMeasureId" rowid="<?= $ord ?>"><?= $measure[$items[ExcelConst::KEY_CODE]] ?></div>

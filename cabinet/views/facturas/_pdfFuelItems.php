@@ -12,8 +12,8 @@
 <tr>
     <th width="30px" rowspan="2">№</th>
     <th rowspan="2"><?= Yii::t('main','ProductName')?></th>
-    <th rowspan="2"><?= Yii::t('main','ProductCatalogName')?></th>
-    <th rowspan="2"><?= Yii::t('main','ProductCatalogCode')?></th>
+    <th rowspan="2"><?= Yii::t('main','Class Name')?></th>
+    <th rowspan="2"><?= Yii::t('main','Class Code')?></th>
     <th width="40px" rowspan="2"><?= Yii::t('main','ProductMeasureId')?></th>
     <th width="40px" rowspan="2"><?= Yii::t('main','ProductCount')?></th>
     <th width="60px" rowspan="2"><?= Yii::t('main','ProductSumma')?></th>

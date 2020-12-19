@@ -509,12 +509,16 @@ class FacturasController extends \cabinet\components\Controller
     public function actionImportExcel(){
         $request = Yii::$app->request;
         $model = new Facturas();
+//        var_dump($request->post());
+//        die();
         $respons = "";
         $productsItesm = [];
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model->load($request->post())){
                 $r = $model->upload();
+//                var_dump($r);
+//                die();
                 if($r!==true){
                     var_dump($r);
                 }
@@ -534,6 +538,7 @@ class FacturasController extends \cabinet\components\Controller
                     $productsItesm[$ord] =
                         [
                             "ProductName" => $items[ExcelConst::KEY_NAME],
+                            "CatalogCode" => $items[ExcelConst::CATALOG_CODE],
                             "ProductMeasureId" => $items[ExcelConst::KEY_CODE],
                             "ProductCount" => (int)$items[ExcelConst::KEY_COUNT],
                             "ProductSumma" => round((float)$items[ExcelConst::KEY_PRICE],2),

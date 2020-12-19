@@ -66,8 +66,12 @@ class InvoicesController extends \common\components\Controller
                 $start_date = $_GET['start_date'];
                 $end_date = $_GET['end_date'];
 
-                $invoices = Invoices::find()->where(' created_date between '.$start_date.' and ' . $end_date.' ')->all();
-
+                $invoices = Invoices::find()
+                    ->select('invoices.*, company.name as company_name, company.address as company_address, company.tin as company_tin')
+                    ->where('invoices.created_date between "'.$start_date.'" and "' . $end_date.'" ')
+                    ->join('inner join', 'company', 'invoices.company_id=company.id')
+                    ->asArray()->all();
+                //$invoices = new Quer
 
 
                 return json_encode(['success'=>true, 'data'=>$invoices]);

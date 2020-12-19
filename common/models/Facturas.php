@@ -637,7 +637,17 @@ class Facturas extends \yii\db\ActiveRecord
             $all_sum = 0;
             $all_sum_vat = 0;
             foreach ($model as $items) {
-                if (isset($items['ProductName']) && isset($items['ProductSumma']) && isset($items['ProductMeasureId']) && isset($items['ProductCount']) && isset($items['ProductDeliverySum'])) {
+                if (isset($items['ProductName']) &&
+                    isset($items['ProductSumma']) &&
+                    isset($items['ProductMeasureId']) &&
+                    isset($items['ProductCount']) &&
+                    isset($items['ProductDeliverySum']) &&
+                    (array_key_exists('ProductCatalogName', $items) || array_key_exists('CatalogCode', $items))
+
+                ) {
+                    $tin = Components::CompanyData('tin');
+//                    var_dump($items);
+//                    die();
                     $k++;
                     $data = new FacturaProducts();
                     $data->FacturaId = $this->Id;
@@ -651,9 +661,22 @@ class Facturas extends \yii\db\ActiveRecord
                     $data->VatRate = isset($items['ProductVatRate'])?$items['ProductVatRate']:0;
                     $data->VatSum = isset($items['ProductVatSum'])?$items['ProductVatSum']:0;
 //                    var_dump($items);die;
-                    $catalogCode = explode("-",$items['ProductCatalogName']);
-                    $data->CatalogCode = trim($catalogCode[0]);
-                    $data->CatalogName= $items['ProductCatalogName'];
+
+                    if (array_key_exists('CatalogCode', $items)){
+                        $data->CatalogCode = $items['CatalogCode'];
+                        $classification = Classifications::find()->where('tin="'.$tin.'" and classCode='.$items['CatalogCode'])->asArray()->all();
+                        if (count($classification)>0){
+                            $data->CatalogName = $classification[0]['className'];
+                        }
+                        else{
+                            $data->CatalogName = "Sizda bunday katalog mavjud emas!";
+                        }
+                    }
+                    else{
+                        $data->CatalogName= $items['ProductCatalogName'];
+                        $catalogCode = explode("-",$items['ProductCatalogName']);
+                        $data->CatalogCode = trim($catalogCode[0]);
+                    }
 
                     if($data->VatSum>0){
                         $this->HasVat = 1;
