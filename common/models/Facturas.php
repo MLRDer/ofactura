@@ -636,6 +636,7 @@ class Facturas extends \yii\db\ActiveRecord
             $k=0;
             $all_sum = 0;
             $all_sum_vat = 0;
+            $missing_class_codes = [];
             foreach ($model as $items) {
                 if (isset($items['ProductName']) &&
                     isset($items['ProductSumma']) &&
@@ -669,7 +670,10 @@ class Facturas extends \yii\db\ActiveRecord
                             $data->CatalogName = $classification[0]['className'];
                         }
                         else{
-                            $data->CatalogName = "Sizda bunday katalog mavjud emas!";
+                            $missing_class_codes[]=$items['CatalogCode'];
+                            $_SESSION['missing_classcodes'] = $missing_class_codes;
+                            $k--;
+                            continue;
                         }
                     }
                     else{

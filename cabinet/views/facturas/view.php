@@ -47,6 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="kt-portlet__body">
         <?php
+            $missings = $_SESSION['missing_classcodes'];
+            $text_missings = "";
+            foreach ($missings as $missing){
+                $text_missings .= $missing . " ";
+
+            }
+
+            if (count($_SESSION['missing_classcodes']) > 0){
+                echo "<div style='background-color: #f2f3f7; padding: 20px '>".$text_missings." - ushbu klass kodlar sizda mavjud emas!"."</div>";
+            }
+
+            $_SESSION["missing_classcodes"]=[];
+
+        ?>
+        <?php
         $CanseledJson = [
             'FacturaId'=>$model->Id,
             'SellerTin'=>$model->SellerTin
