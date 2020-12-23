@@ -6,46 +6,105 @@ $this->title = Yii::t('main','Online factura xujjat almashish tizimi');
 $session = Yii::$app->session->get('mode','min');
 use common\widgets\Alert; ?>
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-    <div class="row">
-        <?php if($session=="min"){ ?>
-
-        <?php }?>
-
-        <div class="col-md-12">
-            <?= Alert::widget() ?>
-            <?php if (Yii::$app->user->identity->username == "493689895") { ?>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <input type="text" id="tin_input" class="form-control shadow-lg" placeholder="INN...">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group ">
-                            <input type="text" id="psd_input" class="form-control shadow-lg" placeholder="PAROL...">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <button type="button" onclick="ChangeCompany()" class="btn btn-danger shadow-lg">Korxonaga
-                                o`tish
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    function ChangeCompany() {
-                        var tin = document.getElementById("tin_input").value;
-                        var password = document.getElementById("psd_input").value;
-                        location.href = "/facturas/change?tin=" + tin + "&psd=" + password;
-                    }
-                </script>
-            <?php }
-            //                echo Yii::$app->user->identity->username;
-            ?>
+<div class="row m-b-30">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header">
+                <img src="/new_template/images/card/document.svg" alt="">
+                <div class="title">Счет-фактуры</div>
+            </div>
+            <div class="body">
+                <ul class="list">
+                    <li class="item">
+                        <div class="label">Входящие</div><a href="#!" class="badge green">+ 2000</a>
+                    </li>
+                    <li class="item">
+                        <div class="label">Отправленные</div><a href="#!" class="value">8</a>
+                    </li>
+                    <li class="item">
+                        <div class="label">Сохраненные</div><a href="#!" class="value">8</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer"><a href="#!" class="footer-link green">+ Создать новую фактуру</a>
+            </div>
         </div>
-
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header">
+                <img src="/new_template/images/card/document-2.svg" alt="">
+                <div class="title">Доверенность</div>
+            </div>
+            <div class="body">
+                <ul class="list">
+                    <li class="item">
+                        <div class="label">Входящие</div><a href="#!" class="badge yellow">+1 000</a>
+                    </li>
+                    <li class="item">
+                        <div class="label">Отправленные</div><a href="#!" class="value">8</a>
+                    </li>
+                    <li class="item">
+                        <div class="label">Сохраненные</div><a href="#!" class="value">8</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer"><a href="#!" class="footer-link yellow">+ Создать доверенность</a>
+            </div>
+        </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-card">
+            <div class="header">
+                <div class="left">
+                    <img src="/new_template/images/icon/restr.svg" alt="">
+                    <div class="title">Реестр</div>
+                </div>
+                <div class="right"><a href="#!" class="btn-gray">+ Создать Реестр</a>
+                </div>
+            </div>
+            <div class="body">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Номер реестра</th>
+                        <th>Дата создания реестра</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    <tr>
+                        <td>№ 25-2555</td>
+                        <td>08.10.2020 / 09:58</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

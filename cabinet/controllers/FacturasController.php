@@ -52,17 +52,31 @@ class FacturasController extends \cabinet\components\Controller
      */
     public function actionIndex()
     {
-        if(Components::CompanyData('tin')=="516630744") {
+
             $searchModel = new FacturasSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->query->where("status>0")->andWhere(['BuyerTin'=>Components::CompanyData('tin')]);
+
+            $searchModel_sent = new FacturasSearch();
+            $dataProvider_sent = $searchModel_sent->search(Yii::$app->request->queryParams);
+            $dataProvider_sent->query->where("status>0")->andWhere(['SellerTin'=>Components::CompanyData('tin')]);
+
+            $searchModel_saved = new FacturasSearch();
+            $dataProvider_saved = $searchModel_saved->search(Yii::$app->request->queryParams);
+            $dataProvider_saved->query->where("status=0")->andWhere(['SellerTin'=>Components::CompanyData('tin')]);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+
+                'searchModel_sent' => $searchModel_sent,
+                'dataProvider_sent' => $dataProvider_sent,
+
+                'searchModel_saved' => $searchModel_saved,
+                'dataProvider_saved' => $dataProvider_saved,
+
             ]);
-        } else {
-            return $this->goHome();
-        }
+
     }
     public function actionReceived()
     {

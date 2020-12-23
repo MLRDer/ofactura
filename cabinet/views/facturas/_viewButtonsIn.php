@@ -6,15 +6,16 @@
  * Time: 21:52
  */
 ?>
-<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
     <?php if($model->status==15){ ?>
-        <button  type="button" name="Send" class="btn btn-brand" onclick="AcceptFactura('<?= $model->Id ?>')">
-            <i class="la la-qrcode"></i> <?= Yii::t('main','Imzolash')?>
+
+        <button class="btn-green m-r-20" onclick="AcceptFactura('<?= $model->Id ?>')">
+            <img src="/new_template/images/icon/signature.svg" alt=""> <span class="title"><?= Yii::t('main','Imzolash')?></span>
         </button>
-        <button  type="button" name="Send" class="btn btn-danger" onclick="RejectedFactura('<?= $model->Id ?>')">
-            <i class="la la-qrcode"></i> <?= Yii::t('main','Rad etish')?>
-        </button>
+
+        <a href="#!" onclick="RejectedFactura('<?= $model->Id ?>')" class="btn-outline-red"><?= Yii::t('main','Rad etish')?></a>
+
     <?php }?>
 
 
-</div>
+
