@@ -1,6 +1,8 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -10,61 +12,677 @@ $this->title = Yii::t('main', 'Create Docs');
 $this->params['breadcrumbs'][] = ['label' => 'Docs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-
-
+$tab = Yii::$app->request->get('tab',"w1-tab0");
+$type_factura = substr($tab,6,1);
 ?>
 
-    <?= \common\widgets\Alert::widget(['options' => ['enctype' => 'multipart/form-data']])?>
-
-<?php $form = ActiveForm::begin(); ?>
-<div class="kt-portlet kt-portlet--responsive-mobile">
-    <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon">
-													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="bound" x="0" y="0" width="24" height="24"/>
-        <path d="M14.8571499,13 C14.9499122,12.7223297 15,12.4263059 15,12.1190476 L15,6.88095238 C15,5.28984632 13.6568542,4 12,4 L11.7272727,4 C10.2210416,4 9,5.17258756 9,6.61904762 L10.0909091,6.61904762 C10.0909091,5.75117158 10.823534,5.04761905 11.7272727,5.04761905 L12,5.04761905 C13.0543618,5.04761905 13.9090909,5.86843034 13.9090909,6.88095238 L13.9090909,12.1190476 C13.9090909,12.4383379 13.8240964,12.7385644 13.6746497,13 L10.3253503,13 C10.1759036,12.7385644 10.0909091,12.4383379 10.0909091,12.1190476 L10.0909091,9.5 C10.0909091,9.06606198 10.4572216,8.71428571 10.9090909,8.71428571 C11.3609602,8.71428571 11.7272727,9.06606198 11.7272727,9.5 L11.7272727,11.3333333 L12.8181818,11.3333333 L12.8181818,9.5 C12.8181818,8.48747796 11.9634527,7.66666667 10.9090909,7.66666667 C9.85472911,7.66666667 9,8.48747796 9,9.5 L9,12.1190476 C9,12.4263059 9.0500878,12.7223297 9.14285008,13 L6,13 C5.44771525,13 5,12.5522847 5,12 L5,3 C5,2.44771525 5.44771525,2 6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,12 C19,12.5522847 18.5522847,13 18,13 L14.8571499,13 Z" id="Combined-Shape" fill="#000000" opacity="0.3"/>
-        <path d="M9,10.3333333 L9,12.1190476 C9,13.7101537 10.3431458,15 12,15 C13.6568542,15 15,13.7101537 15,12.1190476 L15,10.3333333 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9,10.3333333 Z M10.0909091,11.1212121 L12,12.5 L13.9090909,11.1212121 L13.9090909,12.1190476 C13.9090909,13.1315697 13.0543618,13.952381 12,13.952381 C10.9456382,13.952381 10.0909091,13.1315697 10.0909091,12.1190476 L10.0909091,11.1212121 Z" id="Combined-Shape" fill="#000000"/>
-    </g>
-</svg>
-												</span>
-            <h3 class="kt-portlet__head-title">
-                <?= $this->title ?>
-            </h3>
+<?php $form = ActiveForm::begin(['options'=>['autocomplete'=>'off']]); ?>
+<div class="white-box">
+    <div class="row m-b-20">
+        <div class="col-md-6">
+            <div class="page-title m-b-0" id="title-create">Счет-фактуры</div>
         </div>
-        <div class="kt-portlet__head-toolbar">
-            <span style="padding-right: 20px;font-size: 15px"><?= Yii::t('main','Bir tomonlama')?></span>
-            <div style="padding-top: 12px;padding-right: 20px">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+                <label class="invoice-checkbox m-r-30">
+                    <div class="title">Односторонняя "фактура"</div>
+                    <input type="checkbox" onclick="SwitchSingleSlide(5)" id="CheckOnLevel">
+                    <div class="switch-checkbox"></div>
+                </label>
 
-                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
-                    <label onclick="SwitchSingleSlide()">
-                        <input type="checkbox"  name="" id="CheckOnLevel">
-                        <span></span>
-                    </label>
-                </span>
-            </div>
-
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-
-
-                <?= Html::submitButton('<i class="flaticon-attachment"></i> '.Yii::t('main', 'Save'), ['class' => 'btn btn-success']) ?>
-
-
+                <?= Html::submitButton(Yii::t('main', 'Save'), ['class' => 'btn-green']) ?>
             </div>
         </div>
     </div>
-    <div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-md-12">
+            <?php
 
-        <?= $this->render('_form', [
-            'model' => $model,
-            'form'=>$form
+            echo $form->field($model, 'FacturaType')->hiddenInput(['value'=>$type_factura])->label(false);
 
-        ]) ?>
+            echo Tabs::widget([
+                'options'=>['class'=>'profile-tab-header'],
+                'itemOptions'=>['class'=>'tab-pane fade show'],
+                'headerOptions'=>['class'=>''],
+                'items' => [
+                    [
+                        'label' => 'Стандартная',
+                        'content' => '',
+                        'active' => ($tab=="w1-tab0")?true:false
+                    ],
+                    [
+                        'label' => 'Дополнительная',
+                        'content' => $this->render('_extra',['form'=>$form,'model'=>$model]),
+                        'active' => ($tab=="w1-tab1")?true:false
+                    ],
+                    [
+                        'label' => 'Возмещение расходов',
+                        'content' => $this->render('_repayment'),
+                        'active' => ($tab=="w1-tab2")?true:false
+
+                    ],
+                    [
+                        'label' => 'Без оплаты',
+                        'content' => $this->render('_nopayment'),
+                        'active' => ($tab=="w1-tab3")?true:false
+
+                    ],
+                    [
+                        'label' => 'Исправленная',
+                        'content' => $this->render('_corrected',['form'=>$form,'model'=>$model]),
+                        'active' => ($tab=="w1-tab4")?true:false
+
+                    ],
+
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-md-12">
+            <div class="row m-b-50">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerName',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerAccount',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerBankId',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerAddress',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerOked',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="second-input">
+                                <?= $form->field($model, 'SellerVatRegCode',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-block-wrapper">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <div class="btn-change-info" onclick="ChangeStirData()">
+                                        <img src="/new_template/images/icon/edit.svg" alt="">
+                                        <div class="title">Изменить</div>
+                                    </div>
+                                    <?= $form->field($model, 'BuyerName',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <?= $form->field($model, 'BuyerAddress',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <?= $form->field($model, 'BuyerAccount',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <?= $form->field($model, 'BuyerBankId',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <?= $form->field($model, 'BuyerOked',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="second-input">
+                                    <?= $form->field($model, 'BuyerVatRegCode',['template'=>'<label><span class="title">{label}</span>{input}</label>'])->textInput(['class'=>'']) ?>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'BuyerDistrictId')->hiddenInput(['class'=>'form-control-plaintext input-sm'])->label(false) ?>
+
+                                <?= $form->field($model, 'BuyerDirector')->hiddenInput(['maxlength' => true])->label(false) ?>
+
+                                <?= $form->field($model, 'BuyerAccountant')->hiddenInput(['maxlength' => true])->label(false) ?>
+
+                                <?= $form->field($model, 'BuyerVatRegCode')->hiddenInput(['maxlength' => true,'class'=>'form-control-plaintext input-sm'])->label(false) ?>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="change-info-block-wrapper show-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input m-b-30">
+                                    <?= $form->field($model, 'FacturaNo')->textInput(['maxlength' => true,'placeholder'=>'Номер счета-фактуры','class'=>''])->label(false) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                    <?php
+                                    echo $form->field($model, 'FacturaDate',['template'=>'<div class="input datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                                        'options' => ['placeholder' => Yii::t('main','Enter factura date ...'),'class'=>'my-datepicker'],
+//                                                        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                        'type' => DatePicker::TYPE_INPUT,
+                                        'pluginOptions' => [
+                                            'autoclose'=>true,
+                                            'todayHighlight' => true,
+                                            'format' => 'yyyy-mm-dd'
+                                        ]
+                                    ])->label(false);
+                                    ?>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="gray-card">
+                                    <div class="header">
+                                        <div class="title">Дополнительно</div>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+                                                    <?= $form->field($model, 'ContractNo',['template'=>'<div class="input-white">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'Номер договора','class'=>''])->label(false) ?>
+
+                                            </div>
+                                            <div class="col-md-6">
+
+                                                    <?php
+                                                    echo $form->field($model, 'ContractDate',['template'=>'<div class="input-white datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                                                        'options' => ['placeholder' => Yii::t('main','Enter contract date ...'),'class'=>'my-datepicker'],
+//                                                        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                                        'type' => DatePicker::TYPE_INPUT,
+                                                        'pluginOptions' => [
+                                                            'autoclose'=>true,
+                                                            'todayHighlight' => true,
+                                                            'format' => 'yyyy-mm-dd'
+                                                        ]
+                                                    ])->label(false);
+                                                    ?>
+
+
+<!--                                                    <input type="text" placeholder="Дата договора" class="my-datepicker">-->
+
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="input-white">
+                                                    <input type="text" onkeyup="GetDataByTinV2(this.value)" placeholder="<?= Yii::t('main','Введите инн...')?>" id="BuyerTin">
+                                                    <?= $form->field($model, 'BuyerTin')->hiddenInput()->label(false) ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" id="BuyerInfoArea">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="singid-side-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input">
+                                <?= $form->field($model, 'SingleSidedType')->dropDownList(['1'=>'На физ. лицо','2'=>'На экспорт','3'=>'На импорт','4'=>'Реализация, связанная с гос. секретом','5'=>'Финансовые услуги']) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row m-b-50">
+        <div class="col-md-12">
+            <div class="table-card-gray">
+                <div class="header">
+                    <div class="btn-blue font-weight-normal text-transform-none m-r-20">
+                        <img src="/new_template/images/icon/clip.svg" alt="">Загрузить Excel файл</div>
+                    <div class="btn-white">Скачать шаблон</div>
+                </div>
+                <div class="body m-b-20">
+                    <div id="gridArea">
+                        <?= $this->render("/api-v2/_gridWithFuel",['model'=>$model])?>
+                    </div>
+                    <?php if($model->isNewRecord || $model->json_items==""){ ?>
+
+                        <?= $form->field($model, 'json_items')->hiddenInput(['id' => "items_json",'value'=>"{}"])->label(false) ?>
+
+                    <?php } else {?>
+
+                        <?= $form->field($model, 'json_items')->hiddenInput(['id' => "items_json"])->label(false) ?>
+
+                    <?php }?>
+                </div>
+<!--                <div class="footer">-->
+<!--                    <div class="btn-outline-blue color-blue standard-btn m-r-20">+ добавить еще</div>-->
+<!--                    <div class="btn-red remove">remove</div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 m-b-30">
+            <?= $form->field($model, 'SellerDirector',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'ФИО директора']) ?>
+        </div>
+        <div class="col-md-4 m-b-30">
+            <?= $form->field($model, 'SellerAccountant',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'ФИО главного бухгалтера']) ?>
+        </div>
+        <div class="col-md-4 m-b-30">
+            <?= $form->field($model, 'ItemReleasedFio',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'ФИО лица, отпустившего товары']) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 m-b-30">
+            <div class="d-flex justify-content-start align-items-center">
+                <label class="invoice-checkbox m-r-30 show-extra-form-btn">
+                    <div class="title">Доверенность</div>
+                    <input type="checkbox">
+                    <div class="switch-checkbox"></div>
+                </label>
+                <div class="line-gray"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row extra-form">
+                <div class="col-md-2 m-b-30">
 
 
+                    <?= $form->field($model, 'EmpowermentNo',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'№ доверенности'])->label(false) ?>
+                </div>
+                <div class="col-md-2 m-b-30">
+                    <?php
+                    echo $form->field($model, 'EmpowermentDateOfIssue',['template'=>'<div class="input datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                        'options' => ['placeholder' => Yii::t('main','Enter date ...'),'class'=>'my-datepicker','value'=>date('Y-m-d')],
+                        'type' => DatePicker::TYPE_INPUT,
+                        'pluginOptions' => [
+                            'autoclose'=>true,
+                            'todayHighlight' => true,
+                            'format' => 'yyyy-mm-dd'
+                        ]
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-4 m-b-30">
+                    <?= $form->field($model, 'AgentFio',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'ФИО доверенного лица'])->label(false) ?>
+                </div>
+                <div class="col-md-4 m-b-30">
+                    <?= $form->field($model, 'AgentTin',['template'=>'{label}<div class="input">{input}</div>{error}'])->textInput(['maxlength' => true,'placeholder'=>'ИНН доверенного лица'])->label(false) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="d-flex justify-content-end">
+                <?= Html::submitButton(Yii::t('main', 'Save'), ['class' => 'btn-green']) ?>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        var k=document.getElementById('row_value').value;
+        $(".add-row").click(function(){
+
+            var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
+            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
+            var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
+            var ProductCatalogName =  '<div class="editable" name="ProductCatalogName" id="ProductCatalogName_'+k+'" rowid="'+k+'"></div>';
+            var ProductCatalogCode =  '<div class="editable" name="ProductCatalogCode" id="ProductCatalogCode_'+k+'" rowid="'+k+'"></div>';
+            var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'">0</div>';
+            var ProductVatSum =  '<div class="editable" name="ProductVatSum" id="ProductVatSum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySumWithVat =  '<div class="editable" name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVat_'+k+'" rowid="'+k+'">0</div>';
+
+            var ProductFuelRate =  '<div class="editable" name="ProductFuelRate" id="ProductFuelRate_'+k+'" rowid="'+k+'">0</div>';
+            var ProductFuelSum =  '<div class="editable" name="ProductFuelSum" id="ProductFuelSum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySumWithFuel =  '<div class="editable" name="ProductDeliverySumWithFuel" id="ProductDeliverySumWithFuel_'+k+'" rowid="'+k+'">0</div>';
+
+            k++;
+
+
+            var markup = "<tr><td align='center'><label class='second-checkbox d-inline-block m-t-5'><input type='checkbox' name='record'><div class='square'></div></label></td><td>" + ProductName + "</td><td>"+ProductCatalogName+"</td><td>"+ProductCatalogCode+"</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td><td>"+ProductSumma+"</td><td>"+ ProductFuelRate +"</td><td>"+ProductFuelSum+"</td><td>"+ProductDeliverySum+"</td><td>"+ProductVatRate+"</td><td>"+ProductVatSum+"</td><td>"+ProductDeliverySumWithVat+"</td> </tr>";
+
+
+
+
+            // $(this).closest('table').find('tr:last').prev().after(markup);
+
+
+            $("table tbody tr:last").before(markup);
+            // $("table tbody").find('tr:last').prev().append(markup);
+
+            // e.preventDefault();
+        });
+
+        // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            $("table tbody").find('input[name="record"]').each(function(){
+                if($(this).is(":checked")){
+                    var data = document.getElementById("items_json").value;
+                    data = JSON.parse(data);
+                    var index = $(this).attr("rowid");
+                    if (typeof data[index] !== 'undefined') {
+                        delete data[index];
+                    }
+
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+
+        var row_id = 0;
+
+        $(document).on("click",".editable",function () {
+            row_id = $(this).attr('rowid');
+
+            var element_td = $(this).closest('tr');
+            element_td.addClass('activ_row');
+
+
+            var name = $(this).attr('name');
+            switch (name) {
+                case "ProductName":
+                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                    break;
+                case "ProductMeasureId":
+                    if(!$(this).is("select")) {
+                        $.ajax({
+                            url: '/api/get-measure',
+                            async: false,
+                            success: function (data) {
+                                new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
+                            },
+                            error: function (data) {
+                                ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
+                            }
+                        });
+                        $(this).replaceWith(new_item);
+                        new_item.trigger('focus');
+                    }
+                    break;
+                case "ProductCatalogCode":
+                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                    break;
+                case "ProductCatalogName":
+                    if(!$(this).is("select")) {
+                        $.ajax({
+                            url: '/api/get-catalog',
+                            async: false,
+                            success: function (data) {
+                                new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
+                            },
+                            error: function (data) {
+                                ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
+                            }
+                        });
+                        $(this).replaceWith(new_item);
+                        new_item.trigger('focus');
+                    }
+                    break;
+                default:
+                    new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" onkeyup="CalcStandart(this,' + row_id + ')"  rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                    break;
+            }
+        });
+
+        $(document).on('focusout',".editable",function (e) {
+            var list_data = {};
+            // console.log(e.target.name);
+            var element_td = $(this).closest('tr');
+            element_td.removeClass('activ_row');
+            var data = $("#items_json").val();
+            data = JSON.parse(data);
+            var countAll = 0;
+            // var sumProduct = 0;
+            var ProductVatSum = 0;
+            var ProductDeliverySum = 0;
+            var ProductDeliverySumWithVat = 0;
+            $.each(data, function(index, value) {
+                countAll += (value.ProductCount* 1);
+                // sumProduct += (value.ProductSumma * 1);
+                ProductDeliverySum += (value.ProductDeliverySum * 1);
+                ProductVatSum += (value.ProductVatSum * 1);
+                ProductDeliverySumWithVat += (value.ProductDeliverySumWithVat * 1);
+                // console.log(value.ProductCount);
+            });
+            console.log(countAll);
+            document.getElementById("ProductCountAll").innerText = countAll;
+            // document.getElementById("ProductSummaAll").innerText = sumProduct;
+            document.getElementById("ProductDeliverySumAll").innerText = ProductDeliverySum;
+            document.getElementById("ProductVatSumAll").innerText = ProductVatSum;
+            document.getElementById("ProductDeliverySumWithVatAll").innerText = ProductDeliverySumWithVat;
+
+
+            if( data[row_id] == undefined ) {
+                data[row_id] = {};
+                console.log(data[row_id]);
+                console.log("Empty");
+            }else {
+                console.log("Have");
+                list_data = data[row_id];
+            }
+            var key = $(this).attr('name');
+            var new_data = {[key]: $(this).val()};
+            list_data[key] = $(this).val();
+            // console.log(list_data);
+            data[row_id] = list_data;
+            // data[row_id] = {...data[row_id], ...new_data};
+            // data[row_id] = "{"+data[row_id]+","+new_data+"}";
+            console.log(data[row_id]);
+            var id_txt = key+'_'+row_id;
+            if(key=="ProductMeasureId") {
+                new_item = $('<div class="editable"  name="' + $(this).attr('name') + '" rowid="' + row_id + '">' + $(this).find("option:selected").text() + '</div>');
+            } else {
+                new_item = $('<div class="editable" id="'+id_txt+'" name="' + $(this).attr('name') + '" rowid="' + row_id + '">' + $(this).val() + '</div>');
+            }
+            $(this).replaceWith(new_item);
+            // console.log(JSON.stringify(data));
+            $("#items_json").val(JSON.stringify(data));
+        });
+
+        $("#docs-file").change(function(e){
+            var formData = new FormData($('#w1')[0]);
+            $("#UploadBtn").addClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
+            $.ajax({
+                url: "/uz/facturas/import-excel",  //Server script to process data
+                type: 'POST',
+                // Form data
+                data: formData,
+                datatype:'json',
+                success: function(data) {
+                    $("#UploadBtn").removeClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
+                    console.log(data.fuel);
+                    if(data.success==true){
+                        // document.getElementById('docs-hasfuel').value = data.fuel;
+                        document.getElementById('gridArea').innerHTML = data.html;
+                        document.getElementById('items_json').value = data.data;
+                    }
+                },
+                error: function(data){
+                    $("#UploadBtn").removeClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
+                    console.log(data);
+                    data = data.responseJSON;
+
+                    swal("Xatolik", data.message, "error");
+                },
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+    });
+</script>
+
 <?php ActiveForm::end(); ?>
 
+<style>
+    table tbody tr td{
+        padding:0px!important;
+    }
 
+    table thead tr th{
+        text-align: center;
+    }
+    /*table tbody tr td .editable{*/
+        /*white-space: nowrap;*/
+        /*text-overflow: ellipsis;*/
+        /*overflow: hidden;*/
+        /*width: 100%;*/
+    /*}*/
+    table tbody tr td div{
+        /*border: 1px solid #e8e3e3;*/
+        padding:8px 3px;
+        height: 35px;
+        text-align: right;
+    }
+    div[name="ProductName"],div[name="ProductCatalogName"],div[name="ProductCatalogCode"] {
+        text-align: left;
+        /*white-space: nowrap;*/
+        /*text-overflow: ellipsis;*/
+        /*overflow: hidden;*/
+        /*width: 100%;*/
+    }
+
+    div[name="ProductCatalogName"]{
+        text-overflow: ellipsis;
+        min-width: 200px;
+        white-space: nowrap;
+        max-width: 200px;
+        overflow: hidden;
+    }
+
+
+
+    div[name="ProductName"]{
+        white-space: normal;
+        overflow: hidden;
+    }
+
+    input[class="editable"] {
+        width: 110px;
+        text-align: right;
+        padding-right:10px;
+        padding-left:5px;
+        border-radius: 0px;
+    }
+
+    select[name="ProductMeasureId"] {
+        width: 112px!important;
+    }
+    select[name="ProductCatalogName"] {
+        width: 200px!important;
+    }
+
+    table tbody tr:hover{
+        background-color: #dee3e8!important;
+    }
+
+    table tbody tr td >input[class="editable"] {
+        border: 1px solid #45a8f7;!important;
+    }
+
+    /*table tbody tr > td input[class="editable"] {*/
+        /*background-color: #ffefbb!important;*/
+        /*border: 1px solid #f2e3b2;*/
+    /*}*/
+ 
+    div[name="ProductName"] {
+        text-align: left;
+
+    }
+    input[name="ProductName"] {
+        width:100%;
+        text-align: left;
+    }
+
+    table tbody tr td input, select{
+        width:100%;
+        height:35px;
+        padding-left:3px;
+        border:0px;
+    }
+
+    .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+        border-bottom-width: 2px;
+        vertical-align: middle;
+    }
+
+    table tbody tr{
+        background: #fff;
+    }
+
+    table tbody tr:nth-child(2n) {
+        background: #f6f6f6;
+    }
+    .table-bordered, .table-bordered td{
+        border: 1px solid #e9e9e9;
+
+    }
+    .table-bordered, .table-bordered td{
+        border: 1px solid #e9e9e9;
+        color: #404040;
+    }
+
+
+    /*.table-bordered tr td:first-child{*/
+        /*border-left:1px solid #0075ff!important;*/
+    /*}*/
+    /*.table-bordered tr td:last-child{*/
+        /*border-right:1px solid #0075ff!important;*/
+    /*}*/
+
+    /*.table-bordered tr:last-child td{*/
+        /*border-bottom:1px solid #0075ff!important;*/
+    /*}*/
+    /*.table thead th {*/
+        /*vertical-align: bottom;*/
+        /*border-bottom: 1px solid #e9e9e9;*/
+    /*}*/
+
+    /*.table-bordered th:first-child {*/
+        /*border-left: 1px solid #0075ff;*/
+        /*border-top-left-radius: 10px;*/
+    /*}*/
+    /*.table-bordered th:last-child{*/
+        /*border-right: 1px solid #0075ff;*/
+    /*}*/
+    .second-checkbox {
+        margin-right: 0px;
+    }
+
+
+    .activ_row, .activ_row:hover{
+        background-color: #ffefbb!important;
+    }
+
+
+</style>

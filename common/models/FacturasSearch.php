@@ -47,6 +47,7 @@ class FacturasSearch extends Facturas
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>false
         ]);
 
         $this->load($params);

@@ -114,6 +114,13 @@ class SiteController extends \cabinet\components\Controller
         return $this->render('index');
     }
 
+    public function actionNew()
+    {
+//        $this->layout = "mainNew";
+        return $this->render('index');
+    }
+
+
 
     /**
      * Login action.

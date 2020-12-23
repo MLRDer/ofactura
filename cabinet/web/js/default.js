@@ -378,7 +378,7 @@ function EmpSwitchWithLabel() {
         // $("#EmpArea").hide();
     }
 }
-var old_tin="";
+
 function GetDataByTinV2ForUpdate(tin){
 
 
@@ -421,10 +421,18 @@ function GetDataByTinV2ForUpdate(tin){
     });
 
 }
+
+var old_tin="";
+
+function ChangeStirData(){
+    $(".change-info-block-wrapper").addClass("show-block");
+    $(".info-block-wrapper").removeClass("show-block");
+}
+
 function GetDataByTinV2(tin){
 
     document.getElementById("BuyerTin").maxLength = "9";
-
+    console.log(tin);
     // if (tin.length>9){
     //     // tin = old_tin;
     //     document.getElementById("BuyerTin").hasValue = old_tin;
@@ -432,7 +440,6 @@ function GetDataByTinV2(tin){
 
     if(tin.length==9 && old_tin!=tin) {
         old_tin = tin;
-        SetLoader("BuyerInfoArea");
         $.ajax({
             url: '/api/get-company',
             method: 'POST',
@@ -458,10 +465,12 @@ function GetDataByTinV2(tin){
                     document.getElementById("facturas-buyerdirector").value = data.director;
                     document.getElementById("facturas-buyeraccountant").value = data.accountant;
                     document.getElementById("facturas-buyervatregcode").value = data.regCode;
-                    document.getElementById("BuyerInfoArea").innerHTML = htmls
+                    // document.getElementById("BuyerInfoArea").innerHTML = htmls
+                    $(".change-info-block-wrapper").removeClass("show-block");
+                    $(".info-block-wrapper").addClass("show-block");
                 } else {
                     document.getElementById("facturas-buyertin").value = "";
-                    document.getElementById("BuyerInfoArea").innerHTML= "<div class='animated fadeInUp'><div class='alert alert-outline-warning '>"+data.reason+"</div></div>";
+                    document.getElementById("BuyerInfoArea").innerHTML= "<div class='animated fadeInUp'><p class='help-block help-block-error'>"+data.reason+"</p></div>";
                 }
             },
             error: function (data) {
@@ -783,6 +792,7 @@ function SendData(id){
         }
     });
 };
+
 
 
 function SendFactura(factura_id){
@@ -1342,13 +1352,15 @@ function SwitchTypeFac(id) {
 
 function SwitchSingleSlide(id) {
     var isOneLevel = document.getElementById('CheckOnLevel').checked;
+    console.log(isOneLevel);
     if(isOneLevel==true){
-        $("#SendLevelArea").hide();
-        $("#SingleSidedType").show();
+        $(".change-info-block-wrapper").removeClass("show-block");
+        $(".info-block-wrapper").removeClass("show-block");
+        $(".singid-side-block").addClass("show-block");
     } else {
-        $("#SingleSidedType").hide();
-        $("#SendLevelArea").show();
-
+        document.getElementById('BuyerTin').value="";
+        $(".singid-side-block").removeClass("show-block");
+        $(".change-info-block-wrapper").addClass("show-block");
     }
 
 };
@@ -1525,6 +1537,18 @@ function AlcoholName(){
 }
 
 $(document).ready(function(){
+
+
+    $(".nav-item").click(function () {
+        var tab = $(this).children().attr('aria-controls');
+        var key_factura = tab.substr(0,2);
+        var type_factura = tab.substr(6,1);
+        if(key_factura=="w1"){
+            document.getElementById('facturas-facturatype').value=type_factura;
+        }
+       window.history.replaceState(null, null, "?tab="+tab);
+    });
+
 
 
     $("#docs-reestr").change(function(e){

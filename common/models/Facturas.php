@@ -602,7 +602,7 @@ class Facturas extends \yii\db\ActiveRecord
 
     public static function getStatus($status,$type=1){
         $data = [
-            self::STATUS_NEW =>Yii::t('main','Saved'),
+            self::STATUS_NEW =>Yii::t('main','Сақланган'),
             self::STATUS_WAIT =>Yii::t('main','Imzo kutilmoqda'),
             self::STATUS_SEND =>Yii::t('main','Imzo kutilmoqda'),
             self::STATUS_CANCELLED =>Yii::t('main','Bekor qilindi'),
@@ -612,13 +612,13 @@ class Facturas extends \yii\db\ActiveRecord
         ];
         if($type==2){
             $data = [
-                self::STATUS_NEW =>'<span class="kt-badge  kt-badge--info kt-badge--inline kt-badge--pill">'.Yii::t('main','Saved').'</span>',
-                self::STATUS_WAIT=>'<span class="kt-badge  kt-badge--dark kt-badge--inline kt-badge--pill">'.Yii::t('main','Imzo kutilmoqda').'</span>',
-                self::STATUS_SEND =>'<span class="kt-badge  kt-badge--dark kt-badge--inline kt-badge--pill">'.Yii::t('main','Imzo kutilmoqda').'</span>',
-                self::STATUS_CANCELLED =>'<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">'.Yii::t('main','Bekor qilindi').'</span>',
-                self::STATUS_REJECTED =>'<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">'.Yii::t('main','Rad etildi').'</span>',
-                self::STATUS_ACCEPTED =>'<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">'.Yii::t('main','Tasdqilandi').'</span>',
-                self::STATUS_SEND_ACCEPTED =>'<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">'.Yii::t('main','Jo`natildi').'</span>',
+                self::STATUS_NEW =>'<div class="text-info">'.Yii::t('main','Saved').'</div>',
+                self::STATUS_WAIT=>'<span class="text-warning">'.Yii::t('main','Imzo kutilmoqda').'</span>',
+                self::STATUS_SEND =>'<span class="text-warning">'.Yii::t('main','Imzo kutilmoqda').'</span>',
+                self::STATUS_CANCELLED =>'<span class="secondary">'.Yii::t('main','Bekor qilindi').'</span>',
+                self::STATUS_REJECTED =>'<span class="danger">'.Yii::t('main','Rad etildi').'</span>',
+                self::STATUS_ACCEPTED =>'<span class="success">'.Yii::t('main','Tasdqilandi').'</span>',
+                self::STATUS_SEND_ACCEPTED =>'<span class="success">'.Yii::t('main','Jo`natildi').'</span>',
             ];
         }
         return $data[$status];
