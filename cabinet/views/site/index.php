@@ -26,7 +26,7 @@ use common\widgets\Alert; ?>
                     </li>
                 </ul>
             </div>
-            <div class="footer"><a href="#!" class="footer-link green">+ Создать новую фактуру</a>
+            <div class="footer"><a href="/facturas/create" class="footer-link green">+ Создать новую фактуру</a>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@ use common\widgets\Alert; ?>
                     </li>
                 </ul>
             </div>
-            <div class="footer"><a href="#!" class="footer-link yellow">+ Создать доверенность</a>
+            <div class="footer"><a href="/empowerment/create" class="footer-link yellow">+ Создать доверенность</a>
             </div>
         </div>
     </div>

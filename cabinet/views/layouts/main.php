@@ -42,7 +42,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
     <div class="main-wrapper">
         <div class="sidebar">
             <div class="sidebar-top">
-                <a href="#!" class="logo">
+                <a href="/" class="logo">
                     <img src="/new_template/images/logo/logo.png" alt="">
                 </a>
                 <ul class="sidebar-menu">

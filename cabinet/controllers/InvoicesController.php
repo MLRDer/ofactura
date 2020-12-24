@@ -36,9 +36,14 @@ class InvoicesController extends Controller
      */
 
     public function actionPayme(){
+        $searchModel = new InvoicesItemsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['company_id'=>Components::GetId()]);
 
-
-        return $this->render('payme');
+        return $this->render('payme',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
     public function actionIndex()
     {

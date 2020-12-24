@@ -49,6 +49,7 @@ class InvoicesItemsSearch extends Invoices
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>false
         ]);
 
         $query->orderBy('id DESC');
