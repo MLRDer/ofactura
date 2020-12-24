@@ -27,179 +27,12 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
     <script src="/js/e-imzo.js"></script>
     <script src="/js/e-imzo-client.js"></script>
     <link rel="shortcut icon" href="/img/favicon.png" />
-    <style>
+    <?php
+    $host = Yii::$app->request->getPathInfo();
 
 
-        .nav-tabs .nav-item {
-            margin-bottom: 0px!important;
-        }
 
-        .nav-tabs .nav-item .nav-link{
-            border: unset;
-        }
-        .profile-tab-header .nav-item .nav-link.active, .profile-tab-header .nav-item .nav-link:hover {
-            border: unset;
-        }
-        .input-white input.form-control{
-            height:unset!important;
-            border-radius: unset;
-            border: unset;
-        }
-        .input input.form-control{
-            height:unset!important;
-            /*border-radius: unset;*/
-            /*border: unset;*/
-        }
-        .singid-side-block{
-            webkit-transform: translateY(10px);
-            -moz-transform: translateY(10px);
-            -ms-transform: translateY(10px);
-            -o-transform: translateY(10px);
-            transform: translateY(10px);
-            opacity: 0;
-            visibility: hidden;
-            height: 0;
-            overflow: hidden;
-            -webkit-transition: all .3s ease-in-out;
-            -o-transition: all .3s ease-in-out;
-            -moz-transition: all .3s ease-in-out;
-            transition: all .3s ease-in-out;
-        }
-        .singid-side-block.show-block {
-            -webkit-transform: translateY(0);
-            -moz-transform: translateY(0);
-            -ms-transform: translateY(0);
-            -o-transform: translateY(0);
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-            height: auto;
-        }
-        .input select {
-            width: 100%;
-            padding: 5px 20px;
-            border: 1px solid #9794a9;
-            -webkit-border-radius: 14px;
-            -moz-border-radius: 14px;
-            border-radius: 15px;
-            background-color: transparent;
-        }
-        .help-block-error{
-            background-color: #eabebe4d;
-            color: red;
-            font-weight: bold;
-            border-radius: 5px;
-            padding: 3px 15px;
-            margin-top: 10px;
-            margin-bottom: 0px;
-        }
-        .help-block-error:empty{
-            background-color: unset;
-            padding: unset;
-        }
-        .input-white input.form-control:focus{
-            background-color: unset;
-        }
-        .blue-btn{
-            background-color: #0075ff;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 10px;
-            white-space: nowrap;
-            display: block;
-            height: 40px;
-            width: 140px;
-            webkit-box-shadow: 0 0 10px rgba(0,117,255,.4);
-            -moz-box-shadow: 0 0 10px rgba(0,117,255,.4);
-            box-shadow: 0 0 10px rgba(0,117,255,.4);
-        }
-
-        .second-input .form-group {
-            margin-bottom: 0rem!important;
-        }
-        .icon-pdf{
-            background-image: url("/new_template/ico/pdf-file-format-symbol.png");
-            position: absolute;
-            content: "";
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            width: 16px;
-            height: 16px;
-            margin: auto;
-            -webkit-background-size: contain;
-            -moz-background-size: contain;
-            -o-background-size: contain;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: 50%;
-        }
-
-        .pagination li a{
-            border: 0;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -moz-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -moz-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-        }
-        .pagination li a:hover{
-            z-index: 2;
-            color: #0056b3;
-            text-decoration: none;
-            background-color: #e9ecef;
-            border-color: #dee2e6;
-        }
-        .pagination li.active a{
-            background-color: #0075ff;
-        }
-        .pagination .prev{
-            margin-right: 10px!important
-        }
-        .pagination .next{
-            margin-left: 10px!important;
-        }
-        .pagination li.active a{
-            z-index: 3;
-            color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .pagination .disabled{
-            display: none;
-        }
-        .pagination{
-            margin-top: 33px;
-
-        }
-         .pagination img {
-            display: block;
-            width: unset;
-        }
-
-        table tbody tr td{
-
-            color: #404040!important;
-
-        }
-
-</style>
+    ?>
     <?php $this->head() ?>
 </head>
 <body>
@@ -213,7 +46,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
                     <img src="/new_template/images/logo/logo.png" alt="">
                 </a>
                 <ul class="sidebar-menu">
-                    <li class="menu__item active">
+                    <li class="menu__item <?= ($host=="site/index" || $host=="" )?'active':'' ?>">
                         <a href="/" class="menu__link">
                             <span class="item">
                                 <span class="icon home"></span>
@@ -221,17 +54,17 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
                             </span>
                         </a>
                     </li>
-                    <li class="menu__item">
+                    <li class="menu__item <?= ($host=="facturas/index" || $host=="facturas/update" || $host=="facturas/create" || $host=="facturas/view")?'active':'' ?>">
                         <a href="/facturas/index" class="menu__link">
                             <span class="item">
                                 <span class="icon invoices"></span>
-                                <span class="title"><?= Yii::t('main','Счет-фактуры')?> </span>
+                                <span class="title"><?= Yii::t('main','Счет-фактуры') ?> </span>
                             </span>
                             <span class="badge green">+ 2000</span>
                         </a>
                     </li>
-                    <li class="menu__item">
-                        <a href="/letter-of-attorney.html" class="menu__link">
+                    <li class="menu__item <?= ($host=="empowerment/index" || $host=="empowerment/update" || $host=="empowerment/create" || $host=="empowerment/view")?'active':'' ?>">
+                        <a href="/empowerment/index" class="menu__link">
                             <span class="item">
                                 <span class="icon proxy"></span>
                                 <span class="title"><?= Yii::t('main','Доверенность')?></span>

@@ -80,12 +80,25 @@ class EmpowermentController extends \cabinet\components\Controller
     {
         $searchModel = new EmpowermentSaerch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['company_id'=>Components::GetId(),'type'=>[Docs::TYPE_IN,Docs::TYPE_IN_AGENT]]);
 
-        $dataProvider->query->andWhere(['company_id'=>Components::GetId()]);
+        $searchModel_send = new EmpowermentSaerch();
+        $dataProvider_send = $searchModel_send->search(Yii::$app->request->queryParams);
+        $dataProvider_send->query->where('status<>1')->andWhere(['company_id'=>Components::GetId(),'type'=>Docs::TYPE_OUT]);
+
+        $searchModel_saved = new EmpowermentSaerch();
+        $dataProvider_saved = $searchModel_send->search(Yii::$app->request->queryParams);
+        $dataProvider_saved->query->andWhere(['company_id'=>Components::GetId(),'status'=>Docs::NEW_DATA ,'type'=>Docs::TYPE_OUT]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+
+            'searchModel_sent' => $searchModel_send,
+            'dataProvider_sent' => $dataProvider_send,
+
+            'searchModel_saved' => $searchModel_saved,
+            'dataProvider_saved' => $dataProvider_saved,
         ]);
     }
 

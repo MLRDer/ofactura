@@ -1,65 +1,459 @@
 <?php
 
+use kartik\date\DatePicker;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Empowerment */
 
 $this->title = Yii::t('main','Create Empowerment');
-$this->params['breadcrumbs'][] = ['label' => 'Empowerments', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-
-<div class="kt-portlet kt-portlet--responsive-mobile">
-    <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon">
-													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="bound" x="0" y="0" width="24" height="24"/>
-        <path d="M14.8571499,13 C14.9499122,12.7223297 15,12.4263059 15,12.1190476 L15,6.88095238 C15,5.28984632 13.6568542,4 12,4 L11.7272727,4 C10.2210416,4 9,5.17258756 9,6.61904762 L10.0909091,6.61904762 C10.0909091,5.75117158 10.823534,5.04761905 11.7272727,5.04761905 L12,5.04761905 C13.0543618,5.04761905 13.9090909,5.86843034 13.9090909,6.88095238 L13.9090909,12.1190476 C13.9090909,12.4383379 13.8240964,12.7385644 13.6746497,13 L10.3253503,13 C10.1759036,12.7385644 10.0909091,12.4383379 10.0909091,12.1190476 L10.0909091,9.5 C10.0909091,9.06606198 10.4572216,8.71428571 10.9090909,8.71428571 C11.3609602,8.71428571 11.7272727,9.06606198 11.7272727,9.5 L11.7272727,11.3333333 L12.8181818,11.3333333 L12.8181818,9.5 C12.8181818,8.48747796 11.9634527,7.66666667 10.9090909,7.66666667 C9.85472911,7.66666667 9,8.48747796 9,9.5 L9,12.1190476 C9,12.4263059 9.0500878,12.7223297 9.14285008,13 L6,13 C5.44771525,13 5,12.5522847 5,12 L5,3 C5,2.44771525 5.44771525,2 6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,12 C19,12.5522847 18.5522847,13 18,13 L14.8571499,13 Z" id="Combined-Shape" fill="#000000" opacity="0.3"/>
-        <path d="M9,10.3333333 L9,12.1190476 C9,13.7101537 10.3431458,15 12,15 C13.6568542,15 15,13.7101537 15,12.1190476 L15,10.3333333 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9,10.3333333 Z M10.0909091,11.1212121 L12,12.5 L13.9090909,11.1212121 L13.9090909,12.1190476 C13.9090909,13.1315697 13.0543618,13.952381 12,13.952381 C10.9456382,13.952381 10.0909091,13.1315697 10.0909091,12.1190476 L10.0909091,11.1212121 Z" id="Combined-Shape" fill="#000000"/>
-    </g>
-</svg>
-												</span>
-            <h3 class="kt-portlet__head-title">
-                <?= $this->title ?>
-            </h3>
+<div class="white-box">
+    <?php $form = ActiveForm::begin(['options'=>['autocomplete'=>'off']]); ?>
+    <div class="row m-b-20">
+        <div class="col-md-6">
+            <div class="page-title m-b-0"><?= $this->title ?></div>
         </div>
-        <div class="kt-portlet__head-toolbar">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+
+                <?= Html::submitButton(Yii::t('main', 'Empowerment save'), ['class' => 'btn-green']) ?>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <?php if($error!==""){ ?>
+
+                <div class="alert alert-outline-danger fade show" role="alert">
+                    <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+                    <div class="alert-text"><?= $error ?> </div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            <?php }?>
+        </div>
+    </div>
+    <div class="row m-b-30">
+
+        <div class="col-md-4">
+            <?= $form->field($model, 'EmpowermentNo',['template'=>'<div class="input m-b-20">{input}</div>'])->textInput(['maxlength' => true,'placeholder'=>'Номер доверенности']) ?>
+
+        </div>
+        <div class="col-md-4">
+             <?php
+            echo $form->field($model, 'EmpowermentDateOfIssue',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => Yii::t('main','Enter begin date ...')],
+                'type' => DatePicker::TYPE_INPUT,
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'todayHighlight' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);
+            ?>
 
 
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+        </div>
+        <div class="col-md-4">
+            <?php
+            echo $form->field($model, 'EmpowermentDateOfExpire',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => Yii::t('main','Enter end date ...')],
+                'type' => DatePicker::TYPE_INPUT,
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'todayHighlight' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);
+            ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'ContractNo',['template'=>'<div class="input m-b-20">{input}</div>'])->textInput(['maxlength' => true,'placeholder'=>'Номер договора']) ?>
+        </div>
+        <div class="col-md-8">
 
 
-                <!--                <a href="/doc/create" class="btn btn-secondary"><i class="la la-file-text-o"></i> </a>-->
-                <button onclick="SaveFactura()" id="Sendbtn" type="button" class="btn btn-success">
-                    <i class="la la-floppy-o"></i> <?= Yii::t('main','Empowerment save')?></button>
-                <!--                <button  type="button" class="btn btn-secondary"><i class="la la-qrcode"></i> Imzolash va jo`natish</button>-->
+            <?php
+            echo $form->field($model, 'ContractDate',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => Yii::t('main','Дата подписания договора')],
+                'type' => DatePicker::TYPE_INPUT,
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'todayHighlight' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);
+            ?>
+
+        </div>
+    </div>
+    <div class="row no-gutters m-b-20">
+        <div class="col-md-6">
+            <div class="gray-wrapper">
+                <div class="supplier-wrapper">
+                    <div class="supplier-header">
+                        <div class="title">Поставщик</div>
+                        <div class="tin"><?= \cabinet\models\Components::CompanyData('tin')?></div>
+                    </div>
+                    <div class="supplier-body">
 
 
+                        <?= $form->field($model, 'BuyerName',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+
+                        <?= $form->field($model, 'BuyerAddress',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+
+                        <?= $form->field($model, 'BuyerAccount',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+
+                        <?= $form->field($model, 'BuyerBankId',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+
+                        <?= $form->field($model, 'BuyerOked',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+
+                        <?= $form->field($model, 'BuyerDistrictId',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>
+                                {input}
+                            </label>
+                        </div>{error}'])->textInput(['maxlength' => true,'class'=>'']) ?>
+                    </div>
+                </div>
+                <div class="attorney-wrapper">
+                    <div class="attorney-header">
+                        <div class="title">Доверенность</div>
+                    </div>
+                    <div class="attorney-body">
+                        <div class="row">
+                            <div class="col-md-6">
+<!--                                <div class="input m-b-20">-->
+<!--                                    <input type="text"  placeholder="ИНН сотрудника">-->
+<!--                                </div>-->
+                                <?= $form->field($model, 'AgentTin',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'ИНН сотрудника','onkeyup'=>'GetAgentTin(this.value)'])->label(false) ?>
+                            </div>
+                            <div class="col-md-6">
+
+                                <?= $form->field($model, 'AgentFio',['template'=>'<div class="input m-b-20">{input}<div class="footer-info">Которому выдана доверенность</div></div>{error}'])->textInput(['class'=>'','placeholder'=>'Ф.И.О.'])->label(false) ?>
+                            </div>
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'AgentJobTitle',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Должность'])->label(false) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $form->field($model, 'AgentPassportNumber',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Номер паспорта'])->label(false) ?>
+                            </div>
+                            <div class="col-md-6">
+<!--                                <div class="input m-b-20 datepicker-wrapper my-datepicker-icon">-->
+<!--                                    <input type="text" placeholder="Дата выдачи" class="my-datepicker">-->
+<!--                                </div>-->
+
+                                <?php
+                                echo $form->field($model, 'AgentPassportDateOfIssue',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                                    'options' => ['placeholder' => Yii::t('main','Дата выдачи')],
+                                    'type' => DatePicker::TYPE_INPUT,
+                                    'pluginOptions' => [
+                                        'autoclose'=>true,
+                                        'todayHighlight' => true,
+                                        'format' => 'yyyy-mm-dd'
+                                    ]
+                                ]);
+                                ?>
+
+                            </div>
+                            <div class="col-md-12">
+
+                                <?= $form->field($model, 'AgentPassportIssuedBy',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Кем выдан'])->label(false) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="responsible-wrapper">
+                    <div class="responsible-header">
+                        <div class="title">Ответственные</div>
+                    </div>
+                    <div class="responsible-body">
+                        <?= $form->field($model, 'BuyerDirector',['template'=>'<div class="input ">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'ФИО руководителя'])->label(false) ?>
+                        <?= $form->field($model, 'BuyerAccountant',['template'=>'<div class="input ">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Гл.бухгалтер'])->label(false) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="customer p-l-30 p-b-30 p-t-30">
+                <div class="supplier-wrapper">
+                    <div class="supplier-header">
+                        <div class="title">Заказчик</div>
+                        <div class="input plus-button bgc-gray">
+                            <button onclick="GetEnviromentBuyer()" id="SearchEnvBtn" type="button">
+                                <img src="/new_template/images/icon/search.svg" alt="">
+                            </button>
+                            <input onkeyup="GetEnviromentDataByTin(this.value)" id="EnvBuyerTin" type="text" placeholder="Найти">
+                        </div>
+                    </div>
+                    <div class="supplier-body">
+                            <div id="SendLevelArea"></div>
+
+                            <?= $form->field($model, 'SellerTin',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->hiddenInput(['class'=>''])->label(false) ?>
+                        <?= $form->field($model, 'SellerName',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+                        <?= $form->field($model, 'SellerAddress',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+                        <?= $form->field($model, 'SellerAccount',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+
+                        <?= $form->field($model, 'SellerBankId',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+                        <?= $form->field($model, 'SellerOked',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+                        <?= $form->field($model, 'SellerDistrictId',['template'=>'<div class="second-input">
+                            <label><span class="title">{label}</span>{input}</label></div>{error}'])->textInput(['class'=>'']) ?>
+                    </div>
+                </div>
+                <div class="small-table">
+                    <div class="body m-b-20">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="40px" rowspan="2"></th>
+                                <th rowspan="2"><?= Yii::t('main','Наименование товара, выполненных работ и оказанных услуг')?></th>
+                                <th width="130px" rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
+                                <th width="90px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
+                            </tr>
+                            </thead>
+                            <tbody id="productItemsArea">
+                            <?php if($model->isNewRecord){ ?>
+                                <tr>
+                                    <td align="center">
+                                        <label class="kt-checkbox kt-checkbox--brand">
+                                            <input type="checkbox" name="record">
+                                            <span style="top: 4px;left: 5px;"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="editable" name="ProductName" rowid="1"></div>
+                                    </td>
+                                    <td>
+                                        <div class="editable" name="ProductMeasureId" rowid="1"></div>
+                                    </td>
+                                    <td>
+                                        <div class="editable" name="ProductCount" id="ProductCount_1" rowid="1">0</div>
+                                    </td>
+                                </tr>
+                            <?php } else {
+                                $products = \common\models\EmpowermentProduct::findAll(['empowerment_id'=>$model->EmpowermentId]);
+                                $n=0;
+                                foreach ($products as $items){ $n++;
+                                    ?>
+                                    <tr>
+                                        <td align="center">
+                                            <label class="second-checkbox d-inline-block m-t-5">
+                                                <input type="checkbox" name="record">
+                                                <div class="square"></div>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="editable" name="ProductName" rowid="<?= $n?>">
+                                                <?= $items->Name ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="editable" name="ProductMeasureId" rowid="<?= $n?>">
+                                                <?= $measure[$items->MeasureId] ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="editable" name="ProductCount" id="ProductCount_<?= $n?>" rowid="<?= $n?>">
+                                                <?= $items->Count ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php }}?>
+                            </tbody>
+                        </table>
+                        <input type="hidden" id="row_value" value="2">
+                    </div>
+                    <div class="footer">
+                        <div class="add-row btn-outline-blue color-blue small-btn m-r-20">+ добавить еще</div>
+                        <div class="delete-row btn-red remove">remove</div>
+                    </div>
+                </div>
+                <div class="responsible-wrapper">
+                    <div class="responsible-header">
+                        <div class="title">Ответственные</div>
+                    </div>
+                    <div class="responsible-body">
+
+                        <?= $form->field($model, 'SellerDirector',['template'=>'<div class="input ">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'ФИО руководителя'])->label(false) ?>
+                        <?= $form->field($model, 'SellerAccountant',['template'=>'<div class="input ">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Гл.бухгалтер'])->label(false) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end">
+                <?= Html::submitButton(Yii::t('main', 'Empowerment save'), ['class' => 'btn-green']) ?>
             </div>
         </div>
     </div>
-    <div class="kt-portlet__body">
-    <?= $this->render('_form', [
-        'model' => $model,
-        'error'=>$error
-    ]) ?>
+    <?php if($model->isNewRecord){ ?>
+        <?= $form->field($model, 'items_json')->hiddenInput(['id' => 'items_json','value'=>'{}'])->label(false) ?>
 
+    <?php }else{ ?>
+        <?= $form->field($model, 'items_json')->hiddenInput(['id' => 'items_json'])->label(false) ?>
+    <?php }?>
+    <?php ActiveForm::end(); ?>
 </div>
-</div>
+
+<script>
+    $(document).ready(function(){
+        var k=2;
+        $(".add-row").click(function(){
+
+            var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
+            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
+            var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
+            k++;
+            var markup = "<tr><td align='center'><label class='kt-checkbox kt-checkbox--brand'><input type='checkbox' name='record'><span style='top: 4px;left: 5px;'></span></label></td><td>" + ProductName + "</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td></tr>";
+            $("table tbody").append(markup);
+            // e.preventDefault();
+        });
+
+        // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            $("table tbody").find('input[name="record"]').each(function(){
+                if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+
+        var row_id = 0;
+
+        $(document).on("click",".editable",function () {
+            // console.log("sdfgsdfg");
+            row_id = $(this).attr('rowid');
+            var name = $(this).attr('name');
+            if(name=="ProductMeasureId"){
+                if(!$(this).is("select")) {
+                    $.ajax({
+                        url: '/api/get-measure',
+                        async: false,
+                        success: function (data) {
+                            new_item = $('<select class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" >' + data + ' </select>');
+                        },
+                        error: function (data) {
+                            ShowMessage('danger', 'Remote connection failed. Check internet connection !!!');
+                        }
+                    });
+                    $(this).replaceWith(new_item);
+                    new_item.trigger('focus');
+                }
+            } else {
+                new_item = $('<input class="editable" id="' + $(this).attr('name') + '_' + row_id + '" rowid="' + row_id + '"  name="' + name + '" value="' + $(this).text() + '" >');
+                $(this).replaceWith(new_item);
+                new_item.trigger('focus');
+            }
+
+        });
+
+        $(document).on('focusout',".editable",function (e) {
+            var list_data = {};
+            // console.log(e.target.name);
+            var data = $("#items_json").val();
+            data = JSON.parse(data);
+            if( data[row_id] == undefined ) {
+                data[row_id] = {};
+                console.log(data[row_id]);
+                console.log("Empty");
+            }else {
+                console.log("Have");
+                list_data = data[row_id];
+            }
+            var key = $(this).attr('name');
+            var new_data = {[key]: $(this).val()};
+            list_data[key] = $(this).val();
+            // console.log(list_data);
+            data[row_id] = list_data;
+            // data[row_id] = {...data[row_id], ...new_data};
+            // data[row_id] = "{"+data[row_id]+","+new_data+"}";
+            console.log(data[row_id]);
+            var id_txt = key+'_'+row_id;
+            if(key=="ProductMeasureId") {
+                new_item = $('<div class="editable"  name="' + $(this).attr('name') + '" rowid="' + row_id + '">' + $(this).find("option:selected").text() + '</div>');
+            } else {
+                new_item = $('<div class="editable" id="'+id_txt+'" name="' + $(this).attr('name') + '" rowid="' + row_id + '">' + $(this).val() + '</div>');
+            }
+            $(this).replaceWith(new_item);
+            // console.log(JSON.stringify(data));
+            $("#items_json").val(JSON.stringify(data));
+        });
+    });
+</script>
+
 <style>
-
-    .table-bordered th, .table-bordered td {
-        border: 1px solid
-        #000;
+    .SallerBuyer .form-control-plaintext{
+        float:right;
+        width: 50%;
+        padding:0px!important;
+        border-bottom: 1px solid #cecece;
     }
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom:  1px solid #000;
-        background-color: #f5f2e2;
+    .SallerBuyer .form-group{
+        margin-bottom:0px;
+    }
+    .SallerBuyer .form-group label {
+        font-size: 1.1rem;
+        font-weight: 400;
+        float:left;
+        width: 45%;
+        color:black;
+        margin-bottom: 0px;
+        padding-top: 0px;
+    }
 
+
+
+    .SallerBuyer .help-block{
+        clear: both;
+    }
+    table tbody tr td{
+        padding:0px!important;
+    }
+
+    table thead tr th{
+        text-align: center;
+    }
+    table tbody tr td div{
+        /*border: 1px solid #e8e3e3;*/
+        padding:8px 3px;
+        height: 35px;
+    }
+    table tbody tr td input, select{
+        width:100%;
+        height:35px;
+        padding-left:3px;
+        border:0px;
     }
 </style>

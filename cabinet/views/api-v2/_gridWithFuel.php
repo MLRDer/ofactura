@@ -157,10 +157,10 @@ $k=0;
                         <div class="editable" name="ProductName" rowid="<?= $items->OrdNo ?>"><?= $items->Name ?></div>
                     </td>
                     <td>
-                        <div class="editable" name="ProductCatalogName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogName ?></div>
+                        <div class="editable" name="ProductCatalogName" rowid="<?= $items->OrdNo ?>"><?= $items->CatalogName ?></div>
                     </td>
                     <td>
-                        <div class="editable" name="ProductCatalogCode" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogCode ?></div>
+                        <div class="editable" name="ProductCatalogCode" rowid="<?= $items->OrdNo ?>"><?= $items->CatalogCode ?></div>
                     </td>
                     <td>
                         <div class="editable" name="ProductMeasureId" rowid="<?= $items->OrdNo ?>">

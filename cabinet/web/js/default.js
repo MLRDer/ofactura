@@ -382,7 +382,7 @@ function EmpSwitchWithLabel() {
 function GetDataByTinV2ForUpdate(tin){
 
 
-    SetLoader("BuyerInfoArea");
+    // SetLoader("BuyerInfoArea");
     $.ajax({
         url: '/api/get-company',
         method: 'POST',
@@ -408,7 +408,7 @@ function GetDataByTinV2ForUpdate(tin){
                 document.getElementById("facturas-buyerdirector").value = data.director;
                 document.getElementById("facturas-buyeraccountant").value = data.accountant;
                 document.getElementById("facturas-buyervatregcode").value = data.regCode;
-                document.getElementById("BuyerInfoArea").innerHTML = htmls
+                // document.getElementById("BuyerInfoArea").innerHTML = htmls
             } else {
                 document.getElementById("facturas-buyertin").value = "";
                 document.getElementById("BuyerInfoArea").innerHTML= "<div class='animated fadeInUp'><div class='alert alert-outline-warning '>"+data.reason+"</div></div>";

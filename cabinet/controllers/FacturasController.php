@@ -604,7 +604,7 @@ class FacturasController extends \cabinet\components\Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['saved']);
+        return $this->redirect('/facturas/index?tab=w3-tab2');
     }
 
     /**

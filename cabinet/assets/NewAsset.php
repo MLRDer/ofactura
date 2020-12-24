@@ -16,11 +16,12 @@ class NewAsset extends AssetBundle
 //    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 
     public $css = [
-        "new_template/styles/vendor.min.css",
-        "new_template/styles/main.css"
+//        "new_template/styles/vendor.min.css",
+        "new_template/styles/main.css",
+        "css/new_template.css"
     ];
     public $js = [
-        "new_template/scripts/jquery.min.js",
+//        "new_template/scripts/jquery.min.js",
         "new_template/scripts/bootstrap.min.js",
         "new_template/scripts/vendor.min.js",
         "/js/sweetalert.js",
@@ -33,7 +34,7 @@ class NewAsset extends AssetBundle
     ];
     public $depends = [
             BootstrapPluginAsset::class,
-        'yii\web\YiiAsset',
+//        'yii\web\YiiAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 //    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];

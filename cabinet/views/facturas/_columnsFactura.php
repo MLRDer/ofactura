@@ -49,7 +49,7 @@ use yii\grid\GridView;
                             'headerOptions' => ['style' => 'width:40px'],
                             'contentOptions' => ['style'=>'font-weight:bold;text-align:center;'],
                         ],
-                            [
+                        [
                             'label'=>'',
                             'format'=>'raw',
                             'value'=>function($model){
