@@ -317,3 +317,6 @@ table tbody tr td{
 .activ_row, .activ_row:hover{
     background-color: #ffefbb!important;
 }
+.square{
+    height:20px!important;
+}

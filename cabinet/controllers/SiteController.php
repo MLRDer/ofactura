@@ -16,7 +16,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-
+//25198
 /**
  * Site controller
  */
@@ -136,7 +136,7 @@ class SiteController extends \cabinet\components\Controller
     }
     public function actionLogin()
     {
-        $this->layout = "mainLogin";
+        $this->layout = "mainLoginNew";
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
