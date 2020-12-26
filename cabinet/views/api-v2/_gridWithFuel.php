@@ -143,8 +143,8 @@ $k=0;
                 $vatAll +=$items->VatSum;
                 $sumvatAll +=$items->DeliverySumWithVat;
 
-                var_dump($items);
-                die();
+//                var_dump($items);
+//                die();
                 ?>
                 <tr rowid="<?= $items->OrdNo ?>">
                     <td align="center">

@@ -592,7 +592,6 @@ class FacturasController extends \cabinet\components\Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        Yii::$app->session->setFlash('danger', 'Rouming talabiga asosan olib borilgan o`zgarishlar natijasida sizda oldingi hujjatlar ko`rinmasligi mumkin. Barcha hujjatlaringgiz 1-3 kun oralig`ida qayta yuklanish jarayonida. Noqulaylikar uchun uzur so`raymiz');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->Id]);
         }
