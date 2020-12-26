@@ -116,5 +116,43 @@ foreach ($data as $items){
 
 </tr>
 <?php $ord ++; }?>
+<tr rowid="1">
+    <td align="right" colspan="4">
+        <div style="padding-right:10px">
+            <b><?= Yii::t('main','Jami:')?></b>
+        </div>
+    </td>
+    <td>
+        <div  name="ProductCount" id="ProductCountAll"> </div>
+    </td>
+    <td>
+
+    </td>
+    <td>
+        <div  name="ProductDeliverySum" id="ProductDeliverySumAll"> </div>
+    </td>
+    <td>
+
+
+    </td>
+    <td>
+
+
+    </td>
+    <td>
+
+
+    </td>
+    <td>
+
+        <div  name="ProductVatSum" id="ProductVatSumAll"> </div>
+    </td>
+
+    <td>
+        <div name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVatAll"> </div>
+    </td>
+
+
+</tr>
     </tbody>
     </table>
