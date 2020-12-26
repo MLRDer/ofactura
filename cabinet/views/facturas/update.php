@@ -263,7 +263,7 @@ $type_factura = substr($tab,6,1);
                     <div class="btn-white">Скачать шаблон</div>
                 </div>
                 <div class="body m-b-20">
-                    <div id="gridArea">
+                    <div id="gridArea" class="items-grid-template">
                         <?= $this->render("/api-v2/_gridWithFuel",['model'=>$model])?>
                     </div>
                     <?php if($model->isNewRecord || $model->json_items==""){ ?>

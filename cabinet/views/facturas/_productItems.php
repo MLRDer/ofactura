@@ -40,6 +40,12 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
 <?php
 $i=0;
 $ord = 1;
+$productCountAll = 0;
+$productPriceAll = 0;
+$productVarpercernt = 0;
+$productVatRate = 0;
+$productVatValue = 0;
+$productDelivery = 0;
 
 foreach ($data as $items){
     $i++;
@@ -49,7 +55,12 @@ foreach ($data as $items){
         continue;
 
     }
-
+    $productCountAll += $items[ExcelConst::KEY_COUNT];
+    $productPriceAll += $items[ExcelConst::KEY_PRICE];
+    $productVarpercernt += $items[ExcelConst::KEY_DELIVER_SUM];
+    $productVatRate += $items[ExcelConst::KEY_VAT_RATE];
+    $productVatValue += $items[ExcelConst::KEY_VAT_VALUE];
+    $productDelivery += $items[ExcelConst::KEY_DELIVER_WITH_RATE];
     ?>
 <tr>
     <td align="center">
@@ -97,20 +108,15 @@ foreach ($data as $items){
         </div>
     </td>
     <td>
-        <div  name="ProductCount" id="ProductCountAll"> </div>
+        <div  name="ProductCount" id="ProductCountAll"><?= $productCountAll ?></div>
+    </td>
+    <td>
+        <div  name="a" id="ProductDeliverySumAll"><?= $productVarpercernt ?></div>
     </td>
     <td>
 
     </td>
     <td>
-        <div  name="ProductDeliverySum" id="ProductDeliverySumAll"> </div>
-    </td>
-    <td>
-
-
-    </td>
-    <td>
-
 
     </td>
     <td>
@@ -119,11 +125,15 @@ foreach ($data as $items){
     </td>
     <td>
 
-        <div  name="ProductVatSum" id="ProductVatSumAll"> </div>
+
+    </td>
+    <td>
+
+        <div  name="ProductVatSum" id="ProductVatSumAll"><?=$productVatValue?></div>
     </td>
 
     <td>
-        <div name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVatAll"> </div>
+        <div name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVatAll"><?= $productDelivery?></div>
     </td>
 
 
