@@ -114,6 +114,12 @@ class SiteController extends \cabinet\components\Controller
         return $this->render('index');
     }
 
+
+    public function actionAferta(){
+        return $this->render('aferta');
+    }
+
+
     public function actionNew()
     {
 //        $this->layout = "mainNew";

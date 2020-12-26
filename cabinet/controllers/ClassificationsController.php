@@ -14,22 +14,12 @@ use yii\filters\VerbFilter;
 /**
  * ClassificationsController implements the CRUD actions for Classifications model.
  */
-class ClassificationsController extends Controller
+class ClassificationsController extends \cabinet\components\Controller
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+
 
     public function actionGetData(){
         $reason="";

@@ -299,9 +299,7 @@ input[name="ProductName"] {
 }
 
 table tbody tr td{
-
     color: #404040!important;
-
 }
 
 .datepicker table tr td, .datepicker table tr th {
@@ -319,4 +317,13 @@ table tbody tr td{
 }
 .square{
     height:20px!important;
+}
+
+table tr th a{
+    color:#fff!important;
+}
+
+.control-item .control-link.gear{
+    background-image:url(../new_template/images/header/gear1.png);
+    background-size: 28px 28px;
 }

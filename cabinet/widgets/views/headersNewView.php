@@ -48,6 +48,9 @@ use cabinet\models\Components;
         </ul>
         <ul class="control-list">
             <li class="control-item">
+                <a href="/classifications/index" class="control-link gear"></a>
+            </li>
+            <li class="control-item">
                 <a href="/new_template/file/offer.pdf" class="control-link offer"></a>
             </li>
             <li class="control-item active">
