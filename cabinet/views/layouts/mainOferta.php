@@ -27,12 +27,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
     <script src="/js/e-imzo.js"></script>
     <script src="/js/e-imzo-client.js"></script>
     <link rel="shortcut icon" href="/img/favicon.png" />
-    <?php
-    $host = Yii::$app->request->getPathInfo();
 
-
-
-    ?>
     <?php $this->head() ?>
 </head>
 <body>
@@ -40,52 +35,38 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
 <input type="hidden" id="langs" value="<?= Yii::$app->language?>">
 <div class="site-wrapper">
     <div class="main-wrapper">
-        <div class="sidebar">
-            <div class="sidebar-top">
-                <a href="/" class="logo">
-                    <img src="/new_template/images/logo/logo.png" alt="">
-                </a>
-                <ul class="sidebar-menu">
-                    <li class="menu__item <?= ($host=="site/index" || $host=="" )?'active':'' ?>">
-                        <a href="/" class="menu__link">
-                            <span class="item">
-                                <span class="icon home"></span>
-                                <span class="title"><?= Yii::t('main','Главная')?></span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="menu__item <?= ($host=="facturas/index" || $host=="facturas/update" || $host=="facturas/create" || $host=="facturas/view")?'active':'' ?>">
-                        <a href="/facturas/index" class="menu__link">
-                            <span class="item">
-                                <span class="icon invoices"></span>
-                                <span class="title"><?= Yii::t('main','Счет-фактуры') ?> </span>
-                            </span>
-                            <span class="badge green">+ 2000</span>
-                        </a>
-                    </li>
-                    <li class="menu__item <?= ($host=="empowerment/index" || $host=="empowerment/update" || $host=="empowerment/create" || $host=="empowerment/view")?'active':'' ?>">
-                        <a href="/empowerment/index" class="menu__link">
-                            <span class="item">
-                                <span class="icon proxy"></span>
-                                <span class="title"><?= Yii::t('main','Доверенность')?></span>
-                            </span>
-                            <span class="badge yellow">+ 1000</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="sidebar-footer">
-                <div class="phone-info">
-                    <div class="title">Call center:</div>
-                    <div class="phone">+ 998 (71)-200-11-22</div>
-                </div>
-                <div class="info">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</div>
-            </div>
-        </div>
 
+        <?= \cabinet\widgets\SidebarNew::widget()?>
         <div class="content-wrapper">
             <?= \cabinet\widgets\HeadersNew::widget()?>
-            <?= $content ?>
+            <?php
+            $model = \common\models\Aferta::findOne(['id'=>1]);
+            $content_oferta = $model['body_'.Yii::$app->language];
+
+            $aferta_data = [
+                "company_id"=>\cabinet\models\Components::GetId(),
+                'user_id'=>Yii::$app->user->id,
+                'aferta'=>$model['body_'.Yii::$app->language]
+            ];
+            $aferta_data = \yii\helpers\Json::encode($aferta_data);
+            $aferta_data = base64_encode($aferta_data);
+            ?>
+            <div class="my-scroll2">
+                <div class="offer-list">
+                    <div class="offer-content" style="height:calc(100vh - 300px);overflow: auto">
+                         <?= $content_oferta?>
+                    </div>
+                    <p style="display: none;" id="Aferta">
+                        <?=  $aferta_data?>
+                    </p>
+                    <div class="offer-footer">
+                        <a href="#!" onclick="AcceptAferta()" class="btn-green m-r-20">
+                            <img src="/new_template/images/icon/check-white.svg" alt="">принять
+                        </a>
+                        <a href="/site/logout" class="btn-outline-red">Отказаться</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -143,7 +124,61 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
         </div>
     </div>
 </div>
+<script>
+    var getTimestamp = function (context_url, signature_hex, callback, fail) {
+        $.ajax({
+            url: '/api/gettimestamp',
+            method: 'POST',
+            data: {
+                signatureHex: signature_hex
+            },
+            success: function (data) {
+                if (data.Success) {
+                    callback(data.Data);
+                } else {
+                    fail(data.Reason);
+                }
+            },
+            error: function (response) {
+                fail(response);
+            }
+        });
+    }
+    var timestamper = function (signature_hex, callback, fail) {
+        getTimestamp("/faktura/ru", signature_hex, callback, fail);
+    };
+    var failDsvs = function (a, b) {
+        alert("failDsys:"+ (a ? a : "") + (b ? b : ""));
+    };
+    function AcceptAferta(){
 
+        var keyId = window.localStorage.getItem("auth_key");
+        console.log(keyId);
+        var facturaJson = $("#Aferta").text();
+
+        EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
+            $.ajax({
+                type: "POST",
+                url: "/api/aferta",
+                data: {
+                    data: pkcs7
+                },
+                success: function (json) {
+                    if (json.Success) {
+                        location.href="/";
+                    } else {
+                        alertError(json.reason);
+                    }
+                },
+                error: function (response) {
+                    alertError(response);
+                }
+            });
+        }, failDsvs);
+
+    }
+
+</script>
 <?php $this->endBody() ?>
 <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
