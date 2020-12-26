@@ -538,14 +538,14 @@ class FacturasController extends \cabinet\components\Controller
                 }
                 $data = ExcelViewer::readFull(ExcelConst::FILE_PATH . ExcelConst::FILE_NAME);
                 $i=0;
-                $ord=0;
+                $ord=1;
                 $is_fuel = 0;
                 foreach ($data as $items) {
 
                     $i++;
                     $ord++;
                     if ($i <= ExcelConst::ROW_BEGIN_KEY) {
-                        $ord = 0;
+                        $ord = 1;
                         continue;
                     }
 

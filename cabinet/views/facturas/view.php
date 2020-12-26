@@ -46,6 +46,34 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+
+    <div class="kt-portlet__body">
+        <?php
+
+            if(isset($_SESSION['missing_classcodes'])){
+                $missings = $_SESSION['missing_classcodes'];
+                $text_missings = "";
+                foreach ($missings as $missing){
+                    $text_missings .= $missing . " ";
+
+                }
+
+                if (count($_SESSION['missing_classcodes']) > 0){
+                    echo "<div style='background-color: #f2f3f7; padding: 20px '>".$text_missings." - ushbu klass kodlar sizda mavjud emas!"."</div>";
+                }
+            }
+
+            $_SESSION["missing_classcodes"]=[];
+
+        ?>
+        <?php
+        $CanseledJson = [
+            'FacturaId'=>$model->Id,
+            'SellerTin'=>$model->SellerTin
+        ];
+        ?>
+        <input type="hidden" id="CaneledValue" name="caneled_value" value='<?= \yii\helpers\Json::encode($CanseledJson)?>'>
+        <object data="/facturas/pdf?id=<?= $model->Id ?>" type="application/pdf" width="100%" height="650"></object>
     <div class="row">
         <div class="col-md-12">
             <div class="pdf-wrapper">
