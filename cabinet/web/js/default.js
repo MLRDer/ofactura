@@ -819,7 +819,7 @@ function SendFactura(factura_id){
                         },
                         success: function (json) {
                             if (json.Success) {
-                                location.href="/facturas/sent";
+                                location.href="/facturas/view?id="+factura_id;
                             } else {
                                 // ShowMessage('danger',json.reason);
                                 alertError(json.reason);
@@ -1246,7 +1246,7 @@ function CancelFactura(id){
                 success: function (json) {
                     if (json.Success) {
                         alertSuccess(json.Reason);
-                        location.href = "/facturas/sent";
+                        location.href = "/facturas/view?id"+id;
                     } else {
                         alertError(json.Reason);
                     }
