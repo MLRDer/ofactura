@@ -252,9 +252,12 @@ $type_factura = substr($tab,6,1);
         <div class="col-md-12">
             <div class="table-card-gray">
                 <div class="header">
-                    <div class="btn-blue font-weight-normal text-transform-none m-r-20">
-                        <img src="/new_template/images/icon/clip.svg" alt="">Загрузить Excel файл</div>
-                    <div class="btn-white">Скачать шаблон</div>
+
+                    <label class="btn-blue font-weight-normal text-transform-none m-r-20" id="UploadBtn">
+                        <img src="/new_template/images/icon/clip.svg" alt=""> <?= Yii::t('main','Exel to import btn')?>
+                        <input type="file" id="docs-file" name="Facturas[file]" hidden>
+                    </label>
+                    <div class="btn-white"><a href="/docs/faktura_all_template.xlsx">Скачать шаблон</a></div>
                 </div>
                 <div class="body m-b-20">
                     <div id="gridArea">
@@ -508,7 +511,7 @@ $type_factura = substr($tab,6,1);
         });
 
         $("#docs-file").change(function(e){
-            var formData = new FormData($('#w1')[0]);
+            var formData = new FormData($('#w0')[0]);
             $("#UploadBtn").addClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
             $.ajax({
                 url: "/uz/facturas/import-excel",  //Server script to process data

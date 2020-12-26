@@ -19,28 +19,29 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
     <table class="table table-bordered">
     <thead>
 
-    <tr>
-        <th width="40px" rowspan="2"></th>
+    <tr id="productItemsAreaHead">
+        <th rowspan="2"></th>
 
         <th rowspan="2"><?= Yii::t('main','Наименование товара, выполненных работ и оказанных услуг')?></th>
-        <th width="130px" rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
-        <th width="90px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
-        <th width="130px" rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
+        <th rowspan="2"><?= Yii::t('main','Product Code')?></th>
+        <th rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
+        <th rowspan="2"><?= Yii::t('main','Кол - во')?></th>
+        <th rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
 
 
-        <th width="60px" colspan="2" rowspan="1"><?= Yii::t('main','AKSIS')?></th>
-        <th width="130px" rowspan="2"><?= Yii::t('main','Стоимость поставки')?></th>
-        <th width="60px" colspan="2" rowspan="1"><?= Yii::t('main','НДС')?></th>
-        <th width="130px" rowspan="2"><?= Yii::t('main','Стоимость поставок с учётом НДС')?></th>
+        <th colspan="2" rowspan="1"><?= Yii::t('main','AKSIS')?></th>
+        <th rowspan="2"><?= Yii::t('main','Стоимость поставки')?></th>
+        <th colspan="2" rowspan="1"><?= Yii::t('main','НДС')?></th>
+        <th rowspan="2"><?= Yii::t('main','Стоимость поставок с учётом НДС')?></th>
 
 
     </tr>
     <tr>
-        <th width="130px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
-        <th width="130px" rowspan="1"><?= Yii::t('main','сумма')?></th>
+        <th rowspan="1"><?= Yii::t('main','ставка %')?></th>
+        <th rowspan="1"><?= Yii::t('main','сумма')?></th>
 
-        <th width="130px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
-        <th width="130px" rowspan="1"><?= Yii::t('main','сумма')?></th>
+        <th rowspan="1"><?= Yii::t('main','ставка %')?></th>
+        <th rowspan="1"><?= Yii::t('main','сумма')?></th>
     </tr>
 
     </thead>
@@ -54,13 +55,13 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
 
 <?php
 $i=0;
-$ord = 0;
+$ord = 1;
 
 foreach ($data as $items){
     $i++;
 
     if($i <= ExcelConst::ROW_BEGIN_KEY){
-        $ord = 0;
+        $ord = 1;
         continue;
 
     }
@@ -78,6 +79,9 @@ foreach ($data as $items){
 
     <td>
         <div class="editable" name="ProductName" rowid="<?= $ord ?>"><?= $items[ExcelConst::KEY_NAME]?></div>
+    </td>
+    <td>
+        <div class="editable" name="CatalogCode" rowid="<?= $ord ?>"><?= $items[ExcelConst::CATALOG_CODE]?></div>
     </td>
     <td>
         <div class="editable" name="ProductMeasureId" rowid="<?= $ord ?>"><?= $measure[$items[ExcelConst::KEY_CODE]] ?></div>
