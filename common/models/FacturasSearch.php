@@ -42,7 +42,7 @@ class FacturasSearch extends Facturas
     public function search($params)
     {
         $query = Facturas::find();
-
+        $query->select('id, FacturaNo, ContractNo, BuyerTin, BuyerName, status,SellerName');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

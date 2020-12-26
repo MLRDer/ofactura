@@ -16,13 +16,17 @@ use common\widgets\Alert; ?>
             <div class="body">
                 <ul class="list">
                     <li class="item">
-                        <div class="label">Входящие</div><a href="#!" class="badge green">+ 2000</a>
+                        <div class="label">Входящие</div>
+<!--                            <a href="#!" class="badge green">+ 2000-->
+                        </a>
                     </li>
                     <li class="item">
-                        <div class="label">Отправленные</div><a href="#!" class="value">8</a>
+                        <div class="label">Отправленные</div>
+<!--                        <a href="#!" class="value">8</a>-->
                     </li>
                     <li class="item">
-                        <div class="label">Сохраненные</div><a href="#!" class="value">8</a>
+                        <div class="label">Сохраненные</div>
+<!--                        <a href="#!" class="value">8</a>-->
                     </li>
                 </ul>
             </div>
@@ -39,13 +43,17 @@ use common\widgets\Alert; ?>
             <div class="body">
                 <ul class="list">
                     <li class="item">
-                        <div class="label">Входящие</div><a href="#!" class="badge yellow">+1 000</a>
+                        <div class="label">Входящие</div>
+<!--                            <a href="#!" class="badge yellow">+1 000-->
+                        </a>
                     </li>
                     <li class="item">
-                        <div class="label">Отправленные</div><a href="#!" class="value">8</a>
+                        <div class="label">Отправленные</div>
+<!--                        <a href="#!" class="value">8</a>-->
                     </li>
                     <li class="item">
-                        <div class="label">Сохраненные</div><a href="#!" class="value">8</a>
+                        <div class="label">Сохраненные</div>
+<!--                        <a href="#!" class="value">8</a>-->
                     </li>
                 </ul>
             </div>

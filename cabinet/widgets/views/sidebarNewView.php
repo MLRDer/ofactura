@@ -25,7 +25,7 @@ $host = Yii::$app->request->getPathInfo();
                                 <span class="icon invoices"></span>
                                 <span class="title"><?= Yii::t('main','Счет-фактуры') ?> </span>
                             </span>
-                    <span class="badge green">+ 2000</span>
+<!--                    <span class="badge green">+ 2000</span>-->
                 </a>
             </li>
             <li class="menu__item <?= ($host=="empowerment/index" || $host=="empowerment/update" || $host=="empowerment/create" || $host=="empowerment/view")?'active':'' ?>">
@@ -34,7 +34,7 @@ $host = Yii::$app->request->getPathInfo();
                                 <span class="icon proxy"></span>
                                 <span class="title"><?= Yii::t('main','Доверенность')?></span>
                             </span>
-                    <span class="badge yellow">+ 1000</span>
+<!--                    <span class="badge yellow">+ 1000</span>-->
                 </a>
             </li>
         </ul>
