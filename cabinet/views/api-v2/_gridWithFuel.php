@@ -13,39 +13,28 @@ $k=0;
 ?>
 
 <input type="hidden" id="row_value" value="2">
-
-<div class="col-md-12"  style="padding-bottom: 20px">
-
-
-
-
-</div>
-<div class="col-md-12">
-
     <table class="table table-bordered">
         <thead>
-
         <tr>
             <th width="40px" rowspan="2"></th>
-
             <th rowspan="2"><?= Yii::t('main','Наименование товара, выполненных работ и оказанных услуг')?></th>
-            <th rowspan="2"><?= Yii::t('main','Товар (хизмат)лар Ягона электрон миллий каталоги бўйича идентификация коди ва номи')?></th>
-            <th width="130px"  rowspan="2"><?= Yii::t('main','Товар штрих коди (мажбурий эмас)')?></th>
-            <th width="130px" rowspan="2"><?= Yii::t('main','Ед. изм.')?></th>
-            <th width="90px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
-            <th width="130px" rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
+            <th rowspan="2" width="199px"><?= Yii::t('main','Товар (хизмат)лар Ягона электрон миллий каталоги бўйича идентификация коди ва номи')?></th>
+            <th width="112px"  rowspan="2"><?= Yii::t('main','Товар штрих коди (мажбурий эмас)')?></th>
+            <th rowspan="2" width="112px"><?= Yii::t('main','Ед. изм.')?></th>
+            <th width="112px" rowspan="2"><?= Yii::t('main','Кол - во')?></th>
+            <th width="112px" rowspan="2"><?= Yii::t('main','Цена за единицу')?></th>
 
-            <th width="60px" colspan="2" rowspan="1"><?= Yii::t('main','AKSIS')?></th>
-            <th width="130px" rowspan="2"><?= Yii::t('main','Стоимость поставки')?></th>
-            <th width="60px" colspan="2" rowspan="1"><?= Yii::t('main','НДС')?></th>
-            <th width="130px" rowspan="2"><?= Yii::t('main','Стоимость поставок с учётом НДС')?></th>
+            <th width="112px" colspan="2" rowspan="1"><?= Yii::t('main','AKSIS')?></th>
+            <th width="112px" rowspan="2"><?= Yii::t('main','Стоимость поставки')?></th>
+            <th width="112px" colspan="2" rowspan="1"><?= Yii::t('main','НДС')?></th>
+            <th width="112px" rowspan="2"><?= Yii::t('main','Стоимость поставок с учётом НДС')?></th>
         </tr>
         <tr>
-            <th width="130px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
-            <th width="130px" rowspan="1"><?= Yii::t('main','сумма')?></th>
+            <th width="112px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
+            <th width="112px" rowspan="1"><?= Yii::t('main','сумма')?></th>
 
-            <th width="130px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
-            <th width="130px" rowspan="1"><?= Yii::t('main','сумма')?></th>
+            <th width="112px" rowspan="1"><?= Yii::t('main','ставка %')?></th>
+            <th width="112px" rowspan="1"><?= Yii::t('main','сумма')?></th>
 
 
         </tr>
@@ -57,9 +46,9 @@ $k=0;
             <tr rowid="1">
                 <td align="center">
 
-                    <label class="kt-checkbox kt-checkbox--brand">
+                    <label class="second-checkbox d-inline-block m-t-5">
                         <input rowid="1" type="checkbox" name="record">
-                        <span style="top: 4px;left: 5px;"></span>
+                        <div class="square"></div>
                     </label>
 
                 </td>
@@ -160,9 +149,9 @@ $k=0;
                 <tr rowid="<?= $items->OrdNo ?>">
                     <td align="center">
 
-                        <label class="kt-checkbox kt-checkbox--brand">
+                        <label class="second-checkbox d-inline-block m-t-5">
                             <input rowid="<?= $items->OrdNo ?>" type="checkbox" name="record">
-                            <span style="top: 4px;left: 5px;"></span>
+                            <div class="square"></div>
                         </label>
 
                     </td>
@@ -172,10 +161,10 @@ $k=0;
                     </td>
 
                     <td>
-                        <div class="editable" name="ProductCatalogName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogName ?></div>
+                        <div class="editable" name="ProductCatalogName" rowid="<?= $items->OrdNo ?>"><?= $items->CatalogName ?></div>
                     </td>
                     <td>
-                        <div class="editable" name="ProductCatalogCode" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogCode ?></div>
+                        <div class="editable" name="ProductCatalogCode" rowid="<?= $items->OrdNo ?>"><?= $items->CatalogCode ?></div>
                     </td>
                     <td>
                         <div class="editable" name="ProductMeasureId" rowid="<?= $items->OrdNo ?>">
@@ -258,17 +247,23 @@ $k=0;
 
 
     </div>
-</div>
-<div class="col-md-12">
 
-    <button type="button" class="delete-row btn btn-danger btn-elevate"><i class="la la-trash-o
-"></i> <?= Yii::t('main','Удалить')?></button>
-    <span class="pull-right">
-            <button type="button" class="add-row btn btn-brand btn-elevate"><i class="la la-plus-circle
-"></i> <?= Yii::t('main','Добавить ещё')?></button>
-            </span>
+
+
+<div class="footer">
+    <div type="button" class="add-row btn-outline-blue color-blue standard-btn m-r-20">
+        <?= Yii::t('main','+ Добавить ещё')?>
+    </div>
+    <button type="button" class="delete-row btn-red">
+        <?= Yii::t('main','Удалить')?>
+    </button>
 
 </div>
+
+
+
+
+
 
 
 

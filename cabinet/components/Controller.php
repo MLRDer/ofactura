@@ -17,7 +17,8 @@ class Controller extends \common\components\Controller
 
         $is_aferta = Components::CompanyData('is_aferta');
         if($is_aferta==0){
-            $this->layout = "mainAferta";
+            $this->layout = "mainOferta";
+//            $this->redirect('/site/aferta');
         }
         $session = Yii::$app->session->get('mode','min');
         if($session=="max")

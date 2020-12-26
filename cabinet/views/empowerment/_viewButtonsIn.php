@@ -8,18 +8,20 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\Empowerment */
 ?>
-<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+
+
+
+
     <?php if($model->status==5){ ?>
 
-
-
-        <button  type="button" name="Send" class="btn btn-brand" onclick="AcceptEmpowerment(<?= $model->id ?>)">
-            <i class="la la-qrcode"></i> <?= Yii::t('main','Imzolash')?>
+        <button  type="button" name="Send" class="btn-green m-r-20" onclick="AcceptEmpowerment(<?= $model->id ?>)">
+            <img src="/new_template/images/icon/signature.svg" alt=""> <span class="title"><?= Yii::t('main','Imzolash')?></span>
         </button>
-        <button  type="button" name="Send" class="btn btn-danger" onclick="RejectedEmpowerment(<?= $model->id ?>)">
-            <i class="la la-qrcode"></i> <?= Yii::t('main','Rad etish')?>
+        <button  type="button" name="Send" class="btn-outline-red" onclick="RejectedEmpowerment(<?= $model->id ?>)">
+             <?= Yii::t('main','Rad etish')?>
         </button>
     <?php }?>
 
 
-</div>
+

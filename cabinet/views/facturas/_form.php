@@ -288,34 +288,34 @@ use yii\widgets\ActiveForm;
 
 </div>
 <style>
-    .form-group label {
-        /*font-family: Montserrat;*/
-        text-transform: uppercase;
-        color: #f7975c;
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 20px;
-        position: relative;
-        top: 17px;
-        left: 15px;
-        background-color: #fff;
-        padding-right: 5px;
-        padding-bottom: 0px;
-        z-index: 10;
-        padding-left: 5px;
-    }
-    .form-group input, .form-group textarea {
-        width: 100%;
-        padding: 20px 20px;
-        /*font-family: Montserrat;*/
-        font-size: 16px;
-        line-height: 20px;
-        color: #848e9f;
-        border: 1px solid #1e2d55;
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-        border-radius: 6px;
-    }
+    /*.form-group label {*/
+        /*!*font-family: Montserrat;*!*/
+        /*text-transform: uppercase;*/
+        /*color: #f7975c;*/
+        /*font-weight: 600;*/
+        /*font-size: 12px;*/
+        /*line-height: 20px;*/
+        /*position: relative;*/
+        /*top: 17px;*/
+        /*left: 15px;*/
+        /*background-color: #fff;*/
+        /*padding-right: 5px;*/
+        /*padding-bottom: 0px;*/
+        /*z-index: 10;*/
+        /*padding-left: 5px;*/
+    /*}*/
+    /*.form-group input, .form-group textarea {*/
+        /*width: 100%;*/
+        /*padding: 20px 20px;*/
+        /*!*font-family: Montserrat;*!*/
+        /*font-size: 16px;*/
+        /*line-height: 20px;*/
+        /*color: #848e9f;*/
+        /*border: 1px solid #1e2d55;*/
+        /*-webkit-border-radius: 6px;*/
+        /*-moz-border-radius: 6px;*/
+        /*border-radius: 6px;*/
+    /*}*/
 </style>
 
 <script>
@@ -529,15 +529,15 @@ use yii\widgets\ActiveForm;
     .SallerBuyer .form-group{
         margin-bottom:0px;
     }
-    .SallerBuyer .form-group label {
-        font-size: 1.1rem;
-        font-weight: 400;
-        float:left;
-        width: 45%;
-        color:black;
-        margin-bottom: 0px;
-        padding-top: 0px;
-    }
+    /*.SallerBuyer .form-group label {*/
+        /*font-size: 1.1rem;*/
+        /*font-weight: 400;*/
+        /*float:left;*/
+        /*width: 45%;*/
+        /*color:black;*/
+        /*margin-bottom: 0px;*/
+        /*padding-top: 0px;*/
+    /*}*/
 
 
 

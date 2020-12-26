@@ -10,51 +10,29 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-color:#f8f9fa;">
-    <div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
-        <div class="kt-login__container">
-            <div class="kt-login__logo">
-                <a href="#">
-                    <img src="/img/logo.png" width="230px">
-                </a>
+
+<form name="testform" id="authForm" action="/site/login" method="post" class="kt-form" >
+    <div class="sign-in-form">
+        <div class="header">
+            <img src="/new_template/images/icon/sign-in-logo.svg" alt="">
+        </div>
+        <div class="body">
+            <select class="js-example-basic-hide-search" name="key" onchange="cbChanged(this)">
+
+            </select>
+            <div>
+                <p id="message"></p>
+                <input name="data" type="hidden" value="<?= $guid ?>">
+                <label id="keyId" style="display:none;"></label><br />
+                <textarea name="pkcs7" style="display:none;"></textarea>
+                <div class="clearfix"></div>
             </div>
-            <div class="kt-login__signin">
-                <div class="kt-login__head">
-                    <h3 class="kt-login__title">Tizimga kirish <?= Yii::$app->language ?></h3>
-                </div>
-
-                <form name="testform" id="authForm" action="/site/login" method="post" class="kt-form" >
-                        <div class="input-group">
-                            <label>Выберите ключ</label>
-                            <select class="form-control" name="key"  onchange="cbChanged(this)"></select
-                                <div class="clearfix"></div>
-                        </div>
-                    <div>
-                        <p id="message"></p>
-                        <input name="data" type="hidden" value="<?= $guid ?>">
-                        <label id="keyId" style="display:none;"></label><br />
-                        <textarea name="pkcs7" style="display:none;"></textarea>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="kt-login__actions" style="padding-top: 20px;
-padding-bottom: 10px;">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="https://onlinefactura.uz" class="btn btn-light btn-elevate kt-login__btn-primary btn-block btn-login">Ortga</a>
-                            </div>
-                            <div class="col-lg-6">
-                                <span class="btn btn-brand btn-elevate kt-login__btn-primary btn-block btn-login" onclick="sign()">Kirish</span>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </form>
-            </div>
-
+            <button type="button" class="btn-blue w-100 m-b-10 d-flex justify-content-center" onclick="sign()">Войти</button>
         </div>
     </div>
-</div>
+</form>
+
+
 
 <script language="javascript">
     var EIMZO_MAJOR = 3;
@@ -207,8 +185,9 @@ padding-bottom: 10px;">
 
 
     var sendAuth =function(keyId,pkcs7,data){
-        var login ='<div class="kt-spinner kt-spinner--v2 kt-spinner--sm kt-spinner--brand"></div>';
-        document.getElementById('authForm').innerHTML = login;
+        console.log('authga keldi');
+        // var login ='<div class="kt-spinner kt-spinner--v2 kt-spinner--sm kt-spinner--brand"></div>';
+        // document.getElementById('authForm').innerHTML = login;
         SetLoader('authForm');
         $.ajax({
             url: '/site/auth',
@@ -237,6 +216,7 @@ padding-bottom: 10px;">
 
     sign = function () {
         var itm = document.testform.key.value;
+        console.log(itm);
         if (itm) {
             var id = document.getElementById(itm);
             var vo = JSON.parse(id.getAttribute('vo'));
