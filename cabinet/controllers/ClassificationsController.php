@@ -51,9 +51,8 @@ class ClassificationsController extends Controller
             if($data['success']==true){
 
                 foreach ($data['data'] as $items) {
-                    $model = Classifications::find()->andWhere(['groupCode'=>$items['groupCode'], 'tin'=>Components::CompanyData('tin')])->one();
-                    if(empty($model))
-                        $model = new Classifications();
+                    $model = Classifications::find()->andWhere(['classCode'=>$items['classCode'], 'tin'=>Components::CompanyData('tin')])->one();
+                    if(empty($model)) $model = new Classifications();
                     $model->tin = (string)Components::CompanyData('tin');
                     $model->groupCode = $items['groupCode'];
                     $model->classCode = $items['classCode'];

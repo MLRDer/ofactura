@@ -55,7 +55,7 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
             </td>
 
             <td>
-                <div class="editable" name="ProductName" rowid="1"></div>
+                <div class="editable" focus name="ProductName" rowid="1"></div>
             </td>
             <td>
                 <div class="editable" name="ProductCatalogName" rowid="1"></div>
@@ -155,7 +155,7 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
                 </td>
 
                 <td>
-                    <div class="editable" name="ProductName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductName ?></div>
+                    <div class="editable" onkeypress="keyPressHandler(e)" name="ProductName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductName ?></div>
                 </td>
                 <td>
                     <div class="editable" name="ProductCatalogName" rowid="<?= $items->SortOreder ?>"><?= $items->ProductCatalogName ?></div>
@@ -217,3 +217,9 @@ $measure = \yii\helpers\ArrayHelper::map($measure,'id','name')
 
 
 </div>
+
+<script>
+    function keyPressHandler(e){
+        console.log(e.keyCode);if (e.keyCode==9||e.keyCode==13){document.getElementById('ProductCount_1').click()}
+    }
+</script>
