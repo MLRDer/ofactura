@@ -42,7 +42,7 @@ class FacturasSearch extends Facturas
     public function search($params)
     {
         $query = Facturas::find();
-        $query->select('Id, FacturaNo, ContractNo, BuyerTin, BuyerName, status,SellerName');
+        $query->select(['Id', 'FacturaNo', 'ContractNo', 'BuyerTin', 'BuyerName', 'status','SellerName']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -59,61 +59,61 @@ class FacturasSearch extends Facturas
         }
         $query->orderBy('created_date DESC');
         // grid filtering conditions
-        $query->andFilterWhere([
-            'Version' => $this->Version,
-            'FacturaType' => $this->FacturaType,
-            'SingleSidedType' => $this->SingleSidedType,
-            'FacturaDate' => $this->FacturaDate,
-            'ContractDate' => $this->ContractDate,
-            'EmpowermentDateOfIssue' => $this->EmpowermentDateOfIssue,
-            'HasVat' => $this->HasVat,
-            'HasExcise' => $this->HasExcise,
-            'HasCommittent' => $this->HasCommittent,
-            'HasMedical' => $this->HasMedical,
-            'AllSum' => $this->AllSum,
-            'AllVatSum' => $this->AllVatSum,
-            'type' => $this->type,
-            'status' => $this->status,
-        ]);
+//        $query->andFilterWhere([
+//            'Version' => $this->Version,
+//            'FacturaType' => $this->FacturaType,
+//            'SingleSidedType' => $this->SingleSidedType,
+//            'FacturaDate' => $this->FacturaDate,
+//            'ContractDate' => $this->ContractDate,
+//            'EmpowermentDateOfIssue' => $this->EmpowermentDateOfIssue,
+//            'HasVat' => $this->HasVat,
+//            'HasExcise' => $this->HasExcise,
+//            'HasCommittent' => $this->HasCommittent,
+//            'HasMedical' => $this->HasMedical,
+//            'AllSum' => $this->AllSum,
+//            'AllVatSum' => $this->AllVatSum,
+//            'type' => $this->type,
+//            'status' => $this->status,
+//        ]);
 
-        $query->andFilterWhere(['like', 'Id', $this->Id])
-            ->andFilterWhere(['like', 'FacturaNo', $this->FacturaNo])
-            ->andFilterWhere(['like', 'ContractNo', $this->ContractNo])
-            ->andFilterWhere(['like', 'AgentFacturaId', $this->AgentFacturaId])
-            ->andFilterWhere(['like', 'EmpowermentNo', $this->EmpowermentNo])
-            ->andFilterWhere(['like', 'AgentFio', $this->AgentFio])
-            ->andFilterWhere(['like', 'AgentTin', $this->AgentTin])
-            ->andFilterWhere(['like', 'ItemReleasedFio', $this->ItemReleasedFio])
-            ->andFilterWhere(['like', 'SellerTin', $this->SellerTin])
-            ->andFilterWhere(['like', 'BuyerTin', $this->BuyerTin])
-            ->andFilterWhere(['like', 'SellerName', $this->SellerName])
-            ->andFilterWhere(['like', 'SellerAccount', $this->SellerAccount])
-            ->andFilterWhere(['like', 'SellerBankId', $this->SellerBankId])
-            ->andFilterWhere(['like', 'SellerAddress', $this->SellerAddress])
-            ->andFilterWhere(['like', 'SellerMobile', $this->SellerMobile])
-            ->andFilterWhere(['like', 'SellerWorkPhone', $this->SellerWorkPhone])
-            ->andFilterWhere(['like', 'SellerOked', $this->SellerOked])
-            ->andFilterWhere(['like', 'SellerDistrictId', $this->SellerDistrictId])
-            ->andFilterWhere(['like', 'SellerDirector', $this->SellerDirector])
-            ->andFilterWhere(['like', 'SellerAccountant', $this->SellerAccountant])
-            ->andFilterWhere(['like', 'SellerVatRegCode', $this->SellerVatRegCode])
-            ->andFilterWhere(['like', 'SellerBranchCode', $this->SellerBranchCode])
-            ->andFilterWhere(['like', 'SellerBranchName', $this->SellerBranchName])
-            ->andFilterWhere(['like', 'BuyerName', $this->BuyerName])
-            ->andFilterWhere(['like', 'BuyerAccount', $this->BuyerAccount])
-            ->andFilterWhere(['like', 'BuyerBankId', $this->BuyerBankId])
-            ->andFilterWhere(['like', 'BuyerAddress', $this->BuyerAddress])
-            ->andFilterWhere(['like', 'BuyerMobile', $this->BuyerMobile])
-            ->andFilterWhere(['like', 'BuyerWorkPhone', $this->BuyerWorkPhone])
-            ->andFilterWhere(['like', 'BuyerOked', $this->BuyerOked])
-            ->andFilterWhere(['like', 'BuyerDistrictId', $this->BuyerDistrictId])
-            ->andFilterWhere(['like', 'BuyerDirector', $this->BuyerDirector])
-            ->andFilterWhere(['like', 'BuyerAccountant', $this->BuyerAccountant])
-            ->andFilterWhere(['like', 'BuyerVatRegCode', $this->BuyerVatRegCode])
-            ->andFilterWhere(['like', 'BuyerBranchCode', $this->BuyerBranchCode])
-            ->andFilterWhere(['like', 'BuyerBranchName', $this->BuyerBranchName])
-            ->andFilterWhere(['like', 'FacturaProductId', $this->FacturaProductId])
-            ->andFilterWhere(['like', 'Tin', $this->Tin]);
+//        $query->andFilterWhere(['like', 'Id', $this->Id])
+//            ->andFilterWhere(['like', 'FacturaNo', $this->FacturaNo])
+//            ->andFilterWhere(['like', 'ContractNo', $this->ContractNo])
+//            ->andFilterWhere(['like', 'AgentFacturaId', $this->AgentFacturaId])
+//            ->andFilterWhere(['like', 'EmpowermentNo', $this->EmpowermentNo])
+//            ->andFilterWhere(['like', 'AgentFio', $this->AgentFio])
+//            ->andFilterWhere(['like', 'AgentTin', $this->AgentTin])
+//            ->andFilterWhere(['like', 'ItemReleasedFio', $this->ItemReleasedFio])
+//            ->andFilterWhere(['like', 'SellerTin', $this->SellerTin])
+//            ->andFilterWhere(['like', 'BuyerTin', $this->BuyerTin])
+//            ->andFilterWhere(['like', 'SellerName', $this->SellerName])
+//            ->andFilterWhere(['like', 'SellerAccount', $this->SellerAccount])
+//            ->andFilterWhere(['like', 'SellerBankId', $this->SellerBankId])
+//            ->andFilterWhere(['like', 'SellerAddress', $this->SellerAddress])
+//            ->andFilterWhere(['like', 'SellerMobile', $this->SellerMobile])
+//            ->andFilterWhere(['like', 'SellerWorkPhone', $this->SellerWorkPhone])
+//            ->andFilterWhere(['like', 'SellerOked', $this->SellerOked])
+//            ->andFilterWhere(['like', 'SellerDistrictId', $this->SellerDistrictId])
+//            ->andFilterWhere(['like', 'SellerDirector', $this->SellerDirector])
+//            ->andFilterWhere(['like', 'SellerAccountant', $this->SellerAccountant])
+//            ->andFilterWhere(['like', 'SellerVatRegCode', $this->SellerVatRegCode])
+//            ->andFilterWhere(['like', 'SellerBranchCode', $this->SellerBranchCode])
+//            ->andFilterWhere(['like', 'SellerBranchName', $this->SellerBranchName])
+//            ->andFilterWhere(['like', 'BuyerName', $this->BuyerName])
+//            ->andFilterWhere(['like', 'BuyerAccount', $this->BuyerAccount])
+//            ->andFilterWhere(['like', 'BuyerBankId', $this->BuyerBankId])
+//            ->andFilterWhere(['like', 'BuyerAddress', $this->BuyerAddress])
+//            ->andFilterWhere(['like', 'BuyerMobile', $this->BuyerMobile])
+//            ->andFilterWhere(['like', 'BuyerWorkPhone', $this->BuyerWorkPhone])
+//            ->andFilterWhere(['like', 'BuyerOked', $this->BuyerOked])
+//            ->andFilterWhere(['like', 'BuyerDistrictId', $this->BuyerDistrictId])
+//            ->andFilterWhere(['like', 'BuyerDirector', $this->BuyerDirector])
+//            ->andFilterWhere(['like', 'BuyerAccountant', $this->BuyerAccountant])
+//            ->andFilterWhere(['like', 'BuyerVatRegCode', $this->BuyerVatRegCode])
+//            ->andFilterWhere(['like', 'BuyerBranchCode', $this->BuyerBranchCode])
+//            ->andFilterWhere(['like', 'BuyerBranchName', $this->BuyerBranchName])
+//            ->andFilterWhere(['like', 'FacturaProductId', $this->FacturaProductId])
+//            ->andFilterWhere(['like', 'Tin', $this->Tin]);
 
         return $dataProvider;
     }
