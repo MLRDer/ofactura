@@ -549,26 +549,5 @@ $type_factura = substr($tab,6,1);
 <?php ActiveForm::end(); ?>
 
 <style>
-    .profile-tab-header .nav-item .nav-link{
-        min-width: 180px !important;
-    }
-    
-    @media screen and (max-width: 1025px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 180px !important;
-        }
-    }
-
-    @media screen and (max-width: 1260px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 200px !important;
-        }
-    }
-
-    @media screen and (max-width: 769px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 150px !important;
-        }
-    }
 
 </style>

@@ -11,6 +11,7 @@ use common\models\Facturas;
 use common\models\Invoices;
 use common\models\SynsJobs;
 use Yii;
+use yii\debug\models\search\Db;
 use yii\helpers\Json;
 use yii\web\Response;
 
@@ -37,6 +38,113 @@ class ConsoleController extends \yii\console\Controller
             $data = $this->buyerData($item);
             $this->SetData($data);
         }
+    }
+
+    public function actionFetchSellerFacturas(){
+
+        ini_set("memory_limit", "512M");
+
+        try {
+            $db = Yii::$app->getDb();
+
+            $facturas= $db->createCommand("SELECT FACTURA_ID AS factura_id, SELLER_TIN AS seller_tin FROM no_factura")->queryAll();
+
+
+            echo "Started\n";
+            $i=0;
+            foreach ($facturas as $factura){
+//                var_dump($data);
+//                die();
+
+                if(Facturas::findOne("Id=".$factura["factura_id"]))
+                {
+                    echo $factura->id . " exists\n";
+                    continue;
+                }
+                else{
+
+                    $opts = array(
+                        'http' => array(
+                            'method' => "GET",
+                            'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                        )
+                    );
+
+                    $context = stream_context_create($opts);
+                    $url=self::HOST."/provider/api/uz/".$factura["seller_tin"]."/facturas/seller/".$factura["factura_id"];
+                    $data = file_get_contents($url, false, $context);
+
+                    $data = json_decode($data);
+                    $new_factura = new Facturas();
+
+
+                    $new_factura->SellerName=$data->seller->name;
+                    $new_factura->SellerAccount = $data->seller->account;
+                    $new_factura->SellerBankId = $data->seller->bank->bankId;
+                    $new_factura->SellerDirector = $data->seller->director;
+                    $new_factura->SellerAccountant = $data->seller->accountant;
+                    $new_factura->SellerVatRegCode = $data->seller->vatRegCode;
+                    $new_factura->SellerBranchCode = $data->seller->branchCode;
+                    $new_factura->SellerBranchName = $data->seller->branchName;
+                    $new_factura->SellerOked = $data->seller->oked;
+                    $new_factura->SellerDistrictId = $data->seller->district->districtId;
+                    $new_factura->SellerAddress = $data->seller->address;
+                    $new_factura->SellerWorkPhone = $data->seller->workPhone;
+
+
+                    $new_factura->BuyerTin = $data->buyerTin;
+                    $new_factura->BuyerAccount = $data->buyer->account;
+                    $new_factura->BuyerBankId = $data->buyer->bank->bankId;
+                    $new_factura->BuyerBranchName = $data->buyer->bank->name;
+                    $new_factura->BuyerAddress = $data->buyer->address;
+                    $new_factura->BuyerOked = $data->buyer->oked;
+                    $new_factura->BuyerDirector = $data->buyer->director;
+                    $new_factura->BuyerAccountant = $data->buyer->accountant;
+                    $new_factura->BuyerVatRegCode = $data->buyer->vatRegCode;
+
+                    $new_factura->Id = $data->facturaId;
+                    $new_factura->Tin = $data->sellerTin;
+                    $new_factura->SellerTin = $data->sellerTin;
+                    $new_factura->FacturaType=$data->facturaType;
+                    $new_factura->type = 0;
+                    $new_factura->HasExcise = 0;
+                    $new_factura->HasMedical = 0;
+                    $new_factura->HasVat = 0;
+                    $new_factura->HasCommittent = 0;
+                    $new_factura->SingleSidedType=$data->singleSidedType;
+                    $new_factura->created_date=date('Y-m-d H:i:s',strtotime($data->created));
+                    $new_factura->EmpowermentDateOfIssue=date('Y-m-d H:i:s',strtotime($data->facturaEmpowermentDoc->empowermentDateOfIssue));
+                    $new_factura->EmpowermentNo = $data->facturaEmpowermentDoc->empowermentNo;
+                    $new_factura->AgentTin = $data->facturaEmpowermentDoc->agentTin;
+                    $new_factura->AgentFio = $data->facturaEmpowermentDoc->agentFio;
+                    $new_factura->AgentFacturaId = $data->facturaEmpowermentDoc->agentFacturaId;
+                    $new_factura->ContractNo = $data->contractDoc->contractNo;
+                    $new_factura->ContractDate = date('Y-m-d H:i:s',strtotime($data->contractDoc->contractDate));
+                    $new_factura->Version = $data->version;
+                    $new_factura->FacturaProductId = $data->facturaProductId;
+                    $new_factura->status = $data->currentStateId;
+                    $new_factura->FacturaNo = $data->facturaDoc->facturaNo;
+                    $new_factura->FacturaDate = date('Y-m-d H:i:s',strtotime($data->facturaDoc->facturaDate));
+
+                    //var_dump($new_factura);
+                    //die();
+                    if($new_factura->save())
+                    {
+                        echo $i . " success: ".$data->facturaId."\n";
+                    }
+                    else{
+                        var_dump($new_factura->errors);
+                        echo $i . " failed \n";
+                    }
+                    $i++;
+                    die();
+                }
+             }
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+
     }
 
     public function actionApiClear(){
@@ -262,26 +370,6 @@ class ConsoleController extends \yii\console\Controller
         echo "Tugadi. \n";
     }
 
-//    public function actionCreateFacturaPksSingleTxt(){
-//        $factura_id = $_POST['factura_id'];
-//        $seller_pks7 = $_POST['seller_pks7'];
-//        try {
-//            if (!file_exists("./assets/factura_pks7")){
-//                mkdir("./assets/factura_pks7", 0777, true);
-//            }
-//            if (isset($factura_id) && isset($seller_pks7)){
-//                $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "w");
-//                fwrite($file, $seller_pks7);
-//                fclose($file);
-//
-//                return json_encode(["message"=>"saved!"]);
-//            }
-//            return json_encode(["message"=>"factura_id or seller_pks7 fild is missing"]);
-//        }
-//        catch (\Exception $exception){
-//            return $exception->getMessage();
-//        }
-//    }
 
     public function actionCreateFacturaPksTxt(){
         $factura_pks = FacturaPks7::find()
@@ -340,30 +428,6 @@ class ConsoleController extends \yii\console\Controller
 
     }
 
-
-//    public function actionGetFacturaPksTxt(){
-//        try {
-//            if (isset($_GET['factura_id'])){
-//                $factura_id = $_GET['factura_id'];
-//                if (file_exists(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt")){
-//
-//                    $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "r");
-//                    clearstatcache(true, __DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt");
-//                    $content = fread($file, filesize(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt"));
-//
-//                    fclose($file);
-//
-//                    return json_encode(['content'=>$content]);
-//                }
-//                else{
-//                    return json_encode(["content"=>"No file found!"]);
-//                }
-//            }
-//        }
-//        catch (\Exception $exception){
-//            return $exception->getMessage();
-//        }
-//    }
 
     public function actionGetDistrict(){
 
