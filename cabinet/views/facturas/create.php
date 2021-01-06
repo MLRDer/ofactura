@@ -20,7 +20,7 @@ $type_factura = substr($tab,6,1);
 <div class="white-box">
     <div class="row m-b-20">
         <div class="col-md-6">
-            <div class="page-title m-b-0" id="title-create">Счет-фактуры</div>
+            <div class="page-title m-b-0" id="title-create"><?= Yii::t('main', "Счет-фактуры") ?></div>
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">

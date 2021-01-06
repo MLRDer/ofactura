@@ -7,6 +7,7 @@ use common\models\Company;
 use common\models\Districts;
 use common\models\DocInData;
 use common\models\FacturaPks7;
+use common\models\FacturaProducts;
 use common\models\Facturas;
 use common\models\Invoices;
 use common\models\SynsJobs;
@@ -56,13 +57,14 @@ class ConsoleController extends \yii\console\Controller
 //                var_dump($data);
 //                die();
 
-                if(Facturas::findOne("Id=".$factura["factura_id"]))
+                if(Facturas::findOne(["Id"=>$factura["factura_id"]]) || $factura["factura_id"]=="5f9ada5e1fdd7be13950f700" || $factura["seller_tin"]==20052322)
                 {
-                    echo $factura->id . " exists\n";
+                    echo $i ." " . " exists: ". $factura["factura_id"]."\n";
+                    $i++;
                     continue;
                 }
-                else{
 
+                else{
                     $opts = array(
                         'http' => array(
                             'method' => "GET",
@@ -77,30 +79,33 @@ class ConsoleController extends \yii\console\Controller
                     $data = json_decode($data);
                     $new_factura = new Facturas();
 
+//                    var_dump($data);
+//                    die();
 
                     $new_factura->SellerName=$data->seller->name;
                     $new_factura->SellerAccount = $data->seller->account;
-                    $new_factura->SellerBankId = $data->seller->bank->bankId;
                     $new_factura->SellerDirector = $data->seller->director;
                     $new_factura->SellerAccountant = $data->seller->accountant;
                     $new_factura->SellerVatRegCode = $data->seller->vatRegCode;
                     $new_factura->SellerBranchCode = $data->seller->branchCode;
                     $new_factura->SellerBranchName = $data->seller->branchName;
                     $new_factura->SellerOked = $data->seller->oked;
-                    $new_factura->SellerDistrictId = $data->seller->district->districtId;
+                    $new_factura->SellerDistrictId = $data->seller->district ? $data->seller->district->districtId : null;
                     $new_factura->SellerAddress = $data->seller->address;
                     $new_factura->SellerWorkPhone = $data->seller->workPhone;
+                    $new_factura->SellerBankId = $data->seller->bank ? $data->seller->bank->bankId : null;
 
 
                     $new_factura->BuyerTin = $data->buyerTin;
                     $new_factura->BuyerAccount = $data->buyer->account;
-                    $new_factura->BuyerBankId = $data->buyer->bank->bankId;
-                    $new_factura->BuyerBranchName = $data->buyer->bank->name;
+                    $new_factura->BuyerBankId = $data->buyer->bank ? $data->buyer->bank->bankId : null;
+
                     $new_factura->BuyerAddress = $data->buyer->address;
                     $new_factura->BuyerOked = $data->buyer->oked;
                     $new_factura->BuyerDirector = $data->buyer->director;
                     $new_factura->BuyerAccountant = $data->buyer->accountant;
                     $new_factura->BuyerVatRegCode = $data->buyer->vatRegCode;
+
 
                     $new_factura->Id = $data->facturaId;
                     $new_factura->Tin = $data->sellerTin;
@@ -113,11 +118,14 @@ class ConsoleController extends \yii\console\Controller
                     $new_factura->HasCommittent = 0;
                     $new_factura->SingleSidedType=$data->singleSidedType;
                     $new_factura->created_date=date('Y-m-d H:i:s',strtotime($data->created));
-                    $new_factura->EmpowermentDateOfIssue=date('Y-m-d H:i:s',strtotime($data->facturaEmpowermentDoc->empowermentDateOfIssue));
-                    $new_factura->EmpowermentNo = $data->facturaEmpowermentDoc->empowermentNo;
-                    $new_factura->AgentTin = $data->facturaEmpowermentDoc->agentTin;
-                    $new_factura->AgentFio = $data->facturaEmpowermentDoc->agentFio;
-                    $new_factura->AgentFacturaId = $data->facturaEmpowermentDoc->agentFacturaId;
+                    if(isset($data->facturaEmpowermentDoc)){
+                        $new_factura->EmpowermentDateOfIssue=date('Y-m-d H:i:s',strtotime($data->facturaEmpowermentDoc->empowermentDateOfIssue));
+                        $new_factura->EmpowermentNo = $data->facturaEmpowermentDoc->empowermentNo;
+                        $new_factura->AgentTin = $data->facturaEmpowermentDoc->agentTin;
+                        $new_factura->AgentFio = $data->facturaEmpowermentDoc->agentFio;
+                        $new_factura->AgentFacturaId = $data->facturaEmpowermentDoc->agentFacturaId;
+                    }
+
                     $new_factura->ContractNo = $data->contractDoc->contractNo;
                     $new_factura->ContractDate = date('Y-m-d H:i:s',strtotime($data->contractDoc->contractDate));
                     $new_factura->Version = $data->version;
@@ -135,16 +143,104 @@ class ConsoleController extends \yii\console\Controller
                     else{
                         var_dump($new_factura->errors);
                         echo $i . " failed \n";
+
                     }
                     $i++;
-                    die();
+                    //die();
                 }
-             }
+            }
+            echo "Done!";
         }
         catch (\Exception $exception){
             echo $exception->getMessage();
         }
 
+    }
+
+    public function actionFetchFacturaProducts(){
+        try {
+            ini_set("memory_limit", "680M");
+            $db = Yii::$app->getDb();
+            $facturas= $db->createCommand("SELECT FacturaProductId AS factura_product_id, Tin AS tin FROM facturas 
+                where facturas.FacturaProductId not in (SELECT DISTINCT FacturaId from factura_products )")->queryAll();
+
+//            var_dump(count($facturas));
+//            die();
+
+
+            echo "Started!";
+
+            foreach ($facturas as $factura){
+                $opts = array(
+                    'http' => array(
+                        'method' => "GET",
+                        'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                    )
+                );
+
+                $context = stream_context_create($opts);
+                $url=self::HOST."/provider/api/uz/".$factura["tin"]."/facturas/productlist/".$factura["factura_product_id"];
+                $data = file_get_contents($url, false, $context);
+
+                $data = json_decode($data);
+
+                $update_factura = Facturas::findOne(["FacturaProductId"=>$factura["factura_product_id"]]);
+                $update_factura->HasCommittent = (int)$data->hasCommittent;
+                $update_factura->HasMedical = (int)$data->hasMedical;
+                $update_factura->HasVat = (int)$data->hasVat;
+                if($update_factura->update()){
+                    echo "factura updated!";
+                }
+                else{
+                    var_dump($update_factura->errors);
+                }
+                foreach ($data->products as $product){
+                    if (FacturaProducts::findOne(["FacturaId"=>$factura["factura_product_id"], "OrdNo"=>$product->ordNo])){
+                        echo "product exists \n";
+                    }
+                    else{
+                        $new_product = new FacturaProducts();
+//                        var_dump($product);
+//                        die();
+                        $new_product->FacturaId = $factura["factura_product_id"];
+                        $new_product->CatalogCode = $product->catalogCode;
+                        $new_product->CatalogName = $product->catalogName;
+                        $new_product->OrdNo = (string)$product->ordNo;
+                        $new_product->CommittentName = $product->committentName;
+                        $new_product->CommittentTin = $product->committentTin;
+                        $new_product->CommittentVatRegCode = $product->committentVatRegCode;
+                        $new_product->Name = $product->name;
+                        $new_product->Serial = $product->serial;
+                        $new_product->MeasureId = $product->measureId;
+                        $new_product->BaseSumma = $product->baseSumma;
+                        $new_product->ProfitRate = $product->profitRate;
+                        $new_product->Count = $product->count;
+                        $new_product->Summa = $product->summa;
+                        $new_product->DeliverySum = $product->deliverySum;
+                        $new_product->ExciseSum=$product->exciseSum;
+                        $new_product->ExciseRate=$product->exciseRate;
+                        $new_product->WithoutVat = (int)$product->withoutVat;
+                        $new_product->VatRate = $product->vatRate;
+                        $new_product->VatSum = $product->vatRate;
+                        $new_product->DeliverySumWithVat = $product->deliverySumWithVat;
+                        if ($new_product->save()){
+                            echo "new product save!" . "\n";
+                        }
+                        else{
+                            var_dump($new_product->errors);
+                            echo "failed! \n";
+                        }
+                    }
+                }
+
+
+
+            }
+            echo "Done!\n";
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 
     public function actionApiClear(){

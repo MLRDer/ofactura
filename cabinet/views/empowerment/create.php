@@ -96,7 +96,7 @@ $this->title = Yii::t('main','Create Empowerment');
             <div class="gray-wrapper">
                 <div class="supplier-wrapper">
                     <div class="supplier-header">
-                        <div class="title">Поставщик</div>
+                        <div class="title"><?= Yii::t('main', 'Поставщик')?></div>
                         <div class="tin"><?= \cabinet\models\Components::CompanyData('tin')?></div>
                     </div>
                     <div class="supplier-body">
@@ -188,7 +188,7 @@ $this->title = Yii::t('main','Create Empowerment');
                 </div>
                 <div class="responsible-wrapper">
                     <div class="responsible-header">
-                        <div class="title">Ответственные</div>
+                        <div class="title"><?= Yii::t('main', 'Ответственные')?></div>
                     </div>
                     <div class="responsible-body">
                         <?= $form->field($model, 'BuyerDirector',['template'=>'<div class="input ">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'ФИО руководителя'])->label(false) ?>
@@ -293,13 +293,13 @@ $this->title = Yii::t('main','Create Empowerment');
                         <input type="hidden" id="row_value" value="2">
                     </div>
                     <div class="footer">
-                        <div class="add-row btn-outline-blue color-blue small-btn m-r-20">+ добавить еще</div>
-                        <div class="delete-row btn-red remove">remove</div>
+                        <div class="add-row btn-outline-blue color-blue small-btn m-r-20">+ <?= Yii::t('main', 'Добавить ещё')?></div>
+                        <div class="delete-row btn-red remove"><?= Yii::t('main', 'remove')?></div>
                     </div>
                 </div>
                 <div class="responsible-wrapper">
                     <div class="responsible-header">
-                        <div class="title">Ответственные</div>
+                        <div class="title"><?= Yii::t('main', 'Ответственные')?></div>
                     </div>
                     <div class="responsible-body">
 

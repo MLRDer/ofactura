@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
-                <a href="/empowerment/create" class="btn-gray border-right-0-margin-right-30 color-blue">+ <?= Yii::t('main','Создать Доверенность')?></a>
+                <a href="/empowerment/create" class="btn-gray border-right-0-margin-right-30 color-blue">+ <?= Yii::t('main', "Создать доверенность")?></a>
             </div>
 
         </div>
