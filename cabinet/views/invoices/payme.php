@@ -55,7 +55,6 @@ $this->title = Yii::t('main',"Мои финансы");
                              :account.{field} - поля объекта Account
                              Пример: https://your-service.uz/paycom/:transaction -->
                         <input type="hidden" name="callback" value="https://cabinet.onlinefactura.uz/invoices/payme"/>
-
                         <!-- Таймаут после успешного платежа в миллисекундах.
                              Значение по умолчанию 15
                              После успешной оплаты, по истечении времени callback_timeout
@@ -87,14 +86,14 @@ $this->title = Yii::t('main',"Мои финансы");
                     <div class="row">
                         <div class="col-md-6">
                             <label class="checkbox">
-                                <input type="radio" class="input-checkbox" name="payment">
+                                <input type="radio" class="input-checkbox" name="payment_type2">
                                 <div class="check"></div>
                                 <img src="/new_template/images/content/payme.png" alt="">
                             </label>
                         </div>
                         <div class="col-md-6">
                             <label class="checkbox">
-                                <input type="radio" class="input-checkbox" name="payment">
+                                <input type="radio" class="input-checkbox" name="payment_type2">
                                 <div class="check"></div>
                                 <img src="/new_template/images/content/aloqabank.png" alt="">
                             </label>

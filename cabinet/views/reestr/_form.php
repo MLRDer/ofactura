@@ -38,6 +38,7 @@ use yii\widgets\ActiveForm;
             <input type="file" id="docs-reestr" name="ReestrMain[file]" hidden>
         </label>
         <a href="/docs/reestr шаблон.xlsx" class=" btn btn-warning" style="margin-bottom: 7px;"> <?= Yii::t('main','Skachat reestr')?></a>
+        <div style="overflow-x: scroll">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -127,6 +128,7 @@ use yii\widgets\ActiveForm;
             </tbody>
         </table>
 
+        </div>
     </div>
 
 

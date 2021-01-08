@@ -11,7 +11,7 @@ namespace cabinet\classes\consts;
 class ExcelConst
 {
 
-    const FILE_NAME = 'export.xlsx';
+    const FILE_NAME = 'export.xls';
     const FILE_PATH = '@app/web/uploads/';
     const ROW_BEGIN_KEY = 9;
     const KEY_ORDER = 0;

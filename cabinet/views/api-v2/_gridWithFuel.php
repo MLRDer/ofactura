@@ -66,26 +66,26 @@ $k=0;
                     <div class="editable" name="ProductMeasureId" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductCount" id="ProductCount_1" rowid="1">0</div>
+                    <div class="editable" name="ProductCount" id="ProductCount_1" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductSumma" id="ProductSumma_1" rowid="1">0</div>
+                    <div class="editable" name="ProductSumma" id="ProductSumma_1" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductFuelRate" id="ProductFuelRate_1" rowid="1">0</div>
+                    <div class="editable" name="ProductFuelRate" id="ProductFuelRate_1" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductFuelSum" id="ProductFuelSum_1" rowid="1">0</div>
+                    <div class="editable" name="ProductFuelSum" id="ProductFuelSum_1" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_1" rowid="1">0</div>
+                    <div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_1" rowid="1"></div>
                 </td>
 
                 <td>
-                    <div class="editable" name="ProductVatRate" id="ProductVatRate_1" rowid="1">0</div>
+                    <div class="editable" name="ProductVatRate" id="ProductVatRate_1" rowid="1"></div>
                 </td>
                 <td>
-                    <div class="editable" name="ProductVatSum" id="ProductVatSum_1" rowid="1">0</div>
+                    <div class="editable" name="ProductVatSum" id="ProductVatSum_1" rowid="1"></div>
                 </td>
 
                 <td>

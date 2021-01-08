@@ -679,7 +679,11 @@ class EmpowermentController extends \cabinet\components\Controller
             'http' => array(
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode(self::LOGIN.":".self::PASSWORD)
-            )
+            ),
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
         );
         $context = stream_context_create($opts);
         $url = Yii::$app->params['factura_host']."/provider/api/ru/utils/guid";

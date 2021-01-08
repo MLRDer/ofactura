@@ -7,6 +7,7 @@ use common\models\Company;
 use common\models\Districts;
 use common\models\DocInData;
 use common\models\FacturaPks7;
+use common\models\FacturaProducts;
 use common\models\Facturas;
 use common\models\Invoices;
 use common\models\SynsJobs;
@@ -56,7 +57,7 @@ class ConsoleController extends \yii\console\Controller
 //                var_dump($data);
 //                die();
 
-                if(Facturas::findOne(["Id"=>$factura["factura_id"]]) || $factura["factura_id"]=="5f9ada5e1fdd7be13950f700" || $factura["factura_id"]=="5fce2c28344f960001c83f39")
+                if(Facturas::findOne(["Id"=>$factura["factura_id"]]) || $factura["factura_id"]=="5f9ada5e1fdd7be13950f700" || $factura["seller_tin"]==20052322)
                 {
                     echo $i ." " . " exists: ". $factura["factura_id"]."\n";
                     $i++;
@@ -154,6 +155,92 @@ class ConsoleController extends \yii\console\Controller
             echo $exception->getMessage();
         }
 
+    }
+
+    public function actionFetchFacturaProducts(){
+        try {
+            ini_set("memory_limit", "680M");
+            $db = Yii::$app->getDb();
+            $facturas= $db->createCommand("SELECT FacturaProductId AS factura_product_id, Tin AS tin FROM facturas 
+                where facturas.FacturaProductId not in (SELECT DISTINCT FacturaId from factura_products )")->queryAll();
+
+//            var_dump(count($facturas));
+//            die();
+
+
+            echo "Started!";
+
+            foreach ($facturas as $factura){
+                $opts = array(
+                    'http' => array(
+                        'method' => "GET",
+                        'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                    )
+                );
+
+                $context = stream_context_create($opts);
+                $url=self::HOST."/provider/api/uz/".$factura["tin"]."/facturas/productlist/".$factura["factura_product_id"];
+                $data = file_get_contents($url, false, $context);
+
+                $data = json_decode($data);
+
+                $update_factura = Facturas::findOne(["FacturaProductId"=>$factura["factura_product_id"]]);
+                $update_factura->HasCommittent = (int)$data->hasCommittent;
+                $update_factura->HasMedical = (int)$data->hasMedical;
+                $update_factura->HasVat = (int)$data->hasVat;
+                if($update_factura->update()){
+                    echo "factura updated!";
+                }
+                else{
+                    var_dump($update_factura->errors);
+                }
+                foreach ($data->products as $product){
+                    if (FacturaProducts::findOne(["FacturaId"=>$factura["factura_product_id"], "OrdNo"=>$product->ordNo])){
+                        echo "product exists \n";
+                    }
+                    else{
+                        $new_product = new FacturaProducts();
+//                        var_dump($product);
+//                        die();
+                        $new_product->FacturaId = $factura["factura_product_id"];
+                        $new_product->CatalogCode = $product->catalogCode;
+                        $new_product->CatalogName = $product->catalogName;
+                        $new_product->OrdNo = (string)$product->ordNo;
+                        $new_product->CommittentName = $product->committentName;
+                        $new_product->CommittentTin = $product->committentTin;
+                        $new_product->CommittentVatRegCode = $product->committentVatRegCode;
+                        $new_product->Name = $product->name;
+                        $new_product->Serial = $product->serial;
+                        $new_product->MeasureId = $product->measureId;
+                        $new_product->BaseSumma = $product->baseSumma;
+                        $new_product->ProfitRate = $product->profitRate;
+                        $new_product->Count = $product->count;
+                        $new_product->Summa = $product->summa;
+                        $new_product->DeliverySum = $product->deliverySum;
+                        $new_product->ExciseSum=$product->exciseSum;
+                        $new_product->ExciseRate=$product->exciseRate;
+                        $new_product->WithoutVat = (int)$product->withoutVat;
+                        $new_product->VatRate = $product->vatRate;
+                        $new_product->VatSum = $product->vatRate;
+                        $new_product->DeliverySumWithVat = $product->deliverySumWithVat;
+                        if ($new_product->save()){
+                            echo "new product save!" . "\n";
+                        }
+                        else{
+                            var_dump($new_product->errors);
+                            echo "failed! \n";
+                        }
+                    }
+                }
+
+
+
+            }
+            echo "Done!\n";
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 
     public function actionApiClear(){

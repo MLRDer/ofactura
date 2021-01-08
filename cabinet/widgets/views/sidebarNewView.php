@@ -44,6 +44,6 @@ $host = Yii::$app->request->getPathInfo();
             <div class="title">Call center:</div>
             <div class="phone">+ 998 (71)-200-11-22</div>
         </div>
-        <div class="info">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</div>
+        <div class="info">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</div>
     </div>
 </div>

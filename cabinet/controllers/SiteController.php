@@ -6,6 +6,7 @@ use common\models\Banks;
 use common\models\Company;
 use common\models\CompanyInvoicesHelpers;
 use common\models\CompanyUsers;
+use common\models\ReestrMainSearch;
 use common\models\User;
 use common\models\Users;
 use kartik\mpdf\Pdf;
@@ -110,8 +111,14 @@ class SiteController extends \cabinet\components\Controller
 //            Yii::$app->session->setFlash('warning', 'Amallarni davom ettirish uchun o`zinggizga maqul tarifni faolashtiring');
 //            return $this->redirect('/doc/tarif');
 //        }
+        $searchModel = new ReestrMainSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['company_id'=>Components::GetId()]);
 
-        return $this->render('index');
+        return $this->render('index',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 

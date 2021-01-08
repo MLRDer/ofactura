@@ -244,9 +244,9 @@ $this->title = Yii::t('main','Create Empowerment');
                             <?php if($model->isNewRecord){ ?>
                                 <tr>
                                     <td align="center">
-                                        <label class="kt-checkbox kt-checkbox--brand">
-                                            <input type="checkbox" name="record">
-                                            <span style="top: 4px;left: 5px;"></span>
+                                        <label class="second-checkbox d-inline-block m-t-5">
+                                            <input rowid="1" type="checkbox" name="record">
+                                            <div class="square"></div>
                                         </label>
                                     </td>
                                     <td>
@@ -256,7 +256,7 @@ $this->title = Yii::t('main','Create Empowerment');
                                         <div class="editable" name="ProductMeasureId" rowid="1"></div>
                                     </td>
                                     <td>
-                                        <div class="editable" name="ProductCount" id="ProductCount_1" rowid="1">0</div>
+                                        <div class="editable" name="ProductCount" id="ProductCount_1" rowid="1"></div>
                                     </td>
                                 </tr>
                             <?php } else {
@@ -266,8 +266,9 @@ $this->title = Yii::t('main','Create Empowerment');
                                     ?>
                                     <tr>
                                         <td align="center">
+
                                             <label class="second-checkbox d-inline-block m-t-5">
-                                                <input type="checkbox" name="record">
+                                                <input rowid="<?= $n?>" type="checkbox" name="record">
                                                 <div class="square"></div>
                                             </label>
                                         </td>
@@ -333,10 +334,11 @@ $this->title = Yii::t('main','Create Empowerment');
         $(".add-row").click(function(){
 
             var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
-            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
+            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'"></div>';
             var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
             k++;
-            var markup = "<tr><td align='center'><label class='kt-checkbox kt-checkbox--brand'><input type='checkbox' name='record'><span style='top: 4px;left: 5px;'></span></label></td><td>" + ProductName + "</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td></tr>";
+
+            var markup = "<tr><td align='center'><label class='second-checkbox d-inline-block m-t-5'><input rowid='1' type='checkbox' name='record'><div class='square'></div></label></td><td>" + ProductName + "</td><td>" + ProductMeasureId + "</td><td>"+ProductCount+"</td></tr>";
             $("table tbody").append(markup);
             // e.preventDefault();
         });

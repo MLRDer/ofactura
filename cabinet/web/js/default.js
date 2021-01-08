@@ -926,7 +926,7 @@ function AcceptData(id){
                 success: function (json) {
                     if (json.Success) {
                         alertSuccess(json.Reason);
-                        location.href="/doc/in-list";
+                        location.href="/facturas/view?id="+id;
                     } else {
                         alertError(json.reason);
                     }
@@ -966,7 +966,7 @@ function AcceptFactura(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/facturas/received";
+                                location.href = "/facturas/view?id="+id;
                             } else {
                                 alertError(json.reason);
                             }
@@ -1097,7 +1097,7 @@ function RejectedData(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/doc/in-list";
+                                location.href = "/facturas/view?id"+id;
                             } else {
                                 alertError(json.Reason);
                             }
@@ -1141,7 +1141,7 @@ function RejectedFactura(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/facturas/received";
+                                location.href = "/facturas/view?id="+id;
                             } else {
                                 alertError(json.Reason);
                             }
@@ -1354,13 +1354,11 @@ function SwitchSingleSlide(id) {
     var isOneLevel = document.getElementById('CheckOnLevel').checked;
     console.log(isOneLevel);
     if(isOneLevel==true){
-        $(".change-info-block-wrapper").removeClass("show-block");
-        $(".info-block-wrapper").removeClass("show-block");
-        $(".singid-side-block").addClass("show-block");
+        $(".BuyerTinArea").hide();
+        $(".SingleSidedTypeArea").show();
     } else {
-        document.getElementById('BuyerTin').value="";
-        $(".singid-side-block").removeClass("show-block");
-        $(".change-info-block-wrapper").addClass("show-block");
+        $(".BuyerTinArea").show();
+        $(".SingleSidedTypeArea").hide();
     }
 
 };
