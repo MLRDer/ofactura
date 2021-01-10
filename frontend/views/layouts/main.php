@@ -132,8 +132,13 @@ color: black;"><?= Yii::t('main','Информационная система п
                 </div>
 
             </div>
+<<<<<<< HEAD
             <div class="col-md-7 intro-img order-md-last order-first">
                 <img style="width: 100%" src="/img/banner1.png" alt="" class="img-fluid">
+=======
+            <div class="col-md-6 intro-img order-md-last order-first">
+                <img style="width: 100%" src="/img/banner.png" alt="" class="img-fluid">
+>>>>>>> b079945d163e6265191c8007af742cd87b24d120
             </div>
         </div>
     </div>

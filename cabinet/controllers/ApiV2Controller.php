@@ -213,6 +213,7 @@ class ApiV2Controller extends Controller
         $tin = Components::CompanyData('tin');
         $url = Yii::$app->params['factura_host']."/provider/api/uz/{$tin}/facturas/buyer/".$id;
         $data = file_get_contents($url, false, $context);
+
         return $data;
     }
 
