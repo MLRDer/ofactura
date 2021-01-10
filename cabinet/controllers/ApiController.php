@@ -16,6 +16,7 @@ use common\models\EmpowermentInData;
 use common\models\EmpowermentProduct;
 use common\models\FacturaPks7;
 use common\models\Facturas;
+use common\models\Notifications;
 use function GuzzleHttp\Psr7\str;
 use Matrix\Functions;
 use Yii;
@@ -562,6 +563,7 @@ class ApiController extends Controller
             $factura = $this->ProcessingReceivedData($data);
             $facturaUpper = $this->ValidateFacturaData($factura);
             $this->InsertInFactura($facturaUpper);
+
             $data = Json::decode($data);
             $this->InsertPks($facturaUpper['FACTURAID'],$data['Sign']);
              if ($reason == "") {
@@ -624,6 +626,17 @@ class ApiController extends Controller
                 if(!$newFactura->save()){
                     echo $newFactura->getErrors();
                 };
+                $notify = new Notifications();
+                $notify->tin = $newFactura->SellerTin;
+                $notify->type = Notifications::TYPE_FACTURA_ACCEPT;
+                $notify->is_view = Notifications::NOT_VIEW;
+                $notify->path = "/facturas/view?id=".$newFactura->Id;
+                $notify->title_uz = "Подписанный счет фактура №: ".$newFactura->FacturaNo ;
+                $notify->title_ru = "Подписанный счет фактура №: ".$newFactura->FacturaNo ;
+                $notify->anons_uz = "Дата счет фактура ".date("d.m.Y",strtotime($newFactura->FacturaDate)).". Номер договора № ".$newFactura->ContractNo.". Дата договора ".date("d.m.Y",strtotime($newFactura->ContractDate));
+                $notify->anons_ru = "Дата счет фактура ".date("d.m.Y",strtotime($newFactura->FacturaDate)).". Номер договора № ".$newFactura->ContractNo.". Дата договора ".date("d.m.Y",strtotime($newFactura->ContractDate));
+                $notify->doc_id = $newFactura->Id;
+                $notify->save();
             }
 
 
@@ -687,6 +700,17 @@ class ApiController extends Controller
                 if(!$newFactura->save()){
                     echo $newFactura->getErrors();
                 };
+                $notify = new Notifications();
+                $notify->tin = $newFactura->SellerTin;
+                $notify->type = Notifications::TYPE_FACTURA_REJECT;
+                $notify->is_view = Notifications::NOT_VIEW;
+                $notify->path = "/facturas/view?id=".$newFactura->Id;
+                $notify->title_uz = "Отклоненный счет фактура №: ".$newFactura->FacturaNo ;
+                $notify->title_ru = "Отклоненный счет фактура №: ".$newFactura->FacturaNo ;
+                $notify->anons_uz = "Дата счет фактура ".date("d.m.Y",strtotime($newFactura->FacturaDate)).". Номер договора № ".$newFactura->ContractNo.". Дата договора ".date("d.m.Y",strtotime($newFactura->ContractDate));
+                $notify->anons_ru = "Дата счет фактура ".date("d.m.Y",strtotime($newFactura->FacturaDate)).". Номер договора № ".$newFactura->ContractNo.". Дата договора ".date("d.m.Y",strtotime($newFactura->ContractDate));
+                $notify->doc_id = $newFactura->Id;
+                $notify->save();
             }
             if ($reason == "") {
 
@@ -1016,6 +1040,21 @@ class ApiController extends Controller
         return $html;
     }
 
+    protected function SetNotifiy($model){
+        /* @var $model \common\models\Facturas */
+        $data = new Notifications();
+        $data->tin = $model->BuyerTin;
+        $data->type = Notifications::TYPE_FACTURA;
+        $data->doc_id = $model->Id;
+        $data->title_uz = "Входящий счет фактура № ".$model->FacturaNo;
+        $data->title_ru = "Входящий счет фактура № ".$model->FacturaNo;
+        $data->anons_uz = "Дата счет фактура ".date("d.m.Y",strtotime($model->FacturaDate)).". Номер договора № ".$model->ContractNo.". Дата договора ".date("d.m.Y",strtotime($model->ContractDate));
+        $data->anons_ru = "Дата счет фактура ".date("d.m.Y",strtotime($model->FacturaDate)).". Номер договора № ".$model->ContractNo.". Дата договора ".date("d.m.Y",strtotime($model->ContractDate));
+        $data->path = "/facturas/view?id=".$model->Id;
+        $data->is_view = Notifications::NOT_VIEW;
+        $data->save();
+    }
+
     protected function SendBindData($data){
         $sendData = [
             'sign'=>$data,
@@ -1127,6 +1166,7 @@ class ApiController extends Controller
                 echo Json::encode($model->getErrors());
             }
         }
+        self::SetNotifiy($model);
     }
 
 

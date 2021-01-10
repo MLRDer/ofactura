@@ -358,3 +358,14 @@ table tr th a{
     text-decoration: none;
     background-color: #0674fc;
 }
+
+.line-scale div{
+    background-color: #0674fc;
+}
+.loader{
+    text-align: center;
+    padding-top: 40px;
+}
+.bold-text{
+    font-weight: bold;
+}

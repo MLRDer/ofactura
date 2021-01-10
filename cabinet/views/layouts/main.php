@@ -52,48 +52,48 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
             <ul class="nav notification-tabs-header">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#notification-modal-1" aria-selected="true">Оповещения</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-2" aria-selected="false">Фактура</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-3" aria-selected="false">Доверенность</a>
-                </li>
+<!--                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-2" aria-selected="false">Фактура</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-3" aria-selected="false">Доверенность</a>-->
+<!--                </li>-->
             </ul>
             <div class="tab-content notification-tabs-content">
                 <div class="tab-pane fade show active" id="notification-modal-1">
                     <ul class="notification-list">
-                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
+                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>
                         </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
+                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>
                         </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
+                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>
                         </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="notification-modal-2">
-                    <ul class="notification-list">
-                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
+                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>
                         </li>
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="notification-modal-3">
-                    <ul class="notification-list">
-                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</span></a>
-                        </li>
-                    </ul>
-                </div>
+<!--                <div class="tab-pane fade" id="notification-modal-2">-->
+<!--                    <ul class="notification-list">-->
+<!--                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="tab-pane fade" id="notification-modal-3">-->
+<!--                    <ul class="notification-list">-->
+<!--                        <li class="notification-item active"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="notification-item"><span class="badge gray">12.10.2020 </span><a href="#!" class="notification-link"><span class="title">Информационная система </span><span class="subtitle">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</span></a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
         </div>
     </div>

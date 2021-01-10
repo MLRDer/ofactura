@@ -81,7 +81,8 @@ use cabinet\models\Components;
             <li class="control-item">
                 <a href="/new_template/file/offer.pdf" class="control-link offer"></a>
             </li>
-            <li class="control-item active">
+            <?php $ntf = \common\models\Notifications::find()->andWhere(['tin'=>Components::CompanyData('tin'),'is_view'=>1])->count() ?>
+            <li class="control-item <?= ($ntf>0)?'active':''?>">
                 <a href="#!" class="control-link notification"></a>
             </li>
             <li class="control-item">

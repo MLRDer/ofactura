@@ -946,6 +946,7 @@ function AcceptFactura(id){
     console.log(keyId);
     var SellerSign = $("#doc_sign").val();
     console.log(SellerSign);
+
     $.ajax({
         type: "POST",
         url: "/api-v2/get-signed",

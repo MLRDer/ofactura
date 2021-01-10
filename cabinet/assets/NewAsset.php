@@ -18,7 +18,8 @@ class NewAsset extends AssetBundle
     public $css = [
 //        "new_template/styles/vendor.min.css",
         "new_template/styles/main.css",
-        "css/new_template.css"
+        "css/loaders.min.css",
+        "css/new_template.css",
     ];
     public $js = [
 //        "new_template/scripts/jquery.min.js",

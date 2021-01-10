@@ -100,6 +100,7 @@ class Facturas extends \yii\db\ActiveRecord
     const PASSWORD = "n;xw3CE(GDb$@|D*";
 
     public $file;
+    public $is_view;
 
     public static function tableName()
     {

@@ -12,6 +12,7 @@ use common\models\CompanyUsers;
 use common\models\FacturaPks7;
 use common\models\FacturaProducts;
 use common\models\Invoices;
+use common\models\Notifications;
 use kartik\mpdf\Pdf;
 use Matrix\Functions;
 use Yii;
@@ -268,6 +269,11 @@ class FacturasController extends \cabinet\components\Controller
 
     public function actionView($id)
     {
+        $notifiy_view = Notifications::findOne(['doc_id'=>$id]);
+        if(!empty($notifiy_view)){
+            $notifiy_view->is_view = Notifications::VIEWED;
+            $notifiy_view->save();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

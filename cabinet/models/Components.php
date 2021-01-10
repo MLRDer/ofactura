@@ -6,6 +6,7 @@ use common\models\CompanyTarif;
 use common\models\CompanyTarifLog;
 use common\models\Invoices;
 use common\models\MonthPay;
+use common\models\Notifications;
 use Yii;
 use yii\helpers\Json;
 
@@ -164,6 +165,14 @@ class Components
             $reason = "Hisobingizda oylik to'lov uchun yetarli mablag' mavjud emas";
         }
         return $reason;
+    }
+
+    public static function getNotifiy($type){
+        $model = Notifications::find()->andWhere(['tin'=>self::CompanyData('tin'),'is_view'=>1,'type'=>Notifications::TYPE_FACTURA])->count();
+        if($model!=0)
+            return '<span class="badge green">'.$model.'</span>';
+        else
+            return "";
     }
 
     public static function getSum(){

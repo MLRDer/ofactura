@@ -11,26 +11,27 @@ use common\widgets\Alert; ?>
         <div class="card">
             <div class="header">
                 <img src="/new_template/images/card/document.svg" alt="">
-                <div class="title"><?= Yii::t('main', "Счет-фактуры") ?></div>
+                <div class="title">Счет-фактуры</div>
             </div>
             <div class="body">
                 <ul class="list">
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Входящие');?></div>
+                        <div class="label">Входящие</div>
 <!--                            <a href="#!" class="badge green">+ 2000-->
+
                         </a>
                     </li>
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Отправленные')?></div>
+                        <div class="label">Отправленные</div>
 <!--                        <a href="#!" class="value">8</a>-->
                     </li>
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Сохраненные')?></div>
+                        <div class="label">Сохраненные</div>
 <!--                        <a href="#!" class="value">8</a>-->
                     </li>
                 </ul>
             </div>
-            <div class="footer"><a href="/facturas/create" class="footer-link green">+ <?= Yii::t('main', 'Создать новую фактуру')?></a>
+            <div class="footer"><a href="/facturas/create" class="footer-link green">+ Создать новую фактуру</a>
             </div>
         </div>
     </div>
@@ -38,27 +39,27 @@ use common\widgets\Alert; ?>
         <div class="card">
             <div class="header">
                 <img src="/new_template/images/card/document-2.svg" alt="">
-                <div class="title"><?= Yii::t('main', "Доверенность")?></div>
+                <div class="title">Доверенность</div>
             </div>
             <div class="body">
                 <ul class="list">
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Входящие');?></div>
+                        <div class="label">Входящие</div>
 <!--                            <a href="#!" class="badge yellow">+1 000-->
+
                         </a>
                     </li>
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Отправленные')?></div>
+                        <div class="label">Отправленные</div>
 <!--                        <a href="#!" class="value">8</a>-->
-
                     </li>
                     <li class="item">
-                        <div class="label"><?= Yii::t('main', 'Сохраненные')?></div>
+                        <div class="label">Сохраненные</div>
 <!--                        <a href="#!" class="value">8</a>-->
                     </li>
                 </ul>
             </div>
-            <div class="footer"><a href="/empowerment/create" class="footer-link yellow">+ <?= Yii::t('main', "Создать доверенность")?></a>
+            <div class="footer"><a href="/empowerment/create" class="footer-link yellow">+ Создать доверенность</a>
             </div>
         </div>
     </div>
@@ -75,44 +76,8 @@ use common\widgets\Alert; ?>
                 </div>
             </div>
             <div class="body">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Номер реестра</th>
-                        <th>Дата создания реестра</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>#</td>
-                        <td>##</td>
-                    </tr>
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-                    </tbody>
-                </table>
+                <?= $this->render('index_reestr',['searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,])?>
             </div>
         </div>
     </div>

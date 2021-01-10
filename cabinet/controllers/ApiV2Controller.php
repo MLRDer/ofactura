@@ -15,6 +15,7 @@ use common\models\EmpowermentInData;
 use common\models\EmpowermentProduct;
 use common\models\FacturaPks7;
 use common\models\Facturas;
+use common\models\Notifications;
 use yii\httpclient\Client;
 use function GuzzleHttp\Psr7\str;
 use Yii;
@@ -213,6 +214,11 @@ class ApiV2Controller extends Controller
         $url = Yii::$app->params['factura_host']."/provider/api/uz/{$tin}/facturas/buyer/".$id;
         $data = file_get_contents($url, false, $context);
         return $data;
+    }
+
+    public function actionGetNotifications(){
+        $model = Notifications::find()->andWhere(['tin'=>Components::CompanyData('tin')])->orderBy('created_date DESC')->all();
+        return $this->renderPartial('_notifications',['model'=>$model]);
     }
 
 

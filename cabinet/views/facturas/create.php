@@ -20,12 +20,12 @@ $type_factura = substr($tab,6,1);
 <div class="white-box">
     <div class="row m-b-20">
         <div class="col-md-6">
-            <div class="page-title m-b-0" id="title-create">Счет-фактуры</div>
+            <div class="page-title m-b-0" id="title-create"><?= Yii::t('main', "Счет-фактуры") ?></div>
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
                 <label class="invoice-checkbox m-r-30">
-                    <div class="title">Односторонняя "фактура"</div>
+                    <div class="title"><?= Yii::t('main', 'Односторонняя "фактура"')?></div>
                     <input type="checkbox" onclick="SwitchSingleSlide(5)" id="CheckOnLevel">
                     <div class="switch-checkbox"></div>
                 </label>
@@ -46,29 +46,29 @@ $type_factura = substr($tab,6,1);
                 'headerOptions'=>['class'=>''],
                 'items' => [
                     [
-                        'label' => 'Стандартная',
+                        'label' => Yii::t('main', 'Стандартная'),
                         'content' => '',
                         'active' => ($tab=="w1-tab0")?true:false
                     ],
                     [
-                        'label' => 'Дополнительная',
+                        'label' => Yii::t('main', 'Дополнительная'),
                         'content' => $this->render('_extra',['form'=>$form,'model'=>$model]),
                         'active' => ($tab=="w1-tab1")?true:false
                     ],
                     [
-                        'label' => 'Возмещение расходов',
+                        'label' => Yii::t('main', 'Возмещение расходов'),
                         'content' => $this->render('_repayment'),
                         'active' => ($tab=="w1-tab2")?true:false
 
                     ],
                     [
-                        'label' => 'Без оплаты',
+                        'label' => Yii::t('main', 'Без оплаты'),
                         'content' => $this->render('_nopayment'),
                         'active' => ($tab=="w1-tab3")?true:false
 
                     ],
                     [
-                        'label' => 'Исправленная',
+                        'label' => Yii::t('main', 'Исправленная'),
                         'content' => $this->render('_corrected',['form'=>$form,'model'=>$model]),
                         'active' => ($tab=="w1-tab4")?true:false
 
@@ -221,25 +221,12 @@ $type_factura = substr($tab,6,1);
 <!--                                                    <input type="text" placeholder="Дата договора" class="my-datepicker">-->
 
                                             </div>
-
-
-                                            <div class="col-md-12 BuyerTinArea">
+                                            <div class="col-md-12">
                                                 <div class="input-white">
                                                     <input type="text" onkeyup="GetDataByTinV2(this.value)" placeholder="<?= Yii::t('main','Введите инн...')?>" id="BuyerTin">
                                                     <?= $form->field($model, 'BuyerTin')->hiddenInput()->label(false) ?>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12 SingleSidedTypeArea" style="display:none;">
-                                                <div class="input-white">
-                                                    <?= $form->field($model, 'SingleSidedType')->dropDownList(['0'=>'Выбрате',   '1'=>'На физ. лицо','2'=>'На экспорт','3'=>'На импорт','4'=>'Реализация, связанная с гос. секретом','5'=>'Финансовые услуги'],['class'=>''])->label(false) ?>
-                                                </div>
-                                            </div>
-
-
-
-
-
                                             <div class="col-md-12" id="BuyerInfoArea">
                                             </div>
                                         </div>
@@ -248,11 +235,16 @@ $type_factura = substr($tab,6,1);
                             </div>
                         </div>
                     </div>
-<!--                    <div class="singid-side-block">-->
-<!--                        <div class="row">-->
-<!--                            -->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="singid-side-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input">
+<!--                                    16022-->
+                                <?= $form->field($model, 'SingleSidedType')->dropDownList(['0'=>'Выбрате',   '1'=>'На физ. лицо','2'=>'На экспорт','3'=>'На импорт','4'=>'Реализация, связанная с гос. секретом','5'=>'Финансовые услуги']) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -266,7 +258,7 @@ $type_factura = substr($tab,6,1);
                         <img src="/new_template/images/icon/clip.svg" alt=""> <?= Yii::t('main','Exel to import btn')?>
                         <input type="file" id="docs-file" name="Facturas[file]" hidden>
                     </label>
-                    <div class="btn-white"><a href="/docs/factura_with_ccode.xlsx">Скачать шаблон</a></div>
+                    <div class="btn-white"><a href="/docs/faktura_all_template.xlsx">Скачать шаблон</a></div>
                 </div>
                 <div class="body m-b-20">
                     <div id="gridArea" class="items-grid-template">
@@ -356,19 +348,19 @@ $type_factura = substr($tab,6,1);
         $(".add-row").click(function(){
 
             var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
-            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'"></div>';
+            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
             var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
             var ProductCatalogName =  '<div class="editable" name="ProductCatalogName" id="ProductCatalogName_'+k+'" rowid="'+k+'"></div>';
             var ProductCatalogCode =  '<div class="editable" name="ProductCatalogCode" id="ProductCatalogCode_'+k+'" rowid="'+k+'"></div>';
-            var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'"></div>';
-            var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'"></div>';
-            var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'"></div>';
-            var ProductVatSum =  '<div class="editable" name="ProductVatSum" id="ProductVatSum_'+k+'" rowid="'+k+'"></div>';
-            var ProductDeliverySumWithVat =  '<div class="editable" name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVat_'+k+'" rowid="'+k+'"></div>';
+            var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'">0</div>';
+            var ProductVatSum =  '<div class="editable" name="ProductVatSum" id="ProductVatSum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySumWithVat =  '<div class="editable" name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVat_'+k+'" rowid="'+k+'">0</div>';
 
-            var ProductFuelRate =  '<div class="editable" name="ProductFuelRate" id="ProductFuelRate_'+k+'" rowid="'+k+'"></div>';
-            var ProductFuelSum =  '<div class="editable" name="ProductFuelSum" id="ProductFuelSum_'+k+'" rowid="'+k+'"></div>';
-            var ProductDeliverySumWithFuel =  '<div class="editable" name="ProductDeliverySumWithFuel" id="ProductDeliverySumWithFuel_'+k+'" rowid="'+k+'"></div>';
+            var ProductFuelRate =  '<div class="editable" name="ProductFuelRate" id="ProductFuelRate_'+k+'" rowid="'+k+'">0</div>';
+            var ProductFuelSum =  '<div class="editable" name="ProductFuelSum" id="ProductFuelSum_'+k+'" rowid="'+k+'">0</div>';
+            var ProductDeliverySumWithFuel =  '<div class="editable" name="ProductDeliverySumWithFuel" id="ProductDeliverySumWithFuel_'+k+'" rowid="'+k+'">0</div>';
 
             k++;
 
@@ -557,33 +549,5 @@ $type_factura = substr($tab,6,1);
 <?php ActiveForm::end(); ?>
 
 <style>
-    .profile-tab-header .nav-item .nav-link{
-        min-width: 180px !important;
-    }
-    
-    @media screen and (max-width: 1025px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 180px !important;
-        }
-    }
-
-    @media screen and (max-width: 1260px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 200px !important;
-        }
-    }
-
-    @media screen and (max-width: 769px)  {
-        .profile-tab-header .nav-item .nav-link{
-            min-width: 150px !important;
-        }
-    }
-
-    .input-white select{
-        border-radius: 10px;
-        height: 45px;
-        padding: 10px 20px;
-    }
-    }
 
 </style>
