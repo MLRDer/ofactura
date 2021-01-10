@@ -29,7 +29,7 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
     <link rel="shortcut icon" href="/img/favicon.png" />
 
     <?php $this->head() ?>
-</head> 
+</head>
 <body>
 <?php $this->beginBody() ?>
 <input type="hidden" id="langs" value="<?= Yii::$app->language?>">
