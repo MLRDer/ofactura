@@ -25,7 +25,6 @@ use common\widgets\Alert;
     <script src="/js/e-imzo.js"></script>
     <script src="/js/e-imzo-client.js"></script>
     <?php $this->head() ?>
-
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -33,7 +32,7 @@ use common\widgets\Alert;
 <!-- begin:: Page -->
 
 <div class="site-wrapper">
-    <div class="sign-in"><a href="#!" class="back-to-home"><span class="img-block"><img src="/new_template/images/icon/arrow-left.svg" alt=""> </span><span class="title">Вернуться назад</span></a>
+    <div class="sign-in" id="loginPageArea"><a href="https://onlinefactura.uz" class="back-to-home"><span class="img-block"><img src="/new_template/images/icon/arrow-left.svg" alt=""> </span><span class="title"><?= Yii::t('main','Вернуться назад')?></span></a>
         <?= $content ?>
         <ul class="lang-list">
             <li class="lang-item active">

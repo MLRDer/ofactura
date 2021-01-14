@@ -28,6 +28,8 @@ class Notifications extends \yii\db\ActiveRecord
     const TYPE_FACTURA = 10;
     const TYPE_FACTURA_ACCEPT = 20;
     const TYPE_FACTURA_REJECT = 30;
+
+    const TYPE_EMP_SEND = 40;
     const NOT_VIEW = 1;
     const VIEWED = 2;
 

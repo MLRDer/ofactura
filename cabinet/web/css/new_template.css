@@ -189,7 +189,7 @@ input[name="ProductName"] {
     border-radius: 15px;
     background-color: transparent;
 }
-.help-block-error{
+.help-block, .help-block-error{
     background-color: #eabebe4d;
     color: red;
     font-weight: bold;
@@ -198,7 +198,7 @@ input[name="ProductName"] {
     margin-top: 10px;
     margin-bottom: 0px;
 }
-.help-block-error:empty{
+.help-block, .help-block-error:empty{
     background-color: unset;
     padding: unset;
 }
@@ -337,29 +337,6 @@ table tr th a{
     transition: all ease .2;
 }
 
-.profile-tab-header .nav-item .nav-link{
-    min-width: 180px !important;
-}
-
-@media screen and (max-width: 1025px)  {
-    .profile-tab-header .nav-item .nav-link{
-        min-width: 180px !important;
-    }
-}
-
-@media screen and (max-width: 1260px)  {
-    .profile-tab-header .nav-item .nav-link{
-        min-width: 200px !important;
-    }
-}
-
-@media screen and (max-width: 769px)  {
-    .profile-tab-header .nav-item .nav-link{
-        min-width: 150px !important;
-    }
-}
-
-
 
 
 
@@ -391,4 +368,30 @@ table tr th a{
 }
 .bold-text{
     font-weight: bold;
+}
+.count-bell{
+    position: absolute;
+    top: -31%;
+    left: 41%;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    width: 1.75em;
+    height: 1.75em;
+    background-color: #d82428;
+    border: 3px solid #ffffff;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 1.3em;
+    animation: notification 3.2s ease;
+}
+
+
+.input textarea {
+    width: 100%;
+    padding: 11px 20px;
+    border: 1px solid #9794a9!important;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    background-color: transparent!important;
 }

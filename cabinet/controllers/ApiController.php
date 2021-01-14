@@ -3,6 +3,7 @@
 namespace cabinet\controllers;
 
 use cabinet\models\Components;
+use common\models\CallbackFile;
 use common\models\Classifications;
 use common\models\Company;
 use common\models\CompanyUsers;
@@ -299,6 +300,7 @@ class ApiController extends Controller
             $emp = base64_decode($emp);
             $emp = Json::decode($emp);
             $saved = Empowerment::SetData($emp, $emp['Agent']['AgentTin'], Docs::TYPE_IN_AGENT);
+
             $reason = $saved;
         } catch (\Exception $exception){
             $model = new EmpowermentInData();
@@ -588,6 +590,152 @@ class ApiController extends Controller
 
         }
         return $result;
+    }
+
+    public function actionReceivedAct(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_ACT;
+            $model->type_action = CallbackFile::ACTION_RECEIVED;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+    public function actionAcceptAct(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_ACT;
+            $model->type_action = CallbackFile::ACTION_ACCEPT;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+    public function actionRejectAct(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_ACT;
+            $model->type_action = CallbackFile::ACTION_REJECT;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+        }
+        return $result;
+    }
+
+    public function actionCancelAct(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_ACT;
+            $model->type_action = CallbackFile::ACTION_CANCELED;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+
+
+    protected static function WriteSignFile($type,$type_action,$sign){
+        $typeFolder =[
+           10=>'factura',
+           20=>'act',
+           30=>'emp',
+        ];
+//        echo $type_action." - ".$type_action;die;
+        $typeAction = [
+           10 =>'RECEIVED',
+           20 =>'ACCEPT',
+           30 =>'REJECT',
+           40 =>'CANCELED',
+        ];
+        $guid = Yii::$app->security->generateRandomString(10);
+        $base_path = "files/sign_file/".$typeFolder[$type]."/".$typeAction[$type_action];
+        if (!file_exists($base_path)){
+            mkdir($base_path, 0777, true);
+        }
+        $file_path = $base_path."/".$guid.".txt";
+        $file = fopen($file_path, "w");
+        fwrite($file, $sign);
+        fclose($file);
+        return $file_path;
     }
 
     public function actionAccept(){

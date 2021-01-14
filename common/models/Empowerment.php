@@ -156,6 +156,19 @@ class Empowerment extends \yii\db\ActiveRecord
             if(!$model->save()){
                 $reason = Json::encode($model->getErrors());
             }
+            $notify = new Notifications();
+            $notify->tin = $model->AgentTin;
+            $notify->type = Notifications::TYPE_EMP_SEND;
+            $notify->is_view = Notifications::NOT_VIEW;
+            $notify->path = "/empowerment/view?id=".$model->id;
+            $notify->title_uz = "Входящий доверенности №: ".$model->EmpowermentNo ;
+            $notify->title_ru = "Входящий доверенности №: ".$model->EmpowermentNo ;
+            $notify->anons_uz = "Дата доверенности от ".date("d.m.Y",strtotime($model->EmpowermentDateOfIssue))." до ".date("d.m.Y",strtotime($model->EmpowermentDateOfIssue));
+            $notify->anons_ru = "Дата доверенности ".date("d.m.Y",strtotime($model->EmpowermentDateOfIssue))."-".date("d.m.Y",strtotime($model->EmpowermentDateOfIssue));
+            $notify->doc_id = $model->EmpowermentId;
+            $notify->save();
+
+
         }
 
         if($reason==""){
@@ -176,7 +189,7 @@ class Empowerment extends \yii\db\ActiveRecord
         if($reason==""){
             $result = [
               'success'=>true,
-              'reason'=>""
+              'reason'=>"",
             ];
         } else {
             $result = [

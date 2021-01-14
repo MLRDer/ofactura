@@ -2,7 +2,8 @@
 <?php
 
 use kartik\date\DatePicker;
-use yii\bootstrap\ActiveForm;
+
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
 

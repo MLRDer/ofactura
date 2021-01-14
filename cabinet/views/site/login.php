@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <form name="testform" id="authForm" action="/site/login" method="post" class="kt-form" >
     <div class="sign-in-form">
+
         <div class="header">
             <img src="/new_template/images/icon/sign-in-logo.svg" alt="">
         </div>
@@ -188,7 +189,8 @@ $this->params['breadcrumbs'][] = $this->title;
         console.log('authga keldi');
         // var login ='<div class="kt-spinner kt-spinner--v2 kt-spinner--sm kt-spinner--brand"></div>';
         // document.getElementById('authForm').innerHTML = login;
-        SetLoader('authForm');
+        // SetLoader('authForm');
+        document.getElementById('loginPageArea').innerHTML='<div class="loader"><div class="loader-inner line-scale"><div></div><div></div><div></div><div></div><div></div></div><span class="tooltip"><p>line-scale</p></span></div>';
         $.ajax({
             url: '/site/auth',
             method: 'POST',
@@ -205,7 +207,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     window.localStorage.setItem('auth_key',keyId);
                     location.href= data.url;
                 } else {
-                    document.getElementById('authForm').innerHTML = data.reason;
+                    document.getElementById('loginPageArea').innerHTML = data.reason;
                 }
             },
             error: function(data) {

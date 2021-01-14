@@ -237,6 +237,7 @@ class Components
 
         $opts = array(
             'http' => array(
+                'timeout'=>5,
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
             ),
@@ -255,6 +256,7 @@ class Components
 
         $opts = array(
             'http' => array(
+                'timeout'=>5,
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
             ),
