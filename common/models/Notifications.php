@@ -33,6 +33,8 @@ class Notifications extends \yii\db\ActiveRecord
     const NOT_VIEW = 1;
     const VIEWED = 2;
 
+    const TYPE_ACT_RECEIVED = 50;
+
     public static function tableName()
     {
         return 'notifications';

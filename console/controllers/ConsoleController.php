@@ -12,6 +12,7 @@ use common\models\DocInData;
 use common\models\FacturaPks7;
 use common\models\Facturas;
 use common\models\Invoices;
+use common\models\Notifications;
 use common\models\SynsJobs;
 use Yii;
 use yii\helpers\Json;
@@ -371,10 +372,25 @@ class ConsoleController extends \yii\console\Controller
                                   $reason = Json::encode($insertAct->getErrors());
                               } else {
                                   $is_delete = 1;
+                                  $checkAct  = $insertAct;
                               }
                           } else {
                               $is_delete = 1;
                           }
+
+                          $data = new Notifications();
+                          $data->tin = $checkAct->BuyerTin;
+                          $data->type = Notifications::TYPE_ACT_RECEIVED;
+                          $data->doc_id = $checkAct->Id;
+                          $data->title_uz = "Входящий акты № ".$checkAct->ActNo;
+                          $data->title_ru = "Входящий акты № ".$checkAct->ActNo;
+                          $data->anons_uz = $checkAct->ActText;
+                          $data->anons_ru =  $checkAct->ActText;
+                          $data->path = "/act/view?id=".$checkAct->Id;
+                          $data->is_view = Notifications::NOT_VIEW;
+                          $data->save();
+
+
                       } else {
                           $reason = "Faylda ACT mavjud emas";
 //                          var_dump($dataUpper);
@@ -389,6 +405,17 @@ class ConsoleController extends \yii\console\Controller
 
                         } else {
                             $is_delete = 1;
+//                            $data = new Notifications();
+//                            $data->tin = $checkAct->BuyerTin;
+//                            $data->type = Notifications::TYPE_ACT_RECEIVED;
+//                            $data->doc_id = $checkAct->Id;
+//                            $data->title_uz = "Пн акты № ".$checkAct->ActNo;
+//                            $data->title_ru = "Входящий акты № ".$checkAct->ActNo;
+//                            $data->anons_uz = $checkAct->ActText;
+//                            $data->anons_ru =  $checkAct->ActText;
+//                            $data->path = "/act/view?id=".$checkAct->Id;
+//                            $data->is_view = Notifications::NOT_VIEW;
+//                            $data->save();
                         }
 
                     } else {
