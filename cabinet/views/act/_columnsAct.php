@@ -53,14 +53,14 @@ use yii\grid\GridView;
 //                        'Id',
 //                        'ActNo',
                         [
-                            'attribute'=>Yii::t('main', 'ActNo'),
+                            'attribute'=>'ActNo',
                             'format'=>'raw',
                             'value'=>function($model){
 
                                 return '<a href="/act/view?id='.$model->Id.'" class="pdf-badge"> <img src="/new_template/images/icon/pdf-white.svg" alt=""> <div class="title">№ '.$model->ActNo.'</div></a>';
                             }
                         ],
-                        Yii::t('main', 'ActDate'),
+                        'ActDate',
 //                        'ActText',
 //                        'ContractNo',
 //                        'ContractDate',
