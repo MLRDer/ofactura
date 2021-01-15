@@ -252,7 +252,7 @@ $k=0;
 
 <div class="footer">
     <div type="button" class="add-row btn-outline-blue color-blue standard-btn m-r-20">
-        <?= Yii::t('main','+ Добавить ещё')?>
+        + <?= Yii::t('main','Добавить ещё')?>
     </div>
     <button type="button" class="delete-row btn-red">
         <?= Yii::t('main','Удалить')?>
