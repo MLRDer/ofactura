@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions'=>['class'=>''],
                 'items' => [
                     [
-                        'label' => 'Входящие',
+                        'label' => Yii::t('main','Входящие'),
                         'content' => $this->render('_columnsAct',[
                             'searchModel' => $searchModel,
                             'dataProvider' => $dataProvider,
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'active' => ($tab=="w3-tab0")?true:false
                     ],
                     [
-                        'label' => 'Отправленные',
+                        'label' => Yii::t('main', 'Отправленные'),
                         'options'=>['onclick'=>'SetLastTabs(2)'],
                         'content' => $this->render('_columnsAct',[
                             'searchModel' => $searchModel_sent,
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'active' => ($tab=="w3-tab1")?true:false
                     ],
                     [
-                        'label' => 'Сохраненные',
+                        'label' => Yii::t('main', 'Сохраненные'),
                         'options'=>['onclick'=>'SetLastTabs(3)'],
                         'content' => $this->render('_columnsAct',[
                             'searchModel' => $searchModel_saved,

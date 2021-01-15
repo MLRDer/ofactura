@@ -52,6 +52,7 @@ $type_factura = substr($tab,6,1);
                         'content' => '',
                         'active' => ($tab=="w1-tab0")?true:false
                     ],
+
                     [
                         'label' => Yii::t('main', 'Дополнительная'),
                         'content' => $this->render('_extra',['form'=>$form,'model'=>$model]),

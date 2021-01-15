@@ -42,11 +42,11 @@ use yii\grid\GridView;
                         'prevPageLabel'=>'<img src="/new_template/images/icon/arrow-left-blue.svg" alt="">',
                         'nextPageLabel'=>'<img src="/new_template/images/icon/arrow-right-blue.svg" alt="">',
                     ],
-                    'rowOptions'=>function($model){
-                        if($model->is_view == 1){
-                            return ['class' => 'bold-text'];
-                        }
-                    },
+//                    'rowOptions'=>function($model){
+//                        if($model->is_view == 1){
+//                            return ['class' => 'bold-text'];
+//                        }
+//                    },
                     'columns' => [
                         [
                             'class' => 'yii\grid\SerialColumn',

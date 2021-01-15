@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex flex-column align-items-start">
                     <div class="page-title m-b-10">
-                        <?= "Счет фактура <span class='number'>№ ".$model->ActNo."</span>";?>
+                        <?= Yii::t('main', 'Акт');?> <?= "<span class='number'>№ ".$model->ActNo."</span>";?>
                     </div>
                     <div>
                     <?php if($model->SellerTin==\cabinet\models\Components::CompanyData('tin')){ ?>

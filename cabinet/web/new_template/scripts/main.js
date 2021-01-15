@@ -28,14 +28,14 @@ $(document).ready(function () {
     });
 
     //header balance animation
-    if($('.control-panel .balance').hasClass('fill-score')){
-        setInterval(function () {
-            setTimeout(function () {
-                $('.control-panel .balance').addClass('animation')
-            });
-            $('.control-panel .balance').removeClass('animation')
-        },5000, )
-    }
+    // if($('.control-panel .balance').hasClass('fill-score')){
+    //     setInterval(function () {
+    //         setTimeout(function () {
+    //             $('.control-panel .balance').addClass('animation')
+    //         });
+    //         $('.control-panel .balance').removeClass('animation')
+    //     },5000, )
+    // }
 
     //checkbox is checked
     $('.input-checkbox').change(function () {

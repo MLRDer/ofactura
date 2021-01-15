@@ -83,11 +83,11 @@ class Acts extends \yii\db\ActiveRecord
     {
         return [
             'Id' => Yii::t('main', 'ID'),
-            'ActNo' => Yii::t('main', 'Act No'),
-            'ActDate' => Yii::t('main', 'Act Date'),
+            'ActNo' => Yii::t('main', 'ActNo'),
+            'ActDate' => Yii::t('main', 'ActDate'),
             'ActText' => Yii::t('main', 'Act Text'),
-            'ContractNo' => Yii::t('main', 'Contract No'),
-            'ContractDate' => Yii::t('main', 'Contract Date'),
+            'ContractNo' => Yii::t('main', 'ContractNo'),
+            'ContractDate' => Yii::t('main', 'ContractDate'),
             'SellerTin' => Yii::t('main', 'Seller Tin'),
             'SellerName' => Yii::t('main', 'Seller Name'),
             'BuyerTin' => Yii::t('main', 'Buyer Tin'),

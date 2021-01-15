@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <?php
         $CanseledJson = [
-            'FacturaId'=>$model->Id,
+            'FacturaId'=>$model->Id,    
             'SellerTin'=>$model->SellerTin
         ];
         ?>
