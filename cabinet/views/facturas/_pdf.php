@@ -29,6 +29,11 @@ $qrCode = (new QrCode('{INN:'.\cabinet\models\Components::CompanyData('tin').', 
     <div style="text-align: center;font-weight: bold;font-size: 14px;color: black">
          <table>
              <tr>
+                 <td style="font-size: 11px" colspan="3">
+                     ID: <?= $model->Id?>
+                 </td>
+             </tr>
+             <tr>
                  <td width="33%">
 
                  </td>

@@ -89,7 +89,8 @@ class ReestrController extends \cabinet\components\Controller
                         $ord = 0;
                         continue;
                     }
-
+                    //var_dump($items);
+                    //die();
                     $productsItesm[] =
                         [
                             "Tin" => $items[ReestrConst::KEY_TIN],

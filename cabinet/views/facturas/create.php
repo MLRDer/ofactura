@@ -25,7 +25,7 @@ $type_factura = substr($tab,6,1);
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
                 <label class="invoice-checkbox m-r-30">
-                    <div class="title">Односторонняя "фактура"</div>
+                    <div class="title"><?= Yii::t('main', 'Односторонняя "фактура"')?></div>
                     <input type="checkbox" onclick="SwitchSingleSlide(5)" id="CheckOnLevel">
                     <div class="switch-checkbox"></div>
                 </label>
@@ -46,29 +46,30 @@ $type_factura = substr($tab,6,1);
                 'headerOptions'=>['class'=>''],
                 'items' => [
                     [
-                        'label' => 'Стандартная',
+                        'label' => Yii::t('main', 'Стандартная'),
                         'content' => '',
                         'active' => ($tab=="w1-tab0")?true:false
                     ],
+
                     [
-                        'label' => 'Дополнительная',
+                        'label' => Yii::t('main', 'Дополнительная'),
                         'content' => $this->render('_extra',['form'=>$form,'model'=>$model]),
                         'active' => ($tab=="w1-tab1")?true:false
                     ],
                     [
-                        'label' => 'Возмещение расходов',
+                        'label' => Yii::t('main', 'Возмещение расходов'),
                         'content' => $this->render('_repayment'),
                         'active' => ($tab=="w1-tab2")?true:false
 
                     ],
                     [
-                        'label' => 'Без оплаты',
+                        'label' => Yii::t('main', 'Без оплаты'),
                         'content' => $this->render('_nopayment'),
                         'active' => ($tab=="w1-tab3")?true:false
 
                     ],
                     [
-                        'label' => 'Исправленная',
+                        'label' => Yii::t('main', 'Исправленная'),
                         'content' => $this->render('_corrected',['form'=>$form,'model'=>$model]),
                         'active' => ($tab=="w1-tab4")?true:false
 

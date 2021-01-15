@@ -117,8 +117,8 @@ $langName = [
 ============================-->
 <section id="intro" class="clearfix">
     <div class="container d-flex h-100">
-        <div class="row justify-content-center align-self-center">
-            <div class="col-md-6 intro-info order-md-first order-last">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-5 intro-info order-md-first order-last">
                 <h2>
                     <br>Online<span> Factura!</span>
 
@@ -132,8 +132,8 @@ color: black;"><?= Yii::t('main','Информационная система п
                 </div>
 
             </div>
-            <div class="col-md-6 intro-img order-md-last order-first">
-                <img style="width: 100%" src="/img/banner.png" alt="" class="img-fluid">
+            <div class="col-md-7 intro-img order-md-last order-first">
+                <img style="width: 100%" src="/img/banner1.png" alt="" class="img-fluid">
             </div>
         </div>
     </div>
