@@ -18,6 +18,7 @@ use common\widgets\Alert; ?>
                     <li class="item">
                         <div class="label"><?= Yii::t('main', 'Входящие');?></div>
 <!--                            <a href="#!" class="badge green">+ 2000-->
+
                         </a>
                     </li>
                     <li class="item">
@@ -45,6 +46,7 @@ use common\widgets\Alert; ?>
                     <li class="item">
                         <div class="label"><?= Yii::t('main', 'Входящие');?></div>
 <!--                            <a href="#!" class="badge yellow">+1 000-->
+
                         </a>
                     </li>
                     <li class="item">
@@ -71,48 +73,12 @@ use common\widgets\Alert; ?>
                     <img src="/new_template/images/icon/restr.svg" alt="">
                     <div class="title">Реестр</div>
                 </div>
-                <div class="right"><a href="/reestr/create" class="btn-gray"><?= Yii::t('main', '+ Создать Реестр') ?></a>
+                <div class="right"><a href="/reestr/create" class="btn-gray">+ Создать Реестр</a>
                 </div>
             </div>
             <div class="body">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Номер реестра</th>
-                        <th>Дата создания реестра</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>#</td>
-                        <td>##</td>
-                    </tr>
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>№ 25-2555</td>-->
-<!--                        <td>08.10.2020 / 09:58</td>-->
-<!--                    </tr>-->
-                    </tbody>
-                </table>
+                <?= $this->render('index_reestr',['searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,])?>
             </div>
         </div>
     </div>

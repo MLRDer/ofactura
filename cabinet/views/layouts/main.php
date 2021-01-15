@@ -52,10 +52,10 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
             <ul class="nav notification-tabs-header">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#notification-modal-1" aria-selected="true">Оповещения</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-2" aria-selected="false">Фактура</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-3" aria-selected="false">Доверенность</a>
-                </li>
+<!--                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-2" aria-selected="false">Фактура</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#notification-modal-3" aria-selected="false">Доверенность</a>-->
+<!--                </li>-->
             </ul>
             <div class="tab-content notification-tabs-content">
                 <div class="tab-pane fade show active" id="notification-modal-1">

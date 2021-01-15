@@ -29,23 +29,51 @@ use cabinet\models\Components;
             <div class="tin"><?= Components::CompanyData('tin')?></div>
         </div>
     </div>
+    <?php
+    $current_path = Yii::$app->request->url;
+
+    $path_ru = substr_replace($current_path,"/ru",0,3);
+    $path_uz = substr_replace($current_path,"/uz",0,3);
+    $path_oz = substr_replace($current_path,"/oz",0,3);
+    ?>
+
     <div class="control-panel">
         <a href="/invoices/payme" class="balance fill-score">
             <div class="icon"></div>
+
             <div class="balance-value"><?= number_format(Components::getSum(),2)?> сум</div>
         </a>
-        <ul class="lang-list">
-            <li class="lang-item <?= (Yii::$app->language=="uz")?'active':''?>">
-                <a href="/ru" class="lang-link">
-                    <img src="/new_template/images/header/lang-ru.svg" alt="">
+
+
+
+            <div class="dropdown lang-item">
+                <a class="lang-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: block;margin-right: 30px">
+                    <img src="/new_template/images/header/lang-<?= Yii::$app->language?>.svg" alt="" style="width: 30px">
                 </a>
-            </li>
-            <li class="lang-item <?= (Yii::$app->language=="ru")?'active':''?>">
-                <a href="/uz" class="lang-link">
-                    <img src="/new_template/images/header/lang-uz.svg" alt="">
-                </a>
-            </li>
-        </ul>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="<?= $path_uz?>">
+                        <img src="/new_template/images/header/lang-uz.svg" alt="" style="width: 20px;
+    float: left;
+    margin-right: 20px;
+    padding-top: 3px;"> Узб
+                    </a>
+                    <a class="dropdown-item" href="<?= $path_oz?>">
+                        <img src="/new_template/images/header/lang-oz.svg" alt="" style="width: 20px;
+    float: left;
+    margin-right: 20px;
+    padding-top: 3px;"> O'zb
+                    </a>
+                    <a class="dropdown-item" href="<?= $path_ru?>">
+                        <img src="/new_template/images/header/lang-ru.svg" alt="" style="width: 20px;
+    float: left;
+    margin-right: 20px;
+    padding-top: 3px;">    Рус
+                    </a>
+
+                </div>
+            </div>
+
         <ul class="control-list">
             <li class="control-item">
                 <a href="/classifications/index" class="control-link gear"></a>
@@ -53,8 +81,12 @@ use cabinet\models\Components;
             <li class="control-item">
                 <a href="/new_template/file/offer.pdf" class="control-link offer"></a>
             </li>
-            <li class="control-item active">
-                <a href="#!" class="control-link notification"></a>
+            <?php $ntf = \common\models\Notifications::find()->andWhere(['tin'=>Components::CompanyData('tin'),'is_view'=>1])->count() ?>
+            <li class="control-item <?= ($ntf>0)?'active ':''?>">
+                <a href="#!" class="control-link notification fill-score animation">
+                    <?php if($ntf>0){  ?> <span class="count-bell"><?= $ntf?></span> <?php }?>
+                </a>
+
             </li>
             <li class="control-item">
                 <a href="/site/logout" class="control-link log-out"></a>

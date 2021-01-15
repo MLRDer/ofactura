@@ -1,18 +1,19 @@
 <?php
 namespace console\controllers;
 
+use BaconQrCode\Common\EcBlock;
 use cabinet\models\Components;
+use common\models\Acts;
 use common\models\BankInvoicesLog;
+use common\models\CallbackFile;
 use common\models\Company;
 use common\models\Districts;
 use common\models\DocInData;
 use common\models\FacturaPks7;
-use common\models\FacturaProducts;
 use common\models\Facturas;
 use common\models\Invoices;
 use common\models\SynsJobs;
 use Yii;
-use yii\debug\models\search\Db;
 use yii\helpers\Json;
 use yii\web\Response;
 
@@ -38,208 +39,6 @@ class ConsoleController extends \yii\console\Controller
             echo $item->tin."\n";
             $data = $this->buyerData($item);
             $this->SetData($data);
-        }
-    }
-
-    public function actionFetchSellerFacturas(){
-
-        ini_set("memory_limit", "512M");
-
-        try {
-            $db = Yii::$app->getDb();
-
-            $facturas= $db->createCommand("SELECT FACTURA_ID AS factura_id, SELLER_TIN AS seller_tin FROM no_factura")->queryAll();
-
-
-            echo "Started\n";
-            $i=0;
-            foreach ($facturas as $factura){
-//                var_dump($data);
-//                die();
-
-                if(Facturas::findOne(["Id"=>$factura["factura_id"]]) || $factura["factura_id"]=="5f9ada5e1fdd7be13950f700" || $factura["seller_tin"]==20052322)
-                {
-                    echo $i ." " . " exists: ". $factura["factura_id"]."\n";
-                    $i++;
-                    continue;
-                }
-
-                else{
-                    $opts = array(
-                        'http' => array(
-                            'method' => "GET",
-                            'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
-                        )
-                    );
-
-                    $context = stream_context_create($opts);
-                    $url=self::HOST."/provider/api/uz/".$factura["seller_tin"]."/facturas/seller/".$factura["factura_id"];
-                    $data = file_get_contents($url, false, $context);
-
-                    $data = json_decode($data);
-                    $new_factura = new Facturas();
-
-//                    var_dump($data);
-//                    die();
-
-                    $new_factura->SellerName=$data->seller->name;
-                    $new_factura->SellerAccount = $data->seller->account;
-                    $new_factura->SellerDirector = $data->seller->director;
-                    $new_factura->SellerAccountant = $data->seller->accountant;
-                    $new_factura->SellerVatRegCode = $data->seller->vatRegCode;
-                    $new_factura->SellerBranchCode = $data->seller->branchCode;
-                    $new_factura->SellerBranchName = $data->seller->branchName;
-                    $new_factura->SellerOked = $data->seller->oked;
-                    $new_factura->SellerDistrictId = $data->seller->district ? $data->seller->district->districtId : null;
-                    $new_factura->SellerAddress = $data->seller->address;
-                    $new_factura->SellerWorkPhone = $data->seller->workPhone;
-                    $new_factura->SellerBankId = $data->seller->bank ? $data->seller->bank->bankId : null;
-
-
-                    $new_factura->BuyerTin = $data->buyerTin;
-                    $new_factura->BuyerAccount = $data->buyer->account;
-                    $new_factura->BuyerBankId = $data->buyer->bank ? $data->buyer->bank->bankId : null;
-
-                    $new_factura->BuyerAddress = $data->buyer->address;
-                    $new_factura->BuyerOked = $data->buyer->oked;
-                    $new_factura->BuyerDirector = $data->buyer->director;
-                    $new_factura->BuyerAccountant = $data->buyer->accountant;
-                    $new_factura->BuyerVatRegCode = $data->buyer->vatRegCode;
-
-
-                    $new_factura->Id = $data->facturaId;
-                    $new_factura->Tin = $data->sellerTin;
-                    $new_factura->SellerTin = $data->sellerTin;
-                    $new_factura->FacturaType=$data->facturaType;
-                    $new_factura->type = 0;
-                    $new_factura->HasExcise = 0;
-                    $new_factura->HasMedical = 0;
-                    $new_factura->HasVat = 0;
-                    $new_factura->HasCommittent = 0;
-                    $new_factura->SingleSidedType=$data->singleSidedType;
-                    $new_factura->created_date=date('Y-m-d H:i:s',strtotime($data->created));
-                    if(isset($data->facturaEmpowermentDoc)){
-                        $new_factura->EmpowermentDateOfIssue=date('Y-m-d H:i:s',strtotime($data->facturaEmpowermentDoc->empowermentDateOfIssue));
-                        $new_factura->EmpowermentNo = $data->facturaEmpowermentDoc->empowermentNo;
-                        $new_factura->AgentTin = $data->facturaEmpowermentDoc->agentTin;
-                        $new_factura->AgentFio = $data->facturaEmpowermentDoc->agentFio;
-                        $new_factura->AgentFacturaId = $data->facturaEmpowermentDoc->agentFacturaId;
-                    }
-
-                    $new_factura->ContractNo = $data->contractDoc->contractNo;
-                    $new_factura->ContractDate = date('Y-m-d H:i:s',strtotime($data->contractDoc->contractDate));
-                    $new_factura->Version = $data->version;
-                    $new_factura->FacturaProductId = $data->facturaProductId;
-                    $new_factura->status = $data->currentStateId;
-                    $new_factura->FacturaNo = $data->facturaDoc->facturaNo;
-                    $new_factura->FacturaDate = date('Y-m-d H:i:s',strtotime($data->facturaDoc->facturaDate));
-
-                    //var_dump($new_factura);
-                    //die();
-                    if($new_factura->save())
-                    {
-                        echo $i . " success: ".$data->facturaId."\n";
-                    }
-                    else{
-                        var_dump($new_factura->errors);
-                        echo $i . " failed \n";
-
-                    }
-                    $i++;
-                    //die();
-                }
-            }
-            echo "Done!";
-        }
-        catch (\Exception $exception){
-            echo $exception->getMessage();
-        }
-
-    }
-
-    public function actionFetchFacturaProducts(){
-        try {
-            ini_set("memory_limit", "680M");
-            $db = Yii::$app->getDb();
-            $facturas= $db->createCommand("SELECT FacturaProductId AS factura_product_id, Tin AS tin FROM facturas 
-                where facturas.FacturaProductId not in (SELECT DISTINCT FacturaId from factura_products )")->queryAll();
-
-//            var_dump(count($facturas));
-//            die();
-
-
-            echo "Started!";
-
-            foreach ($facturas as $factura){
-                $opts = array(
-                    'http' => array(
-                        'method' => "GET",
-                        'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
-                    )
-                );
-
-                $context = stream_context_create($opts);
-                $url=self::HOST."/provider/api/uz/".$factura["tin"]."/facturas/productlist/".$factura["factura_product_id"];
-                $data = file_get_contents($url, false, $context);
-
-                $data = json_decode($data);
-
-                $update_factura = Facturas::findOne(["FacturaProductId"=>$factura["factura_product_id"]]);
-                $update_factura->HasCommittent = (int)$data->hasCommittent;
-                $update_factura->HasMedical = (int)$data->hasMedical;
-                $update_factura->HasVat = (int)$data->hasVat;
-                if($update_factura->update()){
-                    echo "factura updated!";
-                }
-                else{
-                    var_dump($update_factura->errors);
-                }
-                foreach ($data->products as $product){
-                    if (FacturaProducts::findOne(["FacturaId"=>$factura["factura_product_id"], "OrdNo"=>$product->ordNo])){
-                        echo "product exists \n";
-                    }
-                    else{
-                        $new_product = new FacturaProducts();
-//                        var_dump($product);
-//                        die();
-                        $new_product->FacturaId = $factura["factura_product_id"];
-                        $new_product->CatalogCode = $product->catalogCode;
-                        $new_product->CatalogName = $product->catalogName;
-                        $new_product->OrdNo = (string)$product->ordNo;
-                        $new_product->CommittentName = $product->committentName;
-                        $new_product->CommittentTin = $product->committentTin;
-                        $new_product->CommittentVatRegCode = $product->committentVatRegCode;
-                        $new_product->Name = $product->name;
-                        $new_product->Serial = $product->serial;
-                        $new_product->MeasureId = $product->measureId;
-                        $new_product->BaseSumma = $product->baseSumma;
-                        $new_product->ProfitRate = $product->profitRate;
-                        $new_product->Count = $product->count;
-                        $new_product->Summa = $product->summa;
-                        $new_product->DeliverySum = $product->deliverySum;
-                        $new_product->ExciseSum=$product->exciseSum;
-                        $new_product->ExciseRate=$product->exciseRate;
-                        $new_product->WithoutVat = (int)$product->withoutVat;
-                        $new_product->VatRate = $product->vatRate;
-                        $new_product->VatSum = $product->vatRate;
-                        $new_product->DeliverySumWithVat = $product->deliverySumWithVat;
-                        if ($new_product->save()){
-                            echo "new product save!" . "\n";
-                        }
-                        else{
-                            var_dump($new_product->errors);
-                            echo "failed! \n";
-                        }
-                    }
-                }
-
-
-
-            }
-            echo "Done!\n";
-        }
-        catch (\Exception $exception){
-            echo $exception->getMessage();
         }
     }
 
@@ -466,6 +265,26 @@ class ConsoleController extends \yii\console\Controller
         echo "Tugadi. \n";
     }
 
+//    public function actionCreateFacturaPksSingleTxt(){
+//        $factura_id = $_POST['factura_id'];
+//        $seller_pks7 = $_POST['seller_pks7'];
+//        try {
+//            if (!file_exists("./assets/factura_pks7")){
+//                mkdir("./assets/factura_pks7", 0777, true);
+//            }
+//            if (isset($factura_id) && isset($seller_pks7)){
+//                $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "w");
+//                fwrite($file, $seller_pks7);
+//                fclose($file);
+//
+//                return json_encode(["message"=>"saved!"]);
+//            }
+//            return json_encode(["message"=>"factura_id or seller_pks7 fild is missing"]);
+//        }
+//        catch (\Exception $exception){
+//            return $exception->getMessage();
+//        }
+//    }
 
     public function actionCreateFacturaPksTxt(){
         $factura_pks = FacturaPks7::find()
@@ -524,6 +343,204 @@ class ConsoleController extends \yii\console\Controller
 
     }
 
+    public function actionActJob(){
+        echo "Boshlandi \n";
+        $model = CallbackFile::find()->andWhere(['type'=>CallbackFile::TYPE_ACT,'status'=>CallbackFile::STATUS_NEW])->all();
+
+        $is_delete = 0;
+        foreach ($model as $items){
+            $callbackModel = CallbackFile::findOne(['id'=>$items->id]);
+            echo $items->id;
+            $reason="";
+            $file_path = Yii::getAlias("@cabinet")."/web/".$items->path;
+            if(!file_exists($file_path)){
+                $reason = "Fayl topilmadi: ".$file_path;
+            }
+            if($reason==""){
+                $data = self::GetJsonBySign(file_get_contents($file_path));
+                $dataUpper = self::UpperKeyName($data);
+                  if($items->type_action==CallbackFile::ACTION_RECEIVED) {
+                      echo "TYPE_ACTION:". $items->type_action;
+                      if (isset($dataUpper)) {
+                          $checkAct = Acts::findOne(['Id'=>$dataUpper['ACTID']]);
+                          if(empty($checkAct)) {
+                              $insertAct = new Acts();
+                              $insertAct->InsertByArray($dataUpper);
+                              $insertAct->InsertActProducts($dataUpper);
+                              if (!$insertAct->save()) {
+                                  $reason = Json::encode($insertAct->getErrors());
+                              } else {
+                                  $is_delete = 1;
+                              }
+                          } else {
+                              $is_delete = 1;
+                          }
+                      } else {
+                          $reason = "Faylda ACT mavjud emas";
+//                          var_dump($dataUpper);
+                      }
+                  }
+                if($items->type_action==CallbackFile::ACTION_ACCEPT) {
+                    $modelAct = Acts::findOne(['Id'=>$dataUpper['ACTID']]);
+                    if(!empty($modelAct)){
+                        $modelAct->status = Acts::STATUS_ACCEPTED;
+                        if(!$modelAct->save()){
+                            $reason = Json::encode($modelAct->getErrors());
+
+                        } else {
+                            $is_delete = 1;
+                        }
+
+                    } else {
+                        $is_delete = 1;
+//                        $reason = "Bizning tizimda BUnday ID li akt mavjud emas";
+                    }
+//                    var_dump($dataUpper);die;
+                }
+                if($items->type_action==CallbackFile::ACTION_REJECT) {
+
+                    $notes = $dataUpper['NOTES'];
+                    $dataUpper =$dataUpper['ACT'];
+                    $modelAct = Acts::findOne(['Id'=>$dataUpper['ACTID']]);
+                    if(!empty($modelAct)){
+                        $modelAct->status = Acts::STATUS_REJECTED;
+                        $modelAct->notes = $notes;
+                        if(!$modelAct->save()){
+                            $reason = Json::encode($modelAct->getErrors());
+
+                        } else {
+                            $is_delete = 1;
+                        }
+
+                    } else {
+                        $is_delete = 1;
+//                        $reason = "Bizning tizimda BUnday ID li akt mavjud emas";
+                    }
+//                    var_dump($dataUpper);die;
+                }
+
+                if($items->type_action==CallbackFile::ACTION_CANCELED) {
+//                    var_dump($dataUpper);die;
+                    $modelAct = Acts::findOne(['Id'=>$dataUpper['ACTID']]);
+                    if(!empty($modelAct)){
+                        $modelAct->status = Acts::STATUS_CANCELLED;
+                        if(!$modelAct->save()){
+                            $reason = Json::encode($modelAct->getErrors());
+                        } else {
+                            $is_delete = 1;
+                        }
+                    }
+
+                }
+
+
+
+            }
+            if($reason==""){
+                if($is_delete==1){
+                    unlink($file_path);
+                    $callbackModel->delete();
+                }
+                echo "Success.\n";
+            }
+            else{
+                $callbackModel->status = CallbackFile::STATUS_ERROR ;
+                $callbackModel->reason = $reason;
+                $callbackModel->save();
+                echo $reason."\n";
+            }
+
+
+
+        }
+    }
+
+
+
+    protected static  function GetJsonBySign($data){
+        $data = Json::decode($data);
+        $client = new \SoapClient(self::URL_PKCS);
+        $result = $client->verifyPkcs7([ "pkcs7B64" =>$data['Sign']]);
+        $result = $result->return;
+        $result = Json::decode($result);
+        $doc =  $result['pkcs7Info'];
+        $doc = $doc['documentBase64'];
+        $doc = base64_decode($doc);
+        $doc = Json::decode($doc);
+        return $doc;
+    }
+
+    protected static function UpperKeyName($doc){
+        $UpperData =[];
+        foreach ($doc as $key=>$value){
+            if(is_array($value)){
+                foreach ($value as $key2=>$value2){
+                    if(is_array($value2)){
+                        foreach ($value2 as $key3=>$value3){
+//                            echo $key3."=>".$value3."\n";
+                            if(is_array($value3)){
+                                $resPrd =[];
+//                                echo count((array)$value3);
+//                                if(count((array)$value3)>1) {
+//                                    foreach ($value3 as $items) {
+//                                        $arraYW = [];
+//                                        foreach ($items as $key4 => $value4) {
+//                                            $arraYW[mb_strtoupper($key4)] = $value4;
+//                                        }
+//                                        $resPrd[] = $arraYW;
+//                                    }
+//                                    $UpperFactura[mb_strtoupper($key)][mb_strtoupper($key2)][mb_strtoupper($key3)] = $resPrd;
+//                                } else {
+                                $arra4=[];
+                                foreach ($value3 as $key4=>$value4){
+                                    $arra4[mb_strtoupper($key4)]=$value4;
+                                }
+                                $UpperData[mb_strtoupper($key)][mb_strtoupper($key2)][mb_strtoupper($key3)] = $arra4;
+//                                }
+                            } else {
+                                $UpperData[mb_strtoupper($key)][mb_strtoupper($key2)][mb_strtoupper($key3)] = $value3;
+                            }
+                        }
+                    } else {
+//                        echo $key2."=>".$value2."\n";
+                        $UpperData[mb_strtoupper($key)][mb_strtoupper($key2)] = $value2;
+                    }
+
+                }
+            } else {
+                $UpperData[mb_strtoupper($key)] = $value;
+//                echo $key."=>".$value."\n";
+            }
+        }
+
+//        echo Json::encode($UpperFactura);
+        return $UpperData;
+    }
+
+
+//    public function actionGetFacturaPksTxt(){
+//        try {
+//            if (isset($_GET['factura_id'])){
+//                $factura_id = $_GET['factura_id'];
+//                if (file_exists(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt")){
+//
+//                    $file = fopen(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt", "r");
+//                    clearstatcache(true, __DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt");
+//                    $content = fread($file, filesize(__DIR__.'/../../assets/factura_pks7/'.$factura_id.".txt"));
+//
+//                    fclose($file);
+//
+//                    return json_encode(['content'=>$content]);
+//                }
+//                else{
+//                    return json_encode(["content"=>"No file found!"]);
+//                }
+//            }
+//        }
+//        catch (\Exception $exception){
+//            return $exception->getMessage();
+//        }
+//    }
 
     public function actionGetDistrict(){
 

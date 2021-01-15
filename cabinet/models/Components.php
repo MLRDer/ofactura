@@ -6,6 +6,7 @@ use common\models\CompanyTarif;
 use common\models\CompanyTarifLog;
 use common\models\Invoices;
 use common\models\MonthPay;
+use common\models\Notifications;
 use Yii;
 use yii\helpers\Json;
 
@@ -65,7 +66,11 @@ class Components
             'http' => array(
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode(self::LOGIN.":".self::PASSWORD)
-            )
+            ),
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
         );
         $context = stream_context_create($opts);
         $url = Yii::$app->params['factura_host']."/provider/api/ru/utils/guid";
@@ -162,6 +167,14 @@ class Components
         return $reason;
     }
 
+    public static function getNotifiy($type){
+        $model = Notifications::find()->andWhere(['tin'=>self::CompanyData('tin'),'is_view'=>1,'type'=>Notifications::TYPE_FACTURA])->count();
+        if($model!=0)
+            return '<span class="badge green">'.$model.'</span>';
+        else
+            return "";
+    }
+
     public static function getSum(){
         $model = Company::findOne(['id'=>Components::GetId()]);
         $result = 0;
@@ -224,6 +237,7 @@ class Components
 
         $opts = array(
             'http' => array(
+                'timeout'=>5,
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
             ),
@@ -242,6 +256,7 @@ class Components
 
         $opts = array(
             'http' => array(
+                'timeout'=>5,
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
             ),

@@ -3,7 +3,24 @@ $(document).ready(function () {
     //notification-modal
     $('.control-link.notification').on('click', function () {
         $('.notification-modal').addClass('show-modal');
-        $('body').addClass('overflow-hidden')
+        $('body').addClass('overflow-hidden');
+        document.getElementById('notification-modal-1').innerHTML = '<div class="loader"><div class="loader-inner line-scale">\n' +
+            '          <div></div>\n' +
+            '          <div></div>\n' +
+            '          <div></div>\n' +
+            '          <div></div>\n' +
+            '          <div></div>\n' +
+            '        </div></div>';
+        $.ajax({
+            type: "POST",
+            url: "/uz/api-v2/get-notifications",
+            success: function (json) {
+                document.getElementById('notification-modal-1').innerHTML = json;
+            },
+            error: function (response) {
+
+            }
+        });
     });
     $('.notification-modal .close').on('click', function () {
         $('.notification-modal').removeClass('show-modal');

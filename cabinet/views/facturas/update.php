@@ -260,7 +260,7 @@ $type_factura = substr($tab,6,1);
                 <div class="header">
                     <div class="btn-blue font-weight-normal text-transform-none m-r-20">
                         <img src="/new_template/images/icon/clip.svg" alt="">Загрузить Excel файл</div>
-                    <div class="btn-white">Скачать шаблон</div>
+                    <div class="btn-white"><a href="/docs/factura_with_ccode.xlsx">Скачать шаблон</a></div>
                 </div>
                 <div class="body m-b-20">
                     <div id="gridArea" class="items-grid-template">
@@ -350,19 +350,19 @@ $type_factura = substr($tab,6,1);
         $(".add-row").click(function(){
 
             var ProductName =  '<div class="editable" name="ProductName" id="ProductName_'+k+'" rowid="'+k+'"></div>';
-            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'">0</div>';
+            var ProductCount =  '<div class="editable" name="ProductCount" id="ProductCount_'+k+'" rowid="'+k+'"></div>';
             var ProductMeasureId =  '<div class="editable" name="ProductMeasureId" id="ProductMeasureId_'+k+'" rowid="'+k+'"></div>';
             var ProductCatalogName =  '<div class="editable" name="ProductCatalogName" id="ProductCatalogName_'+k+'" rowid="'+k+'"></div>';
             var ProductCatalogCode =  '<div class="editable" name="ProductCatalogCode" id="ProductCatalogCode_'+k+'" rowid="'+k+'"></div>';
-            var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'">0</div>';
-            var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'">0</div>';
-            var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'">0</div>';
-            var ProductVatSum =  '<div class="editable" name="ProductVatSum" id="ProductVatSum_'+k+'" rowid="'+k+'">0</div>';
-            var ProductDeliverySumWithVat =  '<div class="editable" name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVat_'+k+'" rowid="'+k+'">0</div>';
+            var ProductSumma =  '<div class="editable" name="ProductSumma" id="ProductSumma_'+k+'" rowid="'+k+'"></div>';
+            var ProductDeliverySum =  '<div class="editable" name="ProductDeliverySum" id="ProductDeliverySum_'+k+'" rowid="'+k+'"></div>';
+            var ProductVatRate =  '<div class="editable" name="ProductVatRate" id="ProductVatRate_'+k+'" rowid="'+k+'"></div>';
+            var ProductVatSum =  '<div class="editable" name="ProductVatSum" id="ProductVatSum_'+k+'" rowid="'+k+'"></div>';
+            var ProductDeliverySumWithVat =  '<div class="editable" name="ProductDeliverySumWithVat" id="ProductDeliverySumWithVat_'+k+'" rowid="'+k+'"></div>';
 
-            var ProductFuelRate =  '<div class="editable" name="ProductFuelRate" id="ProductFuelRate_'+k+'" rowid="'+k+'">0</div>';
-            var ProductFuelSum =  '<div class="editable" name="ProductFuelSum" id="ProductFuelSum_'+k+'" rowid="'+k+'">0</div>';
-            var ProductDeliverySumWithFuel =  '<div class="editable" name="ProductDeliverySumWithFuel" id="ProductDeliverySumWithFuel_'+k+'" rowid="'+k+'">0</div>';
+            var ProductFuelRate =  '<div class="editable" name="ProductFuelRate" id="ProductFuelRate_'+k+'" rowid="'+k+'"></div>';
+            var ProductFuelSum =  '<div class="editable" name="ProductFuelSum" id="ProductFuelSum_'+k+'" rowid="'+k+'"></div>';
+            var ProductDeliverySumWithFuel =  '<div class="editable" name="ProductDeliverySumWithFuel" id="ProductDeliverySumWithFuel_'+k+'" rowid="'+k+'"></div>';
 
             k++;
 

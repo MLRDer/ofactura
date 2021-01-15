@@ -18,6 +18,7 @@ class NewAssetLogin extends AssetBundle
     public $css = [
         "new_template/styles/vendor.min.css",
         "new_template/styles/main.css",
+        "css/loaders.min.css",
         "css/new_template.css"
     ];
     public $js = [

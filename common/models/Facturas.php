@@ -100,6 +100,7 @@ class Facturas extends \yii\db\ActiveRecord
     const PASSWORD = "n;xw3CE(GDb$@|D*";
 
     public $file;
+    public $is_view;
 
     public static function tableName()
     {
@@ -314,8 +315,8 @@ class Facturas extends \yii\db\ActiveRecord
                 "CatalogCode"=>$items->CatalogCode,
                 "CatalogName"=>$items->CatalogName,
                 "MeasureId"=>$items->MeasureId,
-                "BaseSumma"=>$items->BaseSumma,
-                "ProfitRate"=>$items->ProfitRate,
+                "BaseSumma"=>($items->BaseSumma==null)?0:$items->BaseSumma,
+                "ProfitRate"=>($items->ProfitRate==null)?0:$items->ProfitRate,
                 "Count"=>$items->Count,
                 "Summa"=>$items->Summa,
                 "DeliverySum"=>$items->DeliverySum,

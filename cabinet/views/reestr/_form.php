@@ -15,13 +15,17 @@ use yii\widgets\ActiveForm;
     <div class="row">
 
         <div class="col-md-6">
-            <?= $form->field($model, 'reest_no')->textInput(['maxlength' => true]) ?>
+            <div class="input m-b-30">
+            <?= $form->field($model, 'reest_no')->textInput(['maxlength' => true,'class'=>'']) ?>
+            </div>
         </div>
         <div class="col-md-6">
              
             <?php
-            echo $form->field($model, 'reestr_date')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => Yii::t('main','Enter date ...'),'value'=>date('Y-m-d')],
+            echo $form->field($model, 'reestr_date',['template'=>'{label}<div class="input datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+
+                'options' => ['placeholder' => Yii::t('main','Enter date ...'),'value'=>date('Y-m-d'),'class'=>'my-datepicker'],
+                'type' => DatePicker::TYPE_INPUT,
                 'pluginOptions' => [
                     'autoclose'=>true,
                     'todayHighlight' => true,
@@ -31,14 +35,18 @@ use yii\widgets\ActiveForm;
             ?>
             <?= $form->field($model, 'json_data')->hiddenInput()->label(false) ?>
         </div>
-    </div>
-    <div class="col-md-12">
-        <label class="btn btn-brand " id="UploadBtn">
+
+    <div class="col-md-12 table-card-gray" id="gridArea">
+        <div class="header">
+        <label class="btn-blue font-weight-normal text-transform-none m-r-20 " id="UploadBtn">
             <i class="flaticon-attachment"></i> <?= Yii::t('main','Exel to import btn')?>
             <input type="file" id="docs-reestr" name="ReestrMain[file]" hidden>
         </label>
-        <a href="/docs/reestr шаблон.xlsx" class=" btn btn-warning" style="margin-bottom: 7px;"> <?= Yii::t('main','Skachat reestr')?></a>
-        <div style="overflow-x: scroll">
+        <div class="btn-white">
+            <a href="/docs/reestr шаблон.xlsx"> <?= Yii::t('main','Skachat reestr')?></a>
+        </div>
+        </div>
+        <div class="items-grid-template">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -127,10 +135,9 @@ use yii\widgets\ActiveForm;
             </tr>
             </tbody>
         </table>
-
         </div>
     </div>
-
+    </div>
 
     <?php ActiveForm::end(); ?>
 

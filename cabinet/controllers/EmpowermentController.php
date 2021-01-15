@@ -10,6 +10,7 @@ use common\models\Docs;
 use common\models\EmpowermentProduct;
 use common\models\Invoices;
 use common\models\MonthPay;
+use common\models\Notifications;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\models\Empowerment;
@@ -147,8 +148,14 @@ class EmpowermentController extends \cabinet\components\Controller
      */
     public function actionView($id)
     {
+        $model =  $this->findModel($id);
+        $notifiy_view = Notifications::findOne(['doc_id'=>$model->EmpowermentId]);
+        if(!empty($notifiy_view)){
+            $notifiy_view->is_view = Notifications::VIEWED;
+            $notifiy_view->save();
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' =>$model
         ]);
     }
 
@@ -679,7 +686,11 @@ class EmpowermentController extends \cabinet\components\Controller
             'http' => array(
                 'method' => "GET",
                 'header' => "Authorization: Basic " . base64_encode(self::LOGIN.":".self::PASSWORD)
-            )
+            ),
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
         );
         $context = stream_context_create($opts);
         $url = Yii::$app->params['factura_host']."/provider/api/ru/utils/guid";

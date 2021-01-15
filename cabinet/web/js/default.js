@@ -533,6 +533,12 @@ function GetEnviromentDataByTin(tin){
     }
 }
 
+function GetBuyerTinAct(tin){
+    if(tin.length==9){
+        GetActBuyer();
+    }
+}
+
 function GetAgentTin(tin){
     if(tin.length==9){
         GetAgentData(tin)
@@ -594,6 +600,39 @@ function GetEnviromentBuyer() {
         error: function(data) {
             // element.className.replace(/\bkt-spinner kt-spinner--v2 kt-spinner--md kt-spinner--info\b/,'');
             ShowMessage('danger','Remote connection failed. Check internet connection !!!');
+        }
+    });
+}
+
+function GetActBuyer() {
+    var tin = document.getElementById("acts-buyertin").value;
+    document.getElementById('SearchEnvBtn').innerHTML = '<div class="spinner-border text-primary" role="status">\n' +
+        '  <span class="sr-only"></span>\n' +
+        '</div>';
+    document.getElementById('alertArea').innerHTML = '';
+    $.ajax({
+        url: '/api/get-company',
+        method: 'POST',
+        // async : false,
+        data:{
+            tin:tin
+        },
+        success: function(data){
+            document.getElementById('SearchEnvBtn').innerHTML = '<img src="/new_template/images/icon/search.svg" alt="">';
+            if(data.success==true){
+
+                data = data.data;
+                document.getElementById("acts-buyername").value = data.name;
+                var sellerName = document.getElementById("acts-sellername").value ;
+
+                document.getElementById('acts-acttext').value = 'Биз қуйида имзо чекувчилар, '+sellerName+' бир томондан, бундан кейин Пудратчи деб номланади ва '+data.name +', иккинчи томондан, бундан кейин Буюртмачи деб номланади, Буюртмачининг талабларига мувофиқ иш тўлиқ бажарилганлиги тўғрисида далолатнома туздик.';
+            } else {
+                document.getElementById('alertArea').innerHTML = '<div class="alert alert-danger" role="alert">'+data.reason+'</div>';
+            }
+        },
+        error: function(data) {
+            document.getElementById('SearchEnvBtn').innerHTML = '<img src="/new_template/images/icon/search.svg" alt="">';
+            document.getElementById('alertArea').innerHTML = '<div class="alert alert-danger" role="alert">Internet aloqasi mavjud emas yoki server javob bermayapti</div>';
         }
     });
 }
@@ -673,6 +712,7 @@ function alertConfirm(_text, success) {
     swal({
         title: 'Предупреждение',
         text: _text,
+        // html: true,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -681,6 +721,36 @@ function alertConfirm(_text, success) {
         cancelButtonText: 'Нет',
     }).then((result) => {
         if (result.value) {
+            success();
+        }
+    });
+};
+
+
+function alertReject(_text, success) {
+    swal({
+        title: 'Предупреждение',
+        text: _text,
+        html: '<textarea id="swal-area" class="swal2-textarea" placeholder="Bekor qilish sababini kiritng"></textarea>',
+        // input: 'textarea',
+        inputPlaceholder: "Rad etish sababini kiriting",
+
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет',
+        preConfirm: () => {
+            if (document.getElementById('swal-area').value) {
+                // Handle return value
+            } else {
+                swal.showValidationError('Bekor qilish sababini kiritish majburiy')
+            }
+        }
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value)
             success();
         }
     });
@@ -838,7 +908,45 @@ function SendFactura(factura_id){
     });
 };
 
-
+function SendAct(factura_id){
+    var keyId = window.localStorage.getItem("auth_key");
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-act-json",
+        data: {
+            id: factura_id
+        },
+        success: function (json) {
+            var facturaJson = JSON.stringify(json);
+            alertConfirm("Вы действительно хотите подписать и отправить эту счет фактуру?", function () {
+                EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/ru/act/send",
+                        data: {
+                            actId: factura_id,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                location.href="/act/view?id="+factura_id;
+                            } else {
+                                // ShowMessage('danger',json.reason);
+                                alertError(json.reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+};
 
 function SendEmpowerment(id){
     var keyId = window.localStorage.getItem("auth_key");
@@ -926,7 +1034,7 @@ function AcceptData(id){
                 success: function (json) {
                     if (json.Success) {
                         alertSuccess(json.Reason);
-                        location.href="/doc/in-list";
+                        location.href="/facturas/view?id="+id;
                     } else {
                         alertError(json.reason);
                     }
@@ -946,6 +1054,7 @@ function AcceptFactura(id){
     console.log(keyId);
     var SellerSign = $("#doc_sign").val();
     console.log(SellerSign);
+
     $.ajax({
         type: "POST",
         url: "/api-v2/get-signed",
@@ -966,7 +1075,53 @@ function AcceptFactura(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/facturas/received";
+                                location.href = "/facturas/view?id="+id;
+                            } else {
+                                alertError(json.reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+
+};
+
+function AcceptAct(id){
+
+    var keyId = window.localStorage.getItem("auth_key");
+    console.log(keyId);
+    // var SellerSign = $("#doc_sign").val();
+    // console.log(SellerSign);
+
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-signed-act",
+        data: {
+            act_id: id,
+        },
+        success: function (SellerSign) {
+            // console.log(SellerSign);
+            alertConfirm("Вы действительно хотите принять этот акт?", function () {
+                EIMZOClient.appendPkcs7Attached(keyId, SellerSign, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/uz/act/accept-data",
+                        data: {
+                            actId: id,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                alertSuccess(json.Reason);
+                                location.href = "/act/view?id="+id;
                             } else {
                                 alertError(json.reason);
                             }
@@ -1005,7 +1160,7 @@ function AcceptEmpowerment(id){
                             success: function (json) {
                                 if (json.Success) {
                                     alertSuccess(json.Reason);
-                                    location.href="/empowerment/index-in";
+                                    location.href="/empowerment/view?id="+id;
                                 } else {
                                     alertError(json.reason);
                                 }
@@ -1053,7 +1208,7 @@ function RejectedEmpowerment(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/empowerment/index-in";
+                                location.href="/empowerment/view?id="+id;
                             } else {
                                 alertError(json.Reason);
                             }
@@ -1097,7 +1252,7 @@ function RejectedData(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/doc/in-list";
+                                location.href = "/facturas/view?id"+id;
                             } else {
                                 alertError(json.Reason);
                             }
@@ -1141,7 +1296,54 @@ function RejectedFactura(id){
                         success: function (json) {
                             if (json.Success) {
                                 alertSuccess(json.Reason);
-                                location.href = "/facturas/received";
+                                location.href = "/facturas/view?id="+id;
+                            } else {
+                                alertError(json.Reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+};
+
+function RejectedAct(id){
+    var keyId = window.localStorage.getItem("auth_key");
+    var notes = "Bekor qilindi";
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-act-json",
+        data: {
+            id: id
+        },
+        success: function (json) {
+            // json['Notes'] = notes;
+
+
+            alertReject("Вы действительно хотите отклонить этот акт?", function () {
+                var notes = document.getElementById('swal-area').value;
+                // console.log(notes);
+                var signData = JSON.stringify({ Act: json, Notes: notes });
+                EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/uz/act/reject-data",
+                        data: {
+                            actId: id,
+                            notes:notes,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                alertSuccess(json.Reason);
+                                location.href = "/act/view?id="+id;
                             } else {
                                 alertError(json.Reason);
                             }
@@ -1226,6 +1428,7 @@ function CancelFacturaData(id){
 };
 
 
+
 function CancelFactura(id){
     var keyId = window.localStorage.getItem("auth_key");
     var notes = "Bekor qilindi";
@@ -1246,7 +1449,41 @@ function CancelFactura(id){
                 success: function (json) {
                     if (json.Success) {
                         alertSuccess(json.Reason);
-                        location.href = "/facturas/view?id"+id;
+                        location.href = "/facturas/view?id="+id;
+                    } else {
+                        alertError(json.Reason);
+                    }
+                },
+                error: function (response) {
+                    alertError(response);
+                }
+            });
+        }, failDsvs);
+    });
+};
+
+
+function CancelAct(id){
+    var keyId = window.localStorage.getItem("auth_key");
+    var notes = "Bekor qilindi";
+    // {"FacturaId":"5d24457313181100016b3286","SellerTin":"200523221"}
+    var signData = document.getElementById("CaneledValue").value;
+
+    console.log(signData);
+    alertConfirm("Вы действительно хотите отменить этот акт?", function () {
+
+        EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
+            $.ajax({
+                type: "POST",
+                url: "/uz/act/canceled-data",
+                data: {
+                    actId: id,
+                    sign: pkcs7
+                },
+                success: function (json) {
+                    if (json.Success) {
+                        alertSuccess(json.Reason);
+                        location.href = "/act/view?id="+id;
                     } else {
                         alertError(json.Reason);
                     }
@@ -1354,13 +1591,11 @@ function SwitchSingleSlide(id) {
     var isOneLevel = document.getElementById('CheckOnLevel').checked;
     console.log(isOneLevel);
     if(isOneLevel==true){
-        $(".change-info-block-wrapper").removeClass("show-block");
-        $(".info-block-wrapper").removeClass("show-block");
-        $(".singid-side-block").addClass("show-block");
+        $(".BuyerTinArea").hide();
+        $(".SingleSidedTypeArea").show();
     } else {
-        document.getElementById('BuyerTin').value="";
-        $(".singid-side-block").removeClass("show-block");
-        $(".change-info-block-wrapper").addClass("show-block");
+        $(".BuyerTinArea").show();
+        $(".SingleSidedTypeArea").hide();
     }
 
 };

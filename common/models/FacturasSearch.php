@@ -42,8 +42,10 @@ class FacturasSearch extends Facturas
     public function search($params)
     {
         $query = Facturas::find();
-        $query->select(['Id', 'FacturaNo', 'ContractNo', 'BuyerTin', 'BuyerName', 'status','SellerName']);
+        $query->select(['f.Id', 'f.FacturaNo', 'f.ContractNo', 'f.BuyerTin', 'f.BuyerName', 'f.status','f.SellerName','f.SellerTin','f.type','n.is_view']);
         // add conditions that should always apply here
+        $query->from(\common\models\Facturas::tableName()." f");
+        $query->leftJoin(Notifications::tableName()." n",'n.doc_id = f.Id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,7 +59,7 @@ class FacturasSearch extends Facturas
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->orderBy('created_date DESC');
+        $query->orderBy('f.created_date DESC');
         // grid filtering conditions
 //        $query->andFilterWhere([
 //            'Version' => $this->Version,

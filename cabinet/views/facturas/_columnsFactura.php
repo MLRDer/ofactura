@@ -42,6 +42,11 @@ use yii\grid\GridView;
                         'prevPageLabel'=>'<img src="/new_template/images/icon/arrow-left-blue.svg" alt="">',
                         'nextPageLabel'=>'<img src="/new_template/images/icon/arrow-right-blue.svg" alt="">',
                     ],
+                    'rowOptions'=>function($model){
+                        if($model->is_view == 1){
+                            return ['class' => 'bold-text'];
+                        }
+                    },
                     'columns' => [
                         [
                             'class' => 'yii\grid\SerialColumn',
@@ -79,20 +84,20 @@ use yii\grid\GridView;
                             'headerOptions' => ['style' => 'width:190px'],
                             'format'=>'raw',
                             'value'=>function($model){
-                                if($model->type==\common\models\Docs::TYPE_IN)
-                                    return $model->SellerTin;
-                                else
+                                if($model->SellerTin==\cabinet\models\Components::CompanyData('tin'))
                                     return $model->BuyerTin;
+                                else
+                                    return $model->SellerTin;
                             }
                         ],
                         [
                             'attribute'=>'BuyerName',
                             'format'=>'raw',
                             'value'=>function($model){
-                                if($model->type==\common\models\Docs::TYPE_IN)
-                                    return $model->SellerName;
-                                else
+                                if($model->SellerTin==\cabinet\models\Components::CompanyData('tin'))
                                     return $model->BuyerName;
+                                else
+                                    return $model->SellerName;
                             }
                         ],
 //                [
@@ -105,7 +110,7 @@ use yii\grid\GridView;
 //                ],
                         [
                             'attribute'=>'status',
-                            'format'=>'html', 
+                            'format'=>'html',
                             'headerOptions' => ['style' => 'width:95px'],
                             'value'=>function($model){
 

@@ -3,6 +3,7 @@
 namespace cabinet\controllers;
 
 use cabinet\models\Components;
+use common\models\Acts;
 use common\models\Company;
 use common\models\CompanyUsers;
 use common\models\DocInData;
@@ -15,6 +16,7 @@ use common\models\EmpowermentInData;
 use common\models\EmpowermentProduct;
 use common\models\FacturaPks7;
 use common\models\Facturas;
+use common\models\Notifications;
 use yii\httpclient\Client;
 use function GuzzleHttp\Psr7\str;
 use Yii;
@@ -94,6 +96,29 @@ class ApiV2Controller extends Controller
             $context = stream_context_create($opts);
             $tin = Components::CompanyData('tin');
             $url = Yii::$app->params['factura_host'] . "/provider/api/uz/{$model->SellerTin}/facturas/seller/signedfile/" . $id;
+            $data = file_get_contents($url, false, $context);
+            return $data;
+        } else {
+            return $modelPks->seller_pks7;
+        }
+    }
+
+    public function actionGetSignedAct(){
+
+        $id = Yii::$app->request->post('act_id');
+        $modelPks = FacturaPks7::findOne(['factura_id'=>$id]);
+        if(empty($modelPks)) {
+            $model = Acts::findOne(['Id' => $id]);
+            $opts = array(
+                'http' => array(
+                    'method' => "GET",
+                    'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                )
+            );
+            $reason = "";
+            $context = stream_context_create($opts);
+            $tin = Components::CompanyData('tin');
+            $url = Yii::$app->params['factura_host'] . "/provider/api/uz/{$model->SellerTin}/acts/seller/signedfile/" . $id;
             $data = file_get_contents($url, false, $context);
             return $data;
         } else {
@@ -212,8 +237,12 @@ class ApiV2Controller extends Controller
         $tin = Components::CompanyData('tin');
         $url = Yii::$app->params['factura_host']."/provider/api/uz/{$tin}/facturas/buyer/".$id;
         $data = file_get_contents($url, false, $context);
-
         return $data;
+    }
+
+    public function actionGetNotifications(){
+        $model = Notifications::find()->andWhere(['tin'=>Components::CompanyData('tin')])->orderBy('created_date DESC')->all();
+        return $this->renderPartial('_notifications',['model'=>$model]);
     }
 
 
@@ -249,6 +278,14 @@ class ApiV2Controller extends Controller
     public function actionGetJson(){
         $factura_id = Yii::$app->request->post('id');
         $model = Facturas::findOne(['Id'=>$factura_id]);
+        if(!empty($model))
+            return $model->GetJsonData();
+        return [];
+    }
+
+    public function actionGetActJson(){
+        $act_id = Yii::$app->request->post('id');
+        $model = Acts::findOne(['Id'=>$act_id]);
         if(!empty($model))
             return $model->GetJsonData();
         return [];

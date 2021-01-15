@@ -25,7 +25,7 @@ $host = Yii::$app->request->getPathInfo();
                                 <span class="icon invoices"></span>
                                 <span class="title"><?= Yii::t('main','Счет-фактуры') ?> </span>
                             </span>
-<!--                    <span class="badge green">+ 2000</span>-->
+                    <?= \cabinet\models\Components::getNotifiy(\common\models\Notifications::TYPE_FACTURA)?>
                 </a>
             </li>
             <li class="menu__item <?= ($host=="empowerment/index" || $host=="empowerment/update" || $host=="empowerment/create" || $host=="empowerment/view")?'active':'' ?>">
@@ -37,6 +37,16 @@ $host = Yii::$app->request->getPathInfo();
 <!--                    <span class="badge yellow">+ 1000</span>-->
                 </a>
             </li>
+            <li class="menu__item <?= ($host=="act/index" || $host=="act/update" || $host=="act/create" || $host=="act/view")?'active':'' ?>">
+                <a href="/act/index" class="menu__link">
+                            <span class="item">
+                                <span class="icon invoices"></span>
+                                <span class="title"><?= Yii::t('main','Акты')?></span>
+                            </span>
+                    <!--                    <span class="badge yellow">+ 1000</span>-->
+                </a>
+            </li>
+
         </ul>
     </div>
     <div class="sidebar-footer">
@@ -44,6 +54,6 @@ $host = Yii::$app->request->getPathInfo();
             <div class="title">Call center:</div>
             <div class="phone">+ 998 (71)-200-11-22</div>
         </div>
-        <div class="info">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 1.0)</div>
+        <div class="info">Информационная система по приёмке и отправке счёт-фактур «onlinefactura.uz» (версия 2.0)</div>
     </div>
 </div>

@@ -1,0 +1,18 @@
+
+table.bordered, table.bordered th, table.bordered td {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+table.bordered td, table.bordered th {
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 9px;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+.mt-15px {
+    margin-top: 15px;
+}
