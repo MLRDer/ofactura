@@ -30,7 +30,7 @@ class Controller extends \yii\web\Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+//                    'delete' => ['post'],
                     'bulk-delete' => ['post'],
                 ],
             ],

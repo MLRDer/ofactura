@@ -533,6 +533,8 @@ function GetEnviromentDataByTin(tin){
     }
 }
 
+
+
 function GetBuyerTinAct(tin){
     if(tin.length==9){
         GetActBuyer();
@@ -948,6 +950,46 @@ function SendAct(factura_id){
     });
 };
 
+function SendContract(contract_id){
+    var keyId = window.localStorage.getItem("auth_key");
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-contract-json",
+        data: {
+            id: contract_id
+        },
+        success: function (json) {
+            var facturaJson = JSON.stringify(json);
+            alertConfirm("Вы действительно хотите подписать и отправить эту контракт?", function () {
+                EIMZOClient.createPkcs7(keyId, facturaJson, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/ru/contracts/send",
+                        data: {
+                            contractId: contract_id,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                location.href="/contracts/view?id="+contract_id;
+                            } else {
+                                // ShowMessage('danger',json.reason);
+                                alertError(json.reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+};
+
 function SendEmpowerment(id){
     var keyId = window.localStorage.getItem("auth_key");
     console.log(keyId);
@@ -1000,6 +1042,18 @@ function DelteFac(id) {
 function DelteFactura(id) {
     alertConfirm("Вы действительно хотите удалить?", function () {
         location.href="/facturas/delete?id="+id;
+    });
+}
+
+function DelteAct(id) {
+    alertConfirm("Вы действительно хотите удалить?", function () {
+        location.href="/act/delete?id="+id;
+    });
+}
+
+function DelteContract(id) {
+    alertConfirm("Вы действительно хотите удалить?", function () {
+        location.href="/contracts/delete?id="+id;
     });
 }
 
@@ -1771,6 +1825,20 @@ function AlcoholName(){
     document.getElementById("all_name").value = full_name;
 }
 
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function SelectFilial(sel){
+    // alert(sel.options[sel.selectedIndex].text);
+    // console.log(sel.id);
+    var id = sel.id.replace("branchcode","branchname");
+    document.getElementById(id).value = sel.options[sel.selectedIndex].text;
+}
+
 $(document).ready(function(){
 
 
@@ -1784,6 +1852,68 @@ $(document).ready(function(){
        window.history.replaceState(null, null, "?tab="+tab);
     });
 
+    $('body').on('keyup', '.FizTin input', function () {
+        var clientFizTinInput = $(this);
+        var clientFizTin = clientFizTinInput.val();
+        var index_id = clientFizTinInput.attr('area-id');
+        console.log(index_id);
+        if (clientFizTin && clientFizTin.length === 9) {
+            $.ajax({
+                type: "POST",
+                url: "/api/get-company",
+                data: {
+                    tin: clientFizTin
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.success==true){
+                        data = data.data;
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-fio').val(data.name);
+                    } else {
+                        console.log(json.Reason);
+                        clientFizTinInput.closest("form").find('input[name=Fio]').val('');
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+    });
+
+    $('body').on('keyup', '.Tin input', function () {
+        var clientFizTinInput = $(this);
+        var clientFizTin = clientFizTinInput.val();
+        var index_id = clientFizTinInput.attr('area-id');
+        console.log(index_id);
+        if (clientFizTin && clientFizTin.length === 9) {
+            $.ajax({
+                type: "POST",
+                url: "/api/get-company",
+                data: {
+                    tin: clientFizTin
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.success==true){
+                        data = data.data;
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-name').val(data.name);
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-address').val(data.address);
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-oked').val(data.oked);
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-account').val(data.account);
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-bankid').val(data.mfo);
+                        clientFizTinInput.closest("form").find('#contractclients-'+index_id+'-branchcode').append(data.branchs);
+                    } else {
+                        console.log(json.Reason);
+                        clientFizTinInput.closest("form").find('input[name=Fio]').val('');
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+    });
 
 
     $("#docs-reestr").change(function(e){

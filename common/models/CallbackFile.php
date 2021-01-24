@@ -25,6 +25,7 @@ class CallbackFile extends \yii\db\ActiveRecord
     const TYPE_FACTURA =10;
     const TYPE_ACT =20;
     const TYPE_EMP =30;
+    const TYPE_CONTRACT =40;
 
     const STATUS_NEW = 10;
     const STATUS_IMPORTED = 20;

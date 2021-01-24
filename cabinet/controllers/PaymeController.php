@@ -23,8 +23,11 @@ use yii\web\Response;
 class PaymeController extends \yii\web\Controller
 {
     const USERNAME = 'Paycom';
-    const PASSWORD = 'MBuH?hXca&WoefpjjU@QYNGrnQUI9Y0QbRHV';
-    const PASSWORD_TEST = 'sDyxwD34y03JvCDc2iPM#OT?&U9HRIcfeuVe';
+//    const PASSWORD = 'MBuH?hXca&WoefpjjU@QYNGrnQUI9Y0QbRHV';
+    const PASSWORD = '?4ejPRm4Xi1BM2@59XKF4frijkdCYH9QE9RD';
+
+//    const PASSWORD = 'Ceq2AWWphuXQzBIVov@01qW#HP3bvSJ95rMd';
+    const PASSWORD_TEST = 'jDUyw7OSWgKo97XpYAcFTNJ#5#6ajX%AFdfR';
     const METHOD_CHECK_PERFORM_TRANSACTION = 'CheckPerformTransaction';
     const METHOD_CREATE_TRANSACTION = 'CreateTransaction';
     const METHOD_CHECK_TRANSACTION = 'CheckTransaction';

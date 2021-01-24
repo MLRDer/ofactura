@@ -16,3 +16,12 @@ table.bordered td, table.bordered th {
 .mt-15px {
     margin-top: 15px;
 }
+
+.paragraph {
+    text-align: justify;
+    text-indent: 30px;
+    font-weight: normal;
+}
+#contracts{
+    font-size: 12px;
+}

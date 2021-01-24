@@ -114,9 +114,10 @@ $langName = [
   Intro Section
 ============================-->
 <section id="intro" class="clearfix">
-    <div class="container d-flex h-100">
+    <div class="container-fluid d-flex h-100">
         <div class="row justify-content-center align-items-center">
-            <div class="col-md-5 intro-info order-md-first order-last">
+            <div class="col-md-4 intro-info order-md-first order-last">
+                <div class="ml-5">
                 <h2>
                     <br>Online<span> Factura!</span>
 
@@ -128,10 +129,10 @@ color: black;"><?= Yii::t('main','Информационная система п
                 <div>
                     <a href="https://cabinet.onlinefactura.uz" class="btn-get-started scrollto"><?= Yii::t('main','Tizimdan foydalanish')?></a>
                 </div>
-
+                </div>
             </div>
-            <div class="col-md-7 intro-img order-md-last order-first">
-                <img style="width: 100%" src="/img/banner1.png" alt="" class="img-fluid">
+            <div class="col-md-8 intro-img order-md-last order-first">
+                <img style="width: 1000px" src="/img/banner1.png" alt="" class="img-fluid">
 
             </div>
         </div>

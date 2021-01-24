@@ -173,6 +173,7 @@ $type_factura = substr($tab,6,1);
                             <div class="col-md-6">
                                 <div class="input m-b-30">
                                     <?= $form->field($model, 'FacturaNo')->textInput(['maxlength' => true,'placeholder'=>'Номер счета-фактуры','class'=>''])->label(false) ?>
+                                    <a  href="/format-num/create" target="_blank" class="border-link"><?= Yii::t('main','Настройка нумерация')?> </a>
                                 </div>
                             </div>
                             <div class="col-md-6">

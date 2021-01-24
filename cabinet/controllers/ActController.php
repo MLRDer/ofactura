@@ -8,6 +8,7 @@ use common\models\Company;
 use common\models\CompanyTarif;
 use common\models\FacturaProducts;
 use common\models\Facturas;
+use common\models\FormatNo;
 use common\models\Invoices;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -389,7 +390,9 @@ class ActController extends \common\components\Controller
         $model->created_date = date('Y-m-d H:i:s');
         $model->Tin = (string)$model->SellerTin;
         $model->type = Acts::TYPE_MANUAL;
+        $model->ActNo = FormatNo::GetNextNumeric(FormatNo::TYPE_ACT);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            FormatNo::SetNextNumeric(FormatNo::TYPE_ACT);
             return $this->redirect(['view', 'id' => $model->Id]);
         }
 

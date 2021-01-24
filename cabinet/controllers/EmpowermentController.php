@@ -569,8 +569,6 @@ class EmpowermentController extends \cabinet\components\Controller
                     ]);
                 }
             }
-
-
             return $this->redirect(['view', 'id' => $model->id]);
         }
         $error = "";

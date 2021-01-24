@@ -319,6 +319,10 @@ table tbody tr td{
     height:20px!important;
 }
 
+th {
+    text-align: center;
+}
+
 table tr th a{
     color:#fff!important;
 }
@@ -394,4 +398,162 @@ table tr th a{
     -moz-border-radius: 14px;
     border-radius: 14px;
     background-color: transparent!important;
+}
+
+.main-wrapper .sidebar .sidebar-top .sidebar-menu .menu__item .menu__link .item .title {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: #9794a9;
+}
+.main-wrapper .sidebar .sidebar-top .sidebar-menu .menu__item .menu__link:hover .item .title {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: #fff;
+}
+.main-wrapper .sidebar .sidebar-top .sidebar-menu .menu__item.active .menu__link .item .title {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: #fff;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.white-box-min{
+    background: #fff;
+    -webkit-box-shadow: 0 0 40px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 0 40px rgba(0,0,0,.1);
+    box-shadow: 0 0 40px rgba(0,0,0,.1);
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    padding: 30px;
+    height:550px;
+    /* height: 100%; */
+    overflow: hidden;
+}
+.btn-close{
+    background-color: #eef3fb;
+    width: 35px;
+    font-weight: bold;
+    height: 35px;
+    color: #d82428;
+    border-radius: 50%;
+}
+.AddClient{
+    color: #00ac11;
+    background: #f2fff4;
+    /*-webkit-box-shadow: 0 0 40px rgb(0 0 0 / 10%);*/
+    /*-moz-box-shadow: 0 0 40px rgba(0,0,0,.1);*/
+    /*box-shadow: 0 0 40px rgb(0 0 0 / 10%);*/
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    text-transform: uppercase;
+
+    overflow: hidden;
+}
+select {
+    border: none;
+    outline: none;
+    width: 100%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.second-input label select {
+    /*border: 0px;*/
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px 0;
+    height:40px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 18px;
+    color: #0075ff;
+    text-transform: uppercase;
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.part-area-title .form-group{
+    margin: 0px;
+}
+.part-title{
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 13pt;
+    padding-left:5px;
+}
+
+.part-area-title {
+    padding: 10px;
+    background: #0075ff;
+    -webkit-box-shadow: 0 0 20px rgb(0 117 255 / 40%);
+    -moz-box-shadow: 0 0 20px rgba(0,117,255,.4);
+    box-shadow: 0 0 20px rgb(0 117 255 / 40%);
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 0px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+.textarea-part textarea{
+    width: 100%;
+    padding: 11px 20px;
+    border: 1px solid #9794a9!important;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+/* border-bottom-left-radius: 14px; */
+    border-radius: 0px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    background-color: transparent!important;
+}
+
+.AddParts{
+    color: #00ac11;
+    background: #f2fff4;
+    /*-webkit-box-shadow: 0 0 40px rgb(0 0 0 / 10%);*/
+    /*-moz-box-shadow: 0 0 40px rgba(0,0,0,.1);*/
+    /*box-shadow: 0 0 40px rgb(0 0 0 / 10%);*/
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+.part-title::placeholder{
+    color: white;
+}
+.input-group .form-group{
+    width:100%;
+}
+.part-num{
+    color: white;
+    font-size: 14pt;
+    padding: 1px 5px;
+}
+.border-link{
+    color: blue;
+    font-size: 12px;
+    font-style: italic;
+    border-bottom: 1px dashed blue;
 }

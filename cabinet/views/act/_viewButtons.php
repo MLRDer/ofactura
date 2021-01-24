@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="btn-item">
-                <a href="#!" onclick='DelteFactura("<?= $model->Id ?>")' type="button" class="btn-link">
+                <a href="#!" onclick='DelteAct("<?= $model->Id ?>")' type="button" class="btn-link">
                     <img src="/new_template/images/icon/delete.svg" alt="">
                     <span class="title">
                         <?= Yii::t('main','O`chirish')?>

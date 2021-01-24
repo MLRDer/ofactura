@@ -118,6 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
         },function(itemId, v){
             return uiCreateItem(itemId, v);
         },function(items, firstId){
+
             uiFillCombo(items);
             uiLoaded();
             uiComboSelect(firstId);

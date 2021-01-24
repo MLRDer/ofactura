@@ -6,6 +6,7 @@ use cabinet\models\Components;
 use common\models\Acts;
 use common\models\Company;
 use common\models\CompanyUsers;
+use common\models\Contracts;
 use common\models\DocInData;
 use common\models\DocInDataLog;
 use common\models\DocMeasure;
@@ -240,6 +241,22 @@ class ApiV2Controller extends Controller
         return $data;
     }
 
+    public function actionGetBranch(){
+
+        $tin = Yii::$app->request->post('tin');
+        $opts = array(
+            'http' => array(
+                'method' => "GET",
+                'header' => "Authorization: Basic " . base64_encode(self::LOGIN.":".self::PASSWORD)
+            )
+        );
+        $reason ="";
+        $context = stream_context_create($opts);
+        $url='https://my.soliq.uz/services/yur-branchs/getdatabytin?tin='.$tin;
+        $data = file_get_contents($url, false, $context);
+        return $data;
+    }
+
     public function actionGetNotifications(){
         $model = Notifications::find()->andWhere(['tin'=>Components::CompanyData('tin')])->orderBy('created_date DESC')->all();
         return $this->renderPartial('_notifications',['model'=>$model]);
@@ -286,6 +303,14 @@ class ApiV2Controller extends Controller
     public function actionGetActJson(){
         $act_id = Yii::$app->request->post('id');
         $model = Acts::findOne(['Id'=>$act_id]);
+        if(!empty($model))
+            return $model->GetJsonData();
+        return [];
+    }
+
+    public function actionGetContractJson(){
+        $contract_id = Yii::$app->request->post('id');
+        $model = Contracts::findOne(['Id'=>$contract_id]);
         if(!empty($model))
             return $model->GetJsonData();
         return [];

@@ -28,8 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-3">
             <div class="input m-b-30">
-                <?= $form->field($model, 'ActNo')->textInput(['maxlength' => true,'class'=>'','placeholder'=>Yii::t('main','ActNo')])->label(false) ?>
+                <?= $form->field($model, 'ActNo',['template'=>'{input}{error}<a  href="/format-num/create" target="_blank" class="border-link">'.Yii::t('main','Настройка нумерация').' </a>'])->textInput(['maxlength' => true,'class'=>'','placeholder'=>Yii::t('main','ActNo')])->label(false) ?>
+
             </div>
+
         </div>
         <div class="col-md-3">
             <div class="input m-b-30">

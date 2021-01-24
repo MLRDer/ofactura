@@ -73,7 +73,7 @@ use common\widgets\Alert; ?>
                     <img src="/new_template/images/icon/restr.svg" alt="">
                     <div class="title">Реестр</div>
                 </div>
-                <div class="right"><a href="/reestr/create" class="btn-gray">+ Создать Реестр</a>
+                <div class="right"><a href="/reestr/create" class="btn-gray"><?= Yii::t('main', "+ Создать Реестр")?></a>
                 </div>
             </div>
             <div class="body">

@@ -24,7 +24,9 @@ $this->title = Yii::t('main',"Мои финансы");
             </div>
             <form method="POST" action="https://checkout.paycom.uz" id="PaymeSet">
                 <!-- Идентификатор WEB Кассы -->
-                <input type="hidden" name="merchant" value="5df8752b7e2d6cf23ec1b00d"/>
+<!--                <input type="hidden" name="merchant" value="5df8752b7e2d6cf23ec1b00d"/>-->
+<!--                <input type="hidden" name="merchant" value="5ff6d557dc00d62a48fb1d4f"/>-->
+                <input type="hidden" name="merchant" value="6006797875d4416c5fb732c0"/>
                 <div class="payment-form">
                     <div class="input m-b-20">
                         <!-- Сумма платежа в тийинах -->
@@ -93,7 +95,7 @@ $this->title = Yii::t('main',"Мои финансы");
                         </div>
                         <div class="col-md-6">
                             <label class="checkbox">
-                                <input type="radio" class="input-checkbox" name="payment_type2">
+                                <input type="radio" class="input-checkbox" name="payment_type3">
                                 <div class="check"></div>
                                 <img src="/new_template/images/content/aloqabank.png" alt="">
                             </label>

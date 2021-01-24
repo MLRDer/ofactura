@@ -27,7 +27,16 @@ $this->title = $this->title." | ".Components::CompanyData('tin');
     <script src="/js/e-imzo.js"></script>
     <script src="/js/e-imzo-client.js"></script>
     <link rel="shortcut icon" href="/img/favicon.png" />
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,400&display=swap" rel="stylesheet">
+    <style>
+        th {
+            text-align: center !important;
+        }
+        body{
+            font-family: 'Poppins', sans-serif !important;
+        }
+    </style>
     <?php $this->head() ?>
 </head>
 <body>

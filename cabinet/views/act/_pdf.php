@@ -84,14 +84,7 @@ $qrCode = (new QrCode('{INN:'.\cabinet\models\Components::CompanyData('tin').', 
                     </tr>
                 </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                </tr>
+
                 <?php $total_sum =0; foreach ($products as $items){
                     $total_sum +=$items->TotalSum;
                     ?>

@@ -149,17 +149,17 @@ $this->title = Yii::t('main','Create Empowerment');
 <!--                                <div class="input m-b-20">-->
 <!--                                    <input type="text"  placeholder="ИНН сотрудника">-->
 <!--                                </div>-->
-                                <?= $form->field($model, 'AgentTin',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'ИНН сотрудника','onkeyup'=>'GetAgentTin(this.value)'])->label(false) ?>
+                                <?= $form->field($model, 'AgentTin',['template'=>'<div class="input m-b-20">{input}{error}</div>'])->textInput(['class'=>'','placeholder'=>'ИНН сотрудника','onkeyup'=>'GetAgentTin(this.value)'])->label(false) ?>
                             </div>
                             <div class="col-md-6">
 
                                 <?= $form->field($model, 'AgentFio',['template'=>'<div class="input m-b-20">{input}<div class="footer-info">Которому выдана доверенность</div></div>{error}'])->textInput(['class'=>'','placeholder'=>'Ф.И.О.'])->label(false) ?>
                             </div>
                             <div class="col-md-12">
-                                <?= $form->field($model, 'AgentJobTitle',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Должность'])->label(false) ?>
+                                <?= $form->field($model, 'AgentJobTitle',['template'=>'<div class="input m-b-20">{input}{error}</div>'])->textInput(['class'=>'','placeholder'=>'Должность'])->label(false) ?>
                             </div>
                             <div class="col-md-6">
-                                <?= $form->field($model, 'AgentPassportNumber',['template'=>'<div class="input m-b-20">{input}</div>{error}'])->textInput(['class'=>'','placeholder'=>'Номер паспорта'])->label(false) ?>
+                                <?= $form->field($model, 'AgentPassportNumber',['template'=>'<div class="input m-b-20">{input}{error}</div>'])->textInput(['class'=>'','placeholder'=>'Номер паспорта'])->label(false) ?>
                             </div>
                             <div class="col-md-6">
 <!--                                <div class="input m-b-20 datepicker-wrapper my-datepicker-icon">-->
@@ -167,7 +167,7 @@ $this->title = Yii::t('main','Create Empowerment');
 <!--                                </div>-->
 
                                 <?php
-                                echo $form->field($model, 'AgentPassportDateOfIssue',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}</div>{error}'])->widget(DatePicker::classname(), [
+                                echo $form->field($model, 'AgentPassportDateOfIssue',['template'=>'<div class="input m-b-20 datepicker-wrapper my-datepicker-icon">{input}{error}</div>'])->widget(DatePicker::classname(), [
                                     'options' => ['placeholder' => Yii::t('main','Дата выдачи')],
                                     'type' => DatePicker::TYPE_INPUT,
                                     'pluginOptions' => [

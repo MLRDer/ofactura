@@ -25,7 +25,7 @@ use cabinet\models\Components;
             <?php }?>
         </div>
         <div class="user-tin">
-            <div class="label">ИНН:</div>
+            <div class="label"><?= Yii::t('main', 'ИНН:')?></div>
             <div class="tin"><?= Components::CompanyData('tin')?></div>
         </div>
     </div>
@@ -76,7 +76,25 @@ use cabinet\models\Components;
 
         <ul class="control-list">
             <li class="control-item">
-                <a href="/classifications/index" class="control-link gear"></a>
+<!--                <a href="/classifications/index" class="control-link gear"></a>-->
+
+                <div class="dropdown lang-item">
+                    <a class="control-link gear" href="#" role="button" id="dropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                        <a class="dropdown-item" href="/classifications/index">
+                            <?= Yii::t('main','Классификатор')?>
+                        </a>
+                        <a class="dropdown-item" href="/format-num/create">
+                            <?= Yii::t('main','Настройка нумерация')?>
+                        </a>
+
+
+                    </div>
+                </div>
+
             </li>
             <li class="control-item">
                 <a href="/new_template/file/offer.pdf" class="control-link offer"></a>

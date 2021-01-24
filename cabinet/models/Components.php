@@ -1,6 +1,7 @@
 <?php
 namespace cabinet\models;
 
+use common\models\Banks;
 use common\models\Company;
 use common\models\CompanyTarif;
 use common\models\CompanyTarifLog;
@@ -14,6 +15,10 @@ class Components
 {
     const LOGIN = "onlinefactura";
     const PASSWORD = "n;xw3CE(GDb$@|D*";
+
+    const HOST_ROUMING = "https://factura.yt.uz";
+    const ROUMING_LOGIN = "onlinefactura";
+    const ROUMING_PASSWORD = "n;xw3CE(GDb$@|D*";
 
     public static function CheckOnline($tin){
         $opts = array(
@@ -269,5 +274,74 @@ class Components
         $url = "https://my.soliq.uz/services/np1/phisbytin/factura?lang=uz&tin={$tin}";
 
         return file_get_contents($url, false, $context);
+    }
+
+    public static function getBranch($tin){
+
+        $opts = array(
+            'http' => array(
+                'timeout'=>5,
+                'method' => "GET",
+                'header' => "Authorization: Basic " . base64_encode("onlinefactura:9826315157e93a13e05$")
+            ),
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );
+        $context = stream_context_create($opts);
+        $url = "https://my.soliq.uz/services/yur-branchs/getdatabytin?tin={$tin}";
+
+        $data = Json::decode(file_get_contents($url, false, $context));
+        $result ="<option value=''>".Yii::t('main','Filialni tanlang...')."</option>";
+        foreach ($data as $items){
+            $result.="<option value='".$items['branchNum']."'>".$items['branchName']."</option>";
+        }
+        return $result;
+    }
+
+    public static function getBankName($bankd_id,$type="one"){
+        $model = Banks::findOne(['bankId'=>$bankd_id]);
+        if(empty($model)) {
+            $opts = array(
+                'http' => array(
+                    'timeout' => 5,
+                    'method' => "GET",
+                    'header' => "Authorization: Basic " . base64_encode(self::ROUMING_LOGIN . ":" . self::ROUMING_PASSWORD)
+                ),
+                "ssl" => array(
+                    "verify_peer" => false,
+                    "verify_peer_name" => false,
+                ),
+            );
+            $context = stream_context_create($opts);
+            if($type=="one") {
+                $url = self::HOST_ROUMING . "/provider/api/uz/catalogs/bank/" . $bankd_id;
+                $data = Json::decode(file_get_contents($url, false, $context));
+                    $dataBnk = new Banks();
+                    $dataBnk->bankId = $data['bankId'];
+                    $dataBnk->Name = $data['name'];
+                    $dataBnk->enabled;
+                    if($dataBnk->save()){
+                        $model = $dataBnk;
+                    }
+
+            } else {
+                $url = self::HOST_ROUMING . "/provider/api/uz/catalogs/bank";
+                $data = Json::decode(file_get_contents($url, false, $context));
+                Banks::deleteAll();
+                foreach ($data as $items) {
+                    $dataBnk = new Banks();
+                    $dataBnk->bankId = $items['bankId'];
+                    $dataBnk->Name = $items['name'];
+                    $dataBnk->enabled;
+                    if ($dataBnk->save()) {
+                        $model = Banks::findOne(['bankId' => $bankd_id]);
+                    }
+                }
+            }
+
+        }
+        return $model->Name;
     }
 }

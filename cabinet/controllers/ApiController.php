@@ -712,12 +712,133 @@ class ApiController extends Controller
     }
 
 
+    public function actionReceivedContract(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_CONTRACT;
+            $model->type_action = CallbackFile::ACTION_RECEIVED;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+    public function actionAcceptContract(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_CONTRACT;
+            $model->type_action = CallbackFile::ACTION_ACCEPT;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+    public function actionRejectContract(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_CONTRACT;
+            $model->type_action = CallbackFile::ACTION_REJECT;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+        }
+        return $result;
+    }
+
+    public function actionCancelContract(){
+        $reason="";
+        $data = file_get_contents('php://input');
+        $data_request = $data;
+        $result=[];
+
+        try {
+            $model = new CallbackFile();
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->type = CallbackFile::TYPE_CONTRACT;
+            $model->type_action = CallbackFile::ACTION_CANCELED;
+            $model->status = CallbackFile::STATUS_NEW;
+            $model->path = self::WriteSignFile($model->type,$model->type_action,$data);
+            if(!$model->save()){
+                var_dump($model->getErrors());
+            }
+        } catch (\Exception $exception){
+            $model = new DocInData();
+            $model->doc_data = $data_request;
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->reason = $reason."|".$exception->getMessage();
+            $model->type = DocInData::IN_DOC;
+            $model->enabled = 0;
+            $model->save();
+            echo 'Caught exception: ',  $exception->getMessage(), "\n";
+
+        }
+        return $result;
+    }
+
+
 
     protected static function WriteSignFile($type,$type_action,$sign){
         $typeFolder =[
            10=>'factura',
            20=>'act',
            30=>'emp',
+           40=>'contract',
         ];
 //        echo $type_action." - ".$type_action;die;
         $typeAction = [
@@ -1071,6 +1192,7 @@ class ApiController extends Controller
                  $data = Json::decode($data);
                  $nds = Components::getNdsCode($tin,'regCode');
                  $data['regCode']= $nds['result'];
+                 $data['branchs'] = Components::getBranch($tin);
                  if($data['name']=="")
                      $reason = Yii::t('main',"Bunday STIR li korxona topilmadi!!!");
              } else {
@@ -1088,7 +1210,8 @@ class ApiController extends Controller
                        'address'=>$data['address'],
                        'ns10Code'=>$data['ns10Code'],
                        'ns11Code'=>$data['ns11Code'],
-                       'regCode'=>""
+                       'regCode'=>"",
+                       'branchs'=>""
                      ];
                  }else {
                      $reason = Yii::t('main',"Bu STIRga tegishli malumot topilmadi");
