@@ -46,17 +46,115 @@ class ContractsController extends \cabinet\components\Controller
     {
         $searchModel = new ContractsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where('c.status>0')->andWhere(["cc.Tin"=>Components::CompanyData('tin')]);
 
+        $searchModel_sent = new ContractsSearch();
+        $dataProvider_sent = $searchModel_sent->search(Yii::$app->request->queryParams);
+        $dataProvider_sent->query->where('c.status>0')->andWhere(["c.Tin"=>Components::CompanyData('tin')]);
+
+        $searchModel_saved = new ContractsSearch();
+        $dataProvider_saved = $searchModel_saved->search(Yii::$app->request->queryParams);
+        $dataProvider_saved->query->where('c.status=0')->andWhere(["c.Tin"=>Components::CompanyData('tin')]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 
-            'searchModel_sent' => $searchModel,
-            'dataProvider_sent' => $dataProvider,
+            'searchModel_sent' => $searchModel_sent,
+            'dataProvider_sent' => $dataProvider_sent,
 
-            'searchModel_saved' => $searchModel,
-            'dataProvider_saved' => $dataProvider,
+            'searchModel_saved' => $searchModel_saved,
+            'dataProvider_saved' => $dataProvider_saved,
         ]);
+    }
+
+    public function actionAcceptData()
+    {
+        $reason="";
+        $data = Yii::$app->request->post('sign');
+        $contractId = Yii::$app->request->post('contractId');
+        $model = Contracts::findOne(['Id'=>$contractId]);
+        if(empty($model)) {
+            $reason = "Bunday factura mavjud emas";
+        }
+
+
+        if($reason=="") {
+            $result = $this->AcceptContractWithCurl($data, $model->Id, 'accept');
+            $result = Json::decode($result);
+            $reason = (isset($result['errorMessage'])) ? $result['errorMessage'] : '';
+        }
+
+        if($reason==""){
+            $model->status = Contracts::STATUS_ACCEPTED;
+            $model->save();
+            $res=[
+                'Success'=>true,
+                'reason'=>$result
+            ];
+        } else {
+            $res=[
+                'Success'=>false,
+                'reason'=>$reason
+            ];
+        }
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $res;
+    }
+
+    public function actionRejectData()
+    {
+        $reason="";
+        $data = Yii::$app->request->post('sign');
+        $notes = Yii::$app->request->post('notes');
+        $actId = Yii::$app->request->post('contractId');
+        $model = Contracts::findOne(['Id'=>$actId]);
+        if(empty($model)) {
+            $reason = "Bunday factura mavjud emas";
+        }
+
+        if($reason=="") {
+            $result = $this->AcceptContractWithCurl($data, $model->Id, 'reject',$notes);
+            $result = Json::decode($result);
+            $reason = (isset($result['errorMessage'])) ? $result['errorMessage'] : '';
+        }
+
+        if($reason==""){
+            $model->notes = $notes;
+            $model->status = Contracts::STATUS_REJECTED;
+            $model->save();
+            $res=[
+                'Success'=>true,
+                'Reason'=>$result
+            ];
+        } else {
+            $res=[
+                'Success'=>false,
+                'Reason'=>$reason
+            ];
+        }
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $res;
+    }
+
+    protected function AcceptContractWithCurl($data,$actId,$action,$notes=null){
+        $sendData = [
+            "action"=>$action,
+            'contractId'=>$actId,
+            'notes'=>$notes,
+            'sign'=>$data,
+            'clientIp'=>Yii::$app->request->getUserIP()
+        ];
+        $ch = curl_init(Yii::$app->params['factura_host']."/provider/api/uz/".Components::CompanyData('tin')."/contracts/client");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERPWD, self::LOGIN . ":" . self::PASSWORD);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($sendData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $return = curl_exec($ch);
+        curl_close($ch);
+        return $return;
     }
 
     /**

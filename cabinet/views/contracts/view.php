@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="pdf-wrapper">
                     <?php
                     $CanseledJson = [
-                        'ActId'=>$model->Id,
+                        'ContractId'=>$model->Id,
                         'SellerTin'=>$model->Tin
                     ];
                     ?>

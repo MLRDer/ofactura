@@ -1194,6 +1194,52 @@ function AcceptAct(id){
 
 };
 
+function AcceptContract(id){
+
+    var keyId = window.localStorage.getItem("auth_key");
+    console.log(keyId);
+    // var SellerSign = $("#doc_sign").val();
+    // console.log(SellerSign);
+
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-signed-contract",
+        data: {
+            contract_id: id,
+        },
+        success: function (SellerSign) {
+            // console.log(SellerSign);
+            alertConfirm("Вы действительно хотите принять этот контракт?", function () {
+                EIMZOClient.appendPkcs7Attached(keyId, SellerSign, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/uz/contracts/accept-data",
+                        data: {
+                            contractId: id,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                alertSuccess(json.Reason);
+                                location.href = "/contracts/view?id="+id;
+                            } else {
+                                alertError(json.reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+
+};
+
 function AcceptEmpowerment(id){
     var keyId = window.localStorage.getItem("auth_key");
     $.ajax({
@@ -1398,6 +1444,54 @@ function RejectedAct(id){
                             if (json.Success) {
                                 alertSuccess(json.Reason);
                                 location.href = "/act/view?id="+id;
+                            } else {
+                                alertError(json.Reason);
+                            }
+                        },
+                        error: function (response) {
+                            alertError(response);
+                        }
+                    });
+                }, failDsvs);
+            });
+        },
+        error: function (response) {
+            alertError(response);
+        }
+    });
+};
+
+
+function RejectedContract(id){
+    var keyId = window.localStorage.getItem("auth_key");
+    var notes = "Bekor qilindi";
+    $.ajax({
+        type: "POST",
+        url: "/api-v2/get-contract-json",
+        data: {
+            id: id
+        },
+        success: function (json) {
+            // json['Notes'] = notes;
+
+
+            alertReject("Вы действительно хотите отклонить этот контракт?", function () {
+                var notes = document.getElementById('swal-area').value;
+                // console.log(notes);
+                var signData = JSON.stringify({ Act: json, Notes: notes });
+                EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/uz/contracts/reject-data",
+                        data: {
+                            contractId: id,
+                            notes:notes,
+                            sign: pkcs7
+                        },
+                        success: function (json) {
+                            if (json.Success) {
+                                alertSuccess(json.Reason);
+                                location.href = "/contracts/view?id="+id;
                             } else {
                                 alertError(json.Reason);
                             }

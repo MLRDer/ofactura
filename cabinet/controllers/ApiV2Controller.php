@@ -95,7 +95,7 @@ class ApiV2Controller extends Controller
             );
             $reason = "";
             $context = stream_context_create($opts);
-            $tin = Components::CompanyData('tin');
+//            $tin = Components::CompanyData('tin');
             $url = Yii::$app->params['factura_host'] . "/provider/api/uz/{$model->SellerTin}/facturas/seller/signedfile/" . $id;
             $data = file_get_contents($url, false, $context);
             return $data;
@@ -118,8 +118,31 @@ class ApiV2Controller extends Controller
             );
             $reason = "";
             $context = stream_context_create($opts);
-            $tin = Components::CompanyData('tin');
+//            $tin = Components::CompanyData('tin');
             $url = Yii::$app->params['factura_host'] . "/provider/api/uz/{$model->SellerTin}/acts/seller/signedfile/" . $id;
+            $data = file_get_contents($url, false, $context);
+            return $data;
+        } else {
+            return $modelPks->seller_pks7;
+        }
+    }
+
+    public function actionGetSignedContract(){
+
+        $id = Yii::$app->request->post('contract_id');
+        $modelPks = FacturaPks7::findOne(['factura_id'=>$id]);
+        if(empty($modelPks)) {
+            $model = Contracts::findOne(['Id' => $id]);
+            $opts = array(
+                'http' => array(
+                    'method' => "GET",
+                    'header' => "Authorization: Basic " . base64_encode(self::LOGIN . ":" . self::PASSWORD)
+                )
+            );
+            $reason = "";
+            $context = stream_context_create($opts);
+//            $tin = Components::CompanyData('tin');
+            $url = Yii::$app->params['factura_host'] . "/provider/api/uz/{$model->Tin}/contracts/client/signedfile/" . $id;
             $data = file_get_contents($url, false, $context);
             return $data;
         } else {
