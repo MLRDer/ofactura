@@ -136,6 +136,59 @@ class ContractsController extends \cabinet\components\Controller
         return $res;
     }
 
+    public function actionCanceledData()
+    {
+        $reason="";
+        $data = Yii::$app->request->post('sign');
+        $actId = Yii::$app->request->post('contractId');
+        $model = Contracts::findOne(['Id'=>$actId]);
+        if(empty($model)) {
+            $reason = "Bunday factura mavjud emas";
+        }
+
+
+        if($reason=="") {
+            $result = $this->CanceledContractWithCurl($data, $model->Id, 'reject');
+            $result = Json::decode($result);
+            $reason = (isset($result['errorMessage'])) ? $result['errorMessage'] : '';
+        }
+
+        if($reason==""){
+            $model->status = Acts::STATUS_CANCELLED;
+            $model->save();
+            $res=[
+                'Success'=>true,
+                'Reason'=>$result
+            ];
+        } else {
+            $res=[
+                'Success'=>false,
+                'Reason'=>$reason
+            ];
+        }
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $res;
+    }
+
+    protected function CanceledContractWithCurl($data,$contract_id,$action){
+        $sendData = [
+            'ContractId'=>$contract_id,
+            'sign'=>$data,
+            'clientIp'=>Yii::$app->request->getUserIP()
+        ];
+        $ch = curl_init(Yii::$app->params['factura_host']."/provider/api/uz/".Components::CompanyData('tin')."/contracts/owner/cancel");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERPWD, self::LOGIN . ":" . self::PASSWORD);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($sendData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $return = curl_exec($ch);
+        curl_close($ch);
+        return $return;
+    }
+
     protected function AcceptContractWithCurl($data,$actId,$action,$notes=null){
         $sendData = [
             "action"=>$action,

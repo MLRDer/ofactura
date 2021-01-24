@@ -37,15 +37,10 @@
                 </a>
             </li>
         </ul>
-
-
-
-
-
     <?php } else{?>
     <?php if($model->status==\common\models\Facturas::STATUS_SEND){ ?>
 
-        <a href="#!" name="Send" class="btn-outline-red" onclick="CancelAct('<?= $model->Id ?>')">
+        <a href="#!" name="Send" class="btn-outline-red" onclick="CancelContract('<?= $model->Id ?>')">
             <?= Yii::t('main','Bekor qilish')?>
         </a>
     <?php }}?>

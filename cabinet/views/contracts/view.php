@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php
                     $CanseledJson = [
                         'ContractId'=>$model->Id,
-                        'SellerTin'=>$model->Tin
+                        'Tin'=>$model->Tin
                     ];
                     ?>
                     <input type="hidden" id="CaneledValue" name="caneled_value" value='<?= \yii\helpers\Json::encode($CanseledJson)?>'>

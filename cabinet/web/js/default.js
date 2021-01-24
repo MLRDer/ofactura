@@ -1644,6 +1644,39 @@ function CancelAct(id){
     });
 };
 
+function CancelContract(id){
+    var keyId = window.localStorage.getItem("auth_key");
+    var notes = "Bekor qilindi";
+    // {"FacturaId":"5d24457313181100016b3286","SellerTin":"200523221"}
+    var signData = document.getElementById("CaneledValue").value;
+
+    console.log(signData);
+    alertConfirm("Вы действительно хотите отменить этот контракт?", function () {
+
+        EIMZOClient.createPkcs7(keyId, signData, timestamper, function (pkcs7) {
+            $.ajax({
+                type: "POST",
+                url: "/uz/contracts/canceled-data",
+                data: {
+                    contractId: id,
+                    sign: pkcs7
+                },
+                success: function (json) {
+                    if (json.Success) {
+                        alertSuccess(json.Reason);
+                        location.href = "/contracts/view?id="+id;
+                    } else {
+                        alertError(json.Reason);
+                    }
+                },
+                error: function (response) {
+                    alertError(response);
+                }
+            });
+        }, failDsvs);
+    });
+};
+
 
 function AcceptAferta(){
 
