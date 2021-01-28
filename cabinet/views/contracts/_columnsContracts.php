@@ -63,6 +63,15 @@ use yii\grid\GridView;
                         'ContractName',
 //                        'ContractNo',
                         'ContractDate',
+                        [
+                            'attribute'=>'status',
+                            'format'=>'html',
+                            'headerOptions' => ['style' => 'width:95px'],
+                            'value'=>function($model){
+ 
+                                return \common\models\Contracts::getStatus($model->status,2);
+                            }
+                        ],
 //                        'ContractExpireDate',
                         //'ContractPlace',
 //                        'Tin',

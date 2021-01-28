@@ -81,6 +81,7 @@ class Company extends \yii\db\ActiveRecord
             'tarif_id' =>Yii::t('main', 'Tarifi'),
             'type' =>Yii::t('main', 'Tip'),
             'enabled' =>Yii::t('main', 'Faol'),
+            'created_date'=>"Aferta sana"
         ];
     }
 }

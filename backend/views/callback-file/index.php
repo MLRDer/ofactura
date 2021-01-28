@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             10=>"Fakturalar",
                             20=>"Akt",
                             30=>"Davernost",
+                            40=>"Contract",
 
                     ];
                     //var_dump($value["type"]);

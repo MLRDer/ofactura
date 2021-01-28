@@ -19,14 +19,15 @@ $this->title = Yii::t('main',"Мои финансы");
         </div>
         <div class="col-md-6">
             <div class="current-balance m-b-60">
-                <div class="label">На счету:</div>
-                <div class="value"><?= \cabinet\models\Components::getSum()?> сум</div>
+                <div class="label"><?= Yii::t('main', "На счету:") ?></div>
+                <div class="value"><?= \cabinet\models\Components::getSum()?> <?= Yii::t('main', "сум")?></div>
             </div>
             <form method="POST" action="https://checkout.paycom.uz" id="PaymeSet">
                 <!-- Идентификатор WEB Кассы -->
 <!--                <input type="hidden" name="merchant" value="5df8752b7e2d6cf23ec1b00d"/>-->
 <!--                <input type="hidden" name="merchant" value="5ff6d557dc00d62a48fb1d4f"/>-->
-                <input type="hidden" name="merchant" value="6006797875d4416c5fb732c0"/>
+<!--                <input type="hidden" name="merchant" value="6006797875d4416c5fb732c0"/>-->
+                <input type="hidden" name="merchant" value="600e704ed879bf58ac4414b7"/>
                 <div class="payment-form">
                     <div class="input m-b-20">
                         <!-- Сумма платежа в тийинах -->
@@ -103,7 +104,7 @@ $this->title = Yii::t('main',"Мои финансы");
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn-blue" type="submit">оплатить</button>
+                            <button class="btn-blue" type="submit"><?= Yii::t('main', 'оплатить') ?></button>
                         </div>
                     </div>
                 </div>
@@ -139,7 +140,7 @@ $this->title = Yii::t('main',"Мои финансы");
                             return $res;
                         }
                     ],
-                    'reason',
+                    Yii::t('main', 'reason'),
                     [
                         'attribute'=>'created_date',
                         'headerOptions' => ['style' => 'width:160px'],

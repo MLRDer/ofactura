@@ -118,7 +118,6 @@ $this->params['breadcrumbs'][] = $this->title;
         },function(itemId, v){
             return uiCreateItem(itemId, v);
         },function(items, firstId){
-
             uiFillCombo(items);
             uiLoaded();
             uiComboSelect(firstId);
@@ -226,7 +225,7 @@ $this->params['breadcrumbs'][] = $this->title;
             var data = document.testform.data.value;
             var keyId = document.getElementById('keyId').innerHTML;
             // var keyId = window.localStorage.getItem('auth_key');
-            console.log(keyId);
+            console.log(keyId, "Hi");
             if(keyId){
                 EIMZOClient.createPkcs7(keyId, data, null, function(pkcs7){
                     document.testform.pkcs7.value = pkcs7;

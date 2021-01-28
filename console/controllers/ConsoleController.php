@@ -7,6 +7,7 @@ use common\models\Acts;
 use common\models\BankInvoicesLog;
 use common\models\CallbackFile;
 use common\models\Company;
+use common\models\Contracts;
 use common\models\Districts;
 use common\models\DocInData;
 use common\models\FacturaPks7;
@@ -367,6 +368,8 @@ class ConsoleController extends \yii\console\Controller
                           if(empty($checkAct)) {
                               $insertAct = new Acts();
                               $insertAct->InsertByArray($dataUpper);
+                              if($insertAct->ActText==null)
+                                  $insertAct->ActText = "Kiritilmagan";
                               $insertAct->InsertActProducts($dataUpper);
                               if (!$insertAct->save()) {
                                   $reason = Json::encode($insertAct->getErrors());
@@ -445,7 +448,6 @@ class ConsoleController extends \yii\console\Controller
                     }
 //                    var_dump($dataUpper);die;
                 }
-
                 if($items->type_action==CallbackFile::ACTION_CANCELED) {
 //                    var_dump($dataUpper);die;
                     $modelAct = Acts::findOne(['Id'=>$dataUpper['ACTID']]);
@@ -454,17 +456,99 @@ class ConsoleController extends \yii\console\Controller
                         if(!$modelAct->save()){
                             $reason = Json::encode($modelAct->getErrors());
                         } else {
+                            echo "OChdi hisob";
                             $is_delete = 1;
                         }
+                    } else{
+                        $is_delete = 1;
                     }
 
                 }
-
-
-
             }
             if($reason==""){
                 if($is_delete==1){
+                    echo "OChdi hisob 2";
+                    unlink($file_path);
+                    $callbackModel->delete();
+                }
+                echo "Success.\n";
+            }
+            else{
+                $callbackModel->status = CallbackFile::STATUS_ERROR ;
+                $callbackModel->reason = $reason;
+                $callbackModel->save();
+                echo $reason."\n";
+            }
+        }
+    }
+
+    public function actionContractJob(){
+        echo "Boshlandi \n";
+        $model = CallbackFile::find()->andWhere(['type'=>CallbackFile::TYPE_CONTRACT,'status'=>CallbackFile::STATUS_NEW])->all();
+
+        $is_delete = 0;
+        foreach ($model as $items){
+            $callbackModel = CallbackFile::findOne(['id'=>$items->id]);
+            echo $items->id;
+            $reason="";
+            $file_path = Yii::getAlias("@cabinet")."/web/".$items->path;
+            if(!file_exists($file_path)){
+                $reason = "Fayl topilmadi: ".$file_path;
+            }
+
+            $dataFile = file_get_contents($file_path);
+            if($reason==""){
+                if($dataFile==null)
+                    $reason = "Fayl ichida malumot mavjud emas(Pustoy)";
+            }
+            if($reason==""){
+                $data = self::GetJsonBySign($dataFile);
+                if($data==false)
+                     continue;
+                $dataUpper = self::UpperKeyName($data);
+                if($items->type_action==CallbackFile::ACTION_RECEIVED) {
+                    echo "TYPE_ACTION:". $items->type_action;
+//                    var_dump($dataUpper);die;
+                    if (isset($dataUpper)) {
+                        $checkAct = Contracts::findOne(['Id'=>$dataUpper['CONTRACTID']]);
+                        if(empty($checkAct)) {
+                            $insertAct = new Contracts();
+                            $insertAct->InsertByArray($dataUpper);
+                            $insertAct->InsertOwner($dataUpper);
+                            $insertAct->InsertProducts($dataUpper);
+                            $insertAct->InsertClients($dataUpper);
+                            $insertAct->InsertParts($dataUpper);
+                            if (!$insertAct->save()) {
+                                $reason = Json::encode($insertAct->getErrors());
+                                echo $reason;die;
+                            } else {
+                                $is_delete = 1;
+                                $checkAct  = $insertAct;
+                            }
+                        } else {
+                            $is_delete = 1;
+                        }
+
+                        $data = new Notifications();
+                        $data->tin = $checkAct->Tin;
+                        $data->type = Notifications::TYPE_CONTRACT_RECEIVED;
+                        $data->doc_id = $checkAct->Id;
+                        $data->title_uz = "Входящий контракт № ".$checkAct->ContractNo;
+                        $data->title_ru = "Входящий контракт № ".$checkAct->ContractNo;
+                        $data->anons_uz = $checkAct->ContractName;
+                        $data->anons_ru =  $checkAct->ContractName;
+                        $data->path = "/act/view?id=".$checkAct->Id;
+                        $data->is_view = Notifications::NOT_VIEW;
+                        $data->save();
+                    } else {
+                        $reason = "Faylda CONTRACT mavjud emas";
+//                          var_dump($dataUpper);
+                    }
+                }
+            }
+            if($reason==""){
+                if($is_delete==1){
+                    echo "OChdi hisob 2";
                     unlink($file_path);
                     $callbackModel->delete();
                 }
@@ -485,16 +569,31 @@ class ConsoleController extends \yii\console\Controller
 
 
     protected static  function GetJsonBySign($data){
+//        echo $data;die;
         $data = Json::decode($data);
         $client = new \SoapClient(self::URL_PKCS);
         $result = $client->verifyPkcs7([ "pkcs7B64" =>$data['Sign']]);
         $result = $result->return;
         $result = Json::decode($result);
+//        var_dump($result);die;
         $doc =  $result['pkcs7Info'];
         $doc = $doc['documentBase64'];
         $doc = base64_decode($doc);
-        $doc = Json::decode($doc);
+        $doc = str_replace("“","",$doc);
+        $doc = str_replace("”","",$doc);
+        if(self::isJson($doc)) {
+            $doc = Json::decode($doc);
+        } else {
+            return false;
+        }
+
         return $doc;
+    }
+
+
+    public static function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 
     protected static function UpperKeyName($doc){

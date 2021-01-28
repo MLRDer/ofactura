@@ -78,9 +78,10 @@ $this->registerJs($js);
         </div>
         <div class="col-md-4">
             <div class="input m-b-30">
-            <?= $form->field($model, 'ContractName')->textInput(['maxlength' => true,'class'=>'','placeholder'=>'ContractName'])->label(false) ?>
+            <?= $form->field($model, 'ContractName')->textInput(['maxlength' => true,'class'=>'','placeholder'=>Yii::t('main', 'ContractName')])->label(false) ?>
             </div>
         </div>
+
         <div class="col-md-4">
 
             <div class="input m-b-30">
@@ -90,7 +91,7 @@ $this->registerJs($js);
         <div class="col-md-4">
 
             <div class="input m-b-30">
-                <?= $form->field($model, 'ContractPlace')->textInput(['maxlength' => true,'class'=>'','placeholder'=>'ContractPlace'])->label(false) ?>
+                <?= $form->field($model, 'ContractPlace')->textInput(['maxlength' => true,'class'=>'','placeholder'=>Yii::t('main', 'ContractPlace')])->label(false) ?>
             </div>
 
 
@@ -370,7 +371,7 @@ $this->registerJs($js);
                     </div>
                 </div>
                 <div class="textarea-part m-b-30">
-                    <?= $form->field($modelParts, "[{$index}]Body")->textarea(['maxlength' => true,'class'=>'','placeholder'=>'Maydon matni','rows'=>6])->label(false) ?>
+                    <?= $form->field($modelParts, "[{$index}]Body")->textarea(['maxlength' => true,'class'=>'','placeholder'=>Yii::t('main', 'Maydon matni'),'rows'=>6])->label(false) ?>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -378,7 +379,7 @@ $this->registerJs($js);
             </div>
             <div class="col-md-12">
                 <div type="button" id="AddParts" class="pull-right AddParts">
-                    + Maydon qo`shish                </div>
+                    <?= Yii::t('main', "+ Maydon qo`shish") ?>                </div>
             </div>
             <?php DynamicFormWidget::end(); ?>
             <div class="col-md-12 m-t-30">

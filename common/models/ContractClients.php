@@ -23,6 +23,7 @@ use Yii;
  * @property string|null $BranchCode
  * @property string|null $BranchName
  * @property int|null $enabled
+ * @property int|null $status
  */
 class ContractClients extends \yii\db\ActiveRecord
 {
@@ -41,7 +42,7 @@ class ContractClients extends \yii\db\ActiveRecord
     {
         return [
             [[ 'Tin', 'Name', 'Address', 'FizTin', 'Fio'], 'required'],
-            [['enabled'], 'integer'],
+            [['enabled','status'], 'integer'],
             [['contract_id', 'Oked'], 'string', 'max' => 50],
             [['Tin', 'FizTin'], 'string', 'max' => 9],
             [['Name', 'Address'], 'string', 'max' => 1000],

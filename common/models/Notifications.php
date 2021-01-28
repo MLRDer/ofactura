@@ -34,6 +34,14 @@ class Notifications extends \yii\db\ActiveRecord
     const VIEWED = 2;
 
     const TYPE_ACT_RECEIVED = 50;
+    const TYPE_ACT_ACCEPT = 60;
+    const TYPE_ACT_REJECT = 70;
+    const TYPE_ACT_CANCELED = 80;
+
+    const TYPE_CONTRACT_RECEIVED = 90;
+    const TYPE_CONTRACT_ACCEPT = 100;
+    const TYPE_CONTRACT_REJECT = 110;
+    const TYPE_CONTRACT_CANCELED = 120;
 
     public static function tableName()
     {

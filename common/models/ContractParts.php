@@ -31,7 +31,7 @@ class ContractParts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'Title', 'Body'], 'required'],
+            [[ 'Title'], 'required'],
             [[ 'OrdNo', 'enabled', 'template_id'], 'integer'],
             [['Body'], 'string'],
             [['Title'], 'string', 'max' => 1000],

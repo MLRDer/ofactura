@@ -39,6 +39,9 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'name',
     ],
+    [
+        'attribute'=>'created_date',
+    ],
 //    [
 //        'class'=>'\kartik\grid\DataColumn',
 //        'attribute'=>'tarif_id',

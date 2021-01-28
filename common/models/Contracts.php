@@ -34,13 +34,18 @@ use yii\helpers\Json;
  * @property string|null $parts
  * @property int|null $status
  * @property int|null $type
- * @property int|null $created_date
+ * @property string|null $created_date
  */
 class Contracts extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
+
+    public $status_client;
+    const TYPE_MANUAL = 1;
+    const TYPE_CALLBACK = 2;
+    const TYPE_CONSOLE = 3;
 
     const STATUS_REESTR=-2;
     const STATUS_DUBL=-1;
@@ -68,8 +73,8 @@ class Contracts extends \yii\db\ActiveRecord
     {
         return [
             [['Id', 'ContractName', 'ContractNo', 'ContractDate', 'ContractExpireDate', 'ContractPlace', 'Tin', 'Name', 'FizTin'], 'required'],
-            [['HasVat', 'status', 'type', 'created_date'], 'integer'],
-            [['ContractDate', 'ContractExpireDate'], 'safe'],
+            [['HasVat', 'status', 'type'], 'integer'],
+            [['ContractDate', 'ContractExpireDate','created_date'], 'safe'],
             [['json_items', 'clients', 'parts'], 'string'],
             [['Id', 'BankId', 'BranchCode'], 'string', 'max' => 50],
             [['ContractName', 'Name', 'Address', 'WorkPhone', 'Mobile', 'Fax', 'BranchName'], 'string', 'max' => 1000],
@@ -199,6 +204,108 @@ class Contracts extends \yii\db\ActiveRecord
         return $clients;
     }
 
+
+    public function InsertByArray($data){
+        $this->Id = $data['CONTRACTID'];
+        $this->ContractNo = $data['CONTRACTDOC']['CONTRACTNO'];
+        $this->ContractPlace = $data['CONTRACTDOC']['CONTRACTPLACE'];
+        $this->ContractName = $data['CONTRACTDOC']['CONTRACTNAME'];
+        $this->ContractDate = date("Y-m-d",strtotime($data['CONTRACTDOC']['CONTRACTDATE']));
+        $this->ContractExpireDate = date("Y-m-d",strtotime($data['CONTRACTDOC']['CONTRACTEXPIREDATE']));
+        $this->HasVat = isset($data['HASVAT'])? (int)$data['HASVAT']:null;
+
+//        $this->created_date = date('Y-m-d H:i:s');
+        $this->type = Contracts::TYPE_CALLBACK;
+        $this->status = Contracts::STATUS_SEND;
+    }
+
+    public function InsertOwner($data){
+        $items = $data['OWNER'];
+        $this->Tin = isset($items['TIN'])?(string)$items['TIN']:(string)$k;
+        $this->Name =$items['NAME'];
+        $this->Address = $items['ADDRESS'];
+        $this->WorkPhone = isset($items['WORKPHONE'])?$items['WORKPHONE']:null;
+        $this->Mobile = isset($items['MOBILE'])?$items['MOBILE']:null;
+        $this->Fax = isset($items['FAX'])?$items['FAX']:null;
+        $this->Oked = $items['OKED'];
+        $this->Account = $items['ACCOUNT'];
+        $this->BankId = $items['BANKID'];
+        $this->FizTin = $items['FIZTIN'];
+        $this->Fio = $items['FIO'];
+        $this->BranchCode = $items['BRANCHCODE'];
+        $this->BranchName = $items['BRANCHNAME'];
+    }
+
+    public function InsertProducts($dataObj){
+        $model = $dataObj['PRODUCTS'];
+        ContractProducts::deleteAll(['contract_id' => $this->Id]);
+        $k=0;
+        foreach ($model as $items) {
+            $k++;
+            $data = new ContractProducts();
+            $data->contract_id = $this->Id;
+            $data->OrdNo = isset($items['ORDNO'])?(string)$items['ORDNO']:(string)$k;
+            $data->Name =$items['NAME'];
+            $data->MeasureId = $items['MEASUREID'];
+            $data->Count = isset($items['COUNT'])?$items['COUNT']:0;
+            $data->Summa = $items['SUMMA'];
+            $data->DeliverySum = $items['DELIVERYSUM'];
+            $data->VatRate = isset($items['VATRATE'])?$items['VATRATE']:null;
+            $data->VatSum = isset($items['VATSUM'])?$items['VATRATE']:null;
+            $data->CatalogCode = $items['CATALOGCODE'];
+            $data->CatalogName = $items['CATALOGNAME'];
+            $data->DeliverySumWithVat = isset($items['DELIVERYSUMWITHVAT'])?$items['DELIVERYSUMWITHVAT']:null;
+            $data->WithoutVat = (int)$items['WITHOUTVAT'];
+            if(!$data->save()){
+                echo Json::encode($data->getErrors());
+            }
+        }
+    }
+
+    public function InsertClients($dataObj){
+        $model = $dataObj['CLIENTS'];
+        ContractClients::deleteAll(['contract_id' => $this->Id]);
+        $k=0;
+        foreach ($model as $items) {
+            $k++;
+            $data = new ContractClients();
+            $data->contract_id = $this->Id;
+            $data->Tin = isset($items['TIN'])?(string)$items['TIN']:(string)$k;
+            $data->Name =$items['NAME'];
+            $data->Address = $items['ADDRESS'];
+            $data->WorkPhone = isset($items['WORKPHONE'])?$items['WORKPHONE']:null;
+            $data->Mobile = isset($items['MOBILE'])?$items['MOBILE']:null;
+            $data->Fax = isset($items['FAX'])?$items['FAX']:null;
+            $data->Oked = $items['OKED'];
+            $data->Account = $items['ACCOUNT'];
+            $data->BankId = $items['BANKID'];
+            $data->FizTin = $items['FIZTIN'];
+            $data->Fio = $items['FIO'];
+            $data->BranchCode = $items['BRANCHCODE'];
+            $data->BranchName = $items['BRANCHNAME'];
+            $data->status = Contracts::STATUS_SEND;
+            if(!$data->save()){
+                echo Json::encode($data->getErrors());
+            }
+        }
+    }
+
+    public function InsertParts($dataObj){
+        $model = $dataObj['PARTS'];
+        ContractParts::deleteAll(['contract_id' => $this->Id]);
+        $k=0;
+        foreach ($model as $items) {
+            $k++;
+            $data = new ContractParts();
+            $data->contract_id = $this->Id;
+            $data->OrdNo =$items['ORDNO'];
+            $data->Title = $items['TITLE'];
+            $data->Body = $items['BODY'];
+            if(!$data->save()){
+                echo Json::encode($data->getErrors());
+            }
+        }
+    }
     /**
      * {@inheritdoc}
      */

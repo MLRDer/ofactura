@@ -50,7 +50,7 @@ class ContractsController extends \cabinet\components\Controller
 
         $searchModel_sent = new ContractsSearch();
         $dataProvider_sent = $searchModel_sent->search(Yii::$app->request->queryParams);
-        $dataProvider_sent->query->where('c.status>0')->andWhere(["c.Tin"=>Components::CompanyData('tin')]);
+        $dataProvider_sent->query->where('cc.status>0')->andWhere(["cc.Tin"=>Components::CompanyData('tin')]);
 
         $searchModel_saved = new ContractsSearch();
         $dataProvider_saved = $searchModel_saved->search(Yii::$app->request->queryParams);

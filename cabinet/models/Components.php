@@ -183,8 +183,9 @@ class Components
     public static function getSum(){
         $model = Company::findOne(['id'=>Components::GetId()]);
         $result = 0;
-        if($model->invoices_sum!=null){
-            $result = $model->invoices_sum;
+        if($model["invoices_sum"]!=null){
+            $result = $model["invoices_sum"];
+
         }
         return $result;
     }

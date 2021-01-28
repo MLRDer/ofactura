@@ -24,10 +24,12 @@ class PaymeController extends \yii\web\Controller
 {
     const USERNAME = 'Paycom';
 //    const PASSWORD = 'MBuH?hXca&WoefpjjU@QYNGrnQUI9Y0QbRHV';
-    const PASSWORD = '?4ejPRm4Xi1BM2@59XKF4frijkdCYH9QE9RD';
+//    const PASSWORD = '?4ejPRm4Xi1BM2@59XKF4frijkdCYH9QE9RD';
+    const PASSWORD = '0hPynDxtuKodN0npK887kC?bqIe2GNw%D4kj';
 
 //    const PASSWORD = 'Ceq2AWWphuXQzBIVov@01qW#HP3bvSJ95rMd';
-    const PASSWORD_TEST = 'jDUyw7OSWgKo97XpYAcFTNJ#5#6ajX%AFdfR';
+//    const PASSWORD_TEST = 'jDUyw7OSWgKo97XpYAcFTNJ#5#6ajX%AFdfR';
+    const PASSWORD_TEST = 'rw6P3oT1eDArP7jE6KyIyBqboou#SxG6ZQT7';
     const METHOD_CHECK_PERFORM_TRANSACTION = 'CheckPerformTransaction';
     const METHOD_CREATE_TRANSACTION = 'CreateTransaction';
     const METHOD_CHECK_TRANSACTION = 'CheckTransaction';

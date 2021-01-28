@@ -42,7 +42,7 @@ class ContractsSearch extends Contracts
     {
         $query = Contracts::find();
 
-        $query->select("c.*")->from(\common\models\Contracts::tableName()." c");
+        $query->select("c.*, cc.status as status_client")->from(\common\models\Contracts::tableName()." c");
         $query->leftJoin(ContractClients::tableName()." cc", "cc.contract_id = c.Id");
         // add conditions that should always apply here
 
